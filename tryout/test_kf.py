@@ -1,4 +1,4 @@
-from .kalman_filter import KF
+from .kalman_filter_template import KF
 
 import unittest
 import numpy as np
