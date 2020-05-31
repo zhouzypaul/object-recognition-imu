@@ -35,7 +35,7 @@ class KF:
         # covariance of GRV, initialized to be identity  TODO: possible change
         self._P = np.eye(TOTOALNUM)
 
-    def predict(self, delta_x: float, delta_y: float) -> None:
+    def predict(self, delta_x: float, delta_y: float, process_noise_var: float) -> None:
         # x = A x + B u[n]
         # P = A P At + Q     (Q = G Gt a)
 
@@ -48,30 +48,40 @@ class KF:
             new_x[y_index] += delta_y  # we are assuming that head movement at from t-1 to t is the same at t to t+1
             # which means we are assuming the head movement to be smooth
 
-        # assume the process noise covariance matrix is identity 
+        # the process noise covariance matrix
         Q = np.eye(TOTOALNUM)
+        for i in range(TOTOALNUM):
+            Q[i, i] = process_noise_var
         new_P = self._P + Q
 
         self._x = new_x
         self._P = new_P
 
-    def update(self, meas_value: float, meas_variance: float) -> None:
-        # y = z - H x
+    def update(self, meas_value: np.array, meas_variance: float) -> None:
+        # compute the Kalman Gain
         # S = H P Ht + R
-        # K = P Ht S^-1
-        # x = x + K y
-        # P = (I - K H) * P
-        H = np.zeros((1, NUMVARS))
-        H[0, iX] = 1
-        z = np.array([meas_value])
-        R = np.array([meas_variance])
+        # K = P Ht np.linalg.pinv(S)
 
-        y = z - H.dot(self._x)
+        # update the estimate via Z
+        # Z = m x[n]
+        # y = Z - H x
+        # x = x + K y
+
+        # update the error covariance
+        # P = (I - K H) P
+
+        H = np.ones((TOTOALNUM, TOTOALNUM))
+        R = np.eye(TOTOALNUM)  # the measurement noise covariance matrix
+        for i in range(TOTOALNUM):
+            R[i, i] = meas_variance
+        z = meas_value  # TODO
+
         S = H.dot(self._P).dot(H.T) + R
-        K = self._P.dot(H.T).dot(np.linalg.inv(S))
+        K = self._P.dot(H.T).dot(np.linalg.pinv(S))
+        y = z - H.dot(self._x)
 
         new_x = self._x + K.dot(y)
-        new_P = (np.eye(NUMVARS) - K.dot(H)).dot(self._P)
+        new_P = (np.eye(TOTOALNUM) - K.dot(H)).dot(self._P)
 
         self._x = new_x
         self._P = new_P
@@ -84,10 +94,3 @@ class KF:
     def mean(self) -> np.array:
         return self._x
 
-    @property
-    def pos(self) -> float:
-        return self._x[iX]
-
-    @property
-    def vel(self) -> float:
-        return self._x[iV]
