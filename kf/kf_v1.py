@@ -30,7 +30,7 @@ TOTOALNUM = NUMOBJS * NUMVARS
 class KF:
     def __init__(self) -> None:
         # mean of state GRV, all initialized to 0
-        self._x = np.zeros(TOTOALNUM, 1)
+        self._x = np.zeros((TOTOALNUM, 1))
 
         # covariance of GRV, initialized to be identity  TODO: possible change
         self._P = np.eye(TOTOALNUM)
@@ -45,12 +45,12 @@ class KF:
             x_index = NUMVARS * i + iX
             y_index = NUMVARS * i + iY
             new_x[x_index] += delta_x
-            new_x[y_index] += delta_y
+            new_x[y_index] += delta_y  # we are assuming that head movement at from t-1 to t is the same at t to t+1
+            # which means we are assuming the head movement to be smooth
 
-        G = np.zeros((2, 1))  # TODO: pick up
-        G[iX] = 0.5 * dt**2
-        G[iV] = dt
-        new_P = F.dot(self._P).dot(F.T) + G.dot(G.T) * self._accel_variance
+        # assume the process noise covariance matrix is identity 
+        Q = np.eye(TOTOALNUM)
+        new_P = self._P + Q
 
         self._x = new_x
         self._P = new_P
