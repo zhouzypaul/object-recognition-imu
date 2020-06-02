@@ -45,14 +45,14 @@ class TestKFV1(unittest.TestCase):
         kf.update(meas_value=np.ones((400, 1)))
 
     def test_update_decrease_state_uncertainty(self):
-        kf = KF(state_var=0.1)
+        kf = KF(state_var=1)
         kf.predict(delta_x=0.5, delta_y=-0.1, process_noise_var=0.1)
 
-        for i in range(5):
+        for i in range(10):
             det_before = np.linalg.det(kf.cov)
             kf.update(meas_value=np.ones((400, 1)), meas_variance=0.1)
             det_after = np.linalg.det(kf.cov)
             kf.predict(delta_x=0.05, delta_y=-0.03, process_noise_var=0.1)
 
-            self.assertLess(det_before, det_after)  # TODO: this does not pass
+            self.assertLess(det_after, det_before)
             print(det_before, det_after)
