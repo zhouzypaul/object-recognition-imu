@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-from kalman_filter import KF
+from kalman_filter_template import KF
 
 plt.ion()
 plt.figure()
@@ -22,8 +22,8 @@ real_xs = []
 real_vs = []
 
 for step in range(NUM_STEPS):
-    if step > 500:
-        real_v *= 0.9
+    # if step > 500:
+    #     real_v *= 0.9
 
     covs.append(kf.cov)
     mus.append(kf.mean)
