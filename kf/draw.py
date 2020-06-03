@@ -58,6 +58,7 @@ for step in range(NUMSTEPS):
 
     con1s.append(kf.mean[0])
     real_con1s.append(real_state[0])
+    print(kf.mean[0])
     x1s.append(kf.mean[1])
     real_x1s.append(real_state[1])
     y1s.append(kf.mean[2])
@@ -101,4 +102,4 @@ plt.plot(real_h1s, 'b')
 # plt.plot(real_con2s, 'b')
 
 plt.show()
-plt.ginput(1)
+plt.ginput(timeout=300)
