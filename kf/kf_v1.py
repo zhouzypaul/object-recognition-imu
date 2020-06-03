@@ -74,7 +74,7 @@ class KF:
         # update the error covariance
         # P = (I - K H) P
 
-        H = np.ones((TOTOALNUM, TOTOALNUM))
+        H = np.eye(TOTOALNUM)
         R = np.eye(TOTOALNUM)  # the measurement noise covariance matrix
         if meas_variance is not 1:
             for i in range(TOTOALNUM):
