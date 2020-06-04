@@ -3,7 +3,7 @@ import random
 import matplotlib.pyplot as plt
 
 from kf_v1 import KF
-from observation import ls_of_observations
+from simulated_observation import ls_of_observations
 
 
 plt.ion()

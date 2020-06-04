@@ -1,4 +1,4 @@
-object_dict = {
+object_to_index = {
     "person": 0,
     "bicycle": 1,
     "car": 2,
@@ -80,3 +80,12 @@ object_dict = {
     "hair drier": 78,
     "toothbrush": 79
 }
+
+
+def change_obejct_name_to_index(ls: []) -> []:
+    # indexed_list = ls.copy()
+    for single_object in ls:
+        name = single_object[0]
+        index = object_to_index.get(name)
+        single_object[0] = index
+    # return indexed_list
