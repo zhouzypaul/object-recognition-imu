@@ -82,7 +82,7 @@ object_to_index = {
 }
 
 
-def change_obejct_name_to_index(ls: []) -> []:
+def object_name_to_index(ls: []) -> []:
     # indexed_list = ls.copy()
     for single_object in ls:
         name = single_object[0]

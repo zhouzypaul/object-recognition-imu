@@ -1,44 +1,49 @@
 import numpy as np
 
-# prediction:
-# x = A x + B u[n]
-# P = A P At + Q
-
-# compute the Kalman Gain
-# S = H P Ht + R
-# K = P Ht np.linalg.pinv(S)
-
-# update the estimate via Z
-# Z = m x[n]
-# y = Z - H x
-# x = x + K y
-
-# update the error covariance
-# P = (I - K H) P
 
 # offsets of each variable in the state vector
-iC = 0
-iX = 1
-iY = 2
-iW = 3
-iH = 4
-NUMVARS = iH + 1
-NUMOBJS = 80
-TOTOALNUM = NUMOBJS * NUMVARS
+iT = 0  # the class tag of the object
+iC = 1  # the confidence level
+iX = 2  # the x coordinate of the center of the bounding box
+iY = 3  # the y coordinate of the center of the bounding box
+iW = 4  # the width of the bounding box
+iH = 5  # the height of the bounding box
+NUMVARS = iH + 1  # the number of variables needed to describe one recognized object
+NUMOBJS = 100  # the maximum number of objects assumed to be in a single frame
+DIM = NUMOBJS * NUMVARS
 
+# the initial state of the state vector, all the class tags are initialized to
+initial_state = np.zeros((DIM, 1))
 
 class KF:
     """
-    This version of KF assumes that each object can only occur once in an image
+    This version of KF assumes that there are a max of NUMOBJS objects being detected in one frame
+    the calculations of the Kalman Filter are as follows:
+
+    prediction:
+    x = A x + B u[n]
+    P = A P At + Q
+
+    compute the Kalman Gain
+    S = H P Ht + R
+    K = P Ht np.linalg.pinv(S)
+
+    update the estimate via Z
+    Z = m x[n]
+    y = Z - H x
+    x = x + K y
+
+    update the error covariance
+    P = (I - K H) P
     """
-    def __init__(self, init_state: np.array = np.zeros((TOTOALNUM, 1)), state_var: float = 1) -> None:
+    def __init__(self, init_state: np.array = np.zeros((DIM, 1)), state_var: float = 1) -> None:
         # mean of state GRV, all initialized to 0
         self._x = init_state
 
-        # covariance of GRV, initialized to be identity  TODO: possible change
-        self._P = np.eye(TOTOALNUM)
+        # covariance of GRV, initialized to be identity
+        self._P = np.eye(DIM)
         if state_var is not 1:
-            for i in range(TOTOALNUM):
+            for i in range(DIM):
                 self._P[i, i] = state_var
 
     def predict(self, delta_x: float, delta_y: float, process_noise_var: float = 1) -> None:
@@ -55,9 +60,9 @@ class KF:
             # which means we are assuming the head movement to be smooth
 
         # the process noise covariance matrix
-        Q = np.eye(TOTOALNUM)
+        Q = np.eye(DIM)
         if process_noise_var is not 1:
-            for i in range(TOTOALNUM):
+            for i in range(DIM):
                 Q[i, i] = process_noise_var
         new_P = self._P + Q
 
@@ -77,10 +82,10 @@ class KF:
         # update the error covariance
         # P = (I - K H) P
 
-        H = np.eye(TOTOALNUM)
-        R = np.eye(TOTOALNUM)  # the measurement noise covariance matrix
+        H = np.eye(DIM)
+        R = np.eye(DIM)  # the measurement noise covariance matrix
         if meas_variance is not 1:
-            for i in range(TOTOALNUM):
+            for i in range(DIM):
                 R[i, i] = meas_variance
         z = meas_value  # TODO
 
@@ -89,7 +94,7 @@ class KF:
         y = z - H.dot(self._x)
 
         new_x = self._x + K.dot(y)
-        new_P = (np.eye(TOTOALNUM) - K.dot(H)).dot(self._P)
+        new_P = (np.eye(DIM) - K.dot(H)).dot(self._P)
 
         self._x = new_x
         self._P = new_P
