@@ -1,5 +1,5 @@
 from darknet.darknet import performDetect, performBatchDetect
-from observation_parser import parse_yolo_output
+from observation_parser import parse_yolo_batch_output
 from kf.kf_v1 import KF
 from kf.object_dict import *
 from kf.make_observation import observation_to_nparray
@@ -15,6 +15,7 @@ batch_detect_result = performBatchDetect(thresh=0.70,
                                          metaPath="./darknet/cfg/kf_coco.data",
                                          batch_size=3,
                                          input_images=['darknet/data/person.jpg', 'darknet/data/horses.jpg', 'darknet/data/dog.jpg'])
+print(type(batch_detect_result))
 
 # process the result form YOLO
 """
@@ -38,4 +39,5 @@ kf = KF()
 # see the results
 print("------------------------------------")
 print(batch_detect_result)
+print(batch_detect_result[1])
 print("------------------------------------")
