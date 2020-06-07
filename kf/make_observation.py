@@ -2,7 +2,10 @@ import numpy as np
 from kf.kf_v1 import TOTOALNUM, NUMVARS
 
 
-def observation_to_nparray(observ: []) -> np.array:
+def observation_to_nparray_v1(observ: []) -> np.array:
+    """
+    this method is for kf_v1
+    """
     # observ is a list of recognized object, which are lists themselves
     final_array = np.zeros((TOTOALNUM, 1))
     for recognized_objects in observ:
@@ -14,3 +17,9 @@ def observation_to_nparray(observ: []) -> np.array:
         final_array[start_index + 3] = recognized_objects[4]
         final_array[start_index + 4] = recognized_objects[5]
     return final_array
+
+
+def observation_to_nparray_v2(observ: []) -> np.array:
+    """
+    this method is for kf_v2
+    """

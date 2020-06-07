@@ -2,22 +2,23 @@ import numpy as np
 
 
 # offsets of each variable in the state vector
-iT = 0  # the class tag of the object
-iC = 1  # the confidence level
-iX = 2  # the x coordinate of the center of the bounding box
-iY = 3  # the y coordinate of the center of the bounding box
-iW = 4  # the width of the bounding box
-iH = 5  # the height of the bounding box
+iC = 0  # the confidence level
+iX = 1  # the x coordinate of the center of the bounding box
+iY = 2  # the y coordinate of the center of the bounding box
+iW = 3  # the width of the bounding box
+iH = 4  # the height of the bounding box
 NUMVARS = iH + 1  # the number of variables needed to describe one recognized object
-NUMOBJS = 100  # the maximum number of objects assumed to be in a single frame
-DIM = NUMOBJS * NUMVARS
+NUMMAX = 20  # the maximum number of each objects assumed to be in a single frame
+NUMOBJS = 80  # the number of different types of objects an algorithm can recognize
+DIM = NUMOBJS * NUMVARS * NUMMAX
 
 # the initial state of the state vector, all the class tags are initialized to
 initial_state = np.zeros((DIM, 1))
 
+
 class KF:
     """
-    This version of KF assumes that there are a max of NUMOBJS objects being detected in one frame
+    This version of KF assumes that each object can occur at most NUMMAX times in one frame
     the calculations of the Kalman Filter are as follows:
 
     prediction:
@@ -52,7 +53,7 @@ class KF:
 
         # A should be the identity matrix, so it can be occluded
         new_x = self._x
-        for i in range(NUMOBJS):
+        for i in range(NUMOBJS * NUMMAX):
             x_index = NUMVARS * i + iX
             y_index = NUMVARS * i + iY
             new_x[x_index] += delta_x

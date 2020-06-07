@@ -1,0 +1,3 @@
+#!/home/h2r/VP/env/bin/python3
+from numba.pycc import main
+main()
