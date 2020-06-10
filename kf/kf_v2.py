@@ -1,4 +1,5 @@
 import numpy as np
+from numba import jit
 
 
 # offsets of each variable in the state vector
@@ -37,6 +38,7 @@ class KF:
     update the error covariance
     P = (I - K H) P
     """
+    @jit
     def __init__(self, init_state: np.array = np.zeros((DIM, 1)), state_var: float = 1) -> None:
         # mean of state GRV, all initialized to 0
         self._x = init_state
@@ -47,6 +49,7 @@ class KF:
             for i in range(DIM):
                 self._P[i, i] = state_var
 
+    @jit
     def predict(self, delta_x: float, delta_y: float, process_noise_var: float = 1) -> None:
         # x = A x + B u[n]
         # P = A P At + Q     (Q = G Gt a)
@@ -70,6 +73,7 @@ class KF:
         self._x = new_x
         self._P = new_P
 
+    @jit
     def update(self, meas_value: np.array, meas_variance: float = 1) -> None:
         # compute the Kalman Gain
         # S = H P Ht + R

@@ -15,7 +15,7 @@ ZED_CAMERA_v2_8=0 # ZED SDK 2.X
 USE_CPP=0
 DEBUG=0
 
-ARCH= -gencode arch=compute_72,code=[sm_72,compute_72]
+ARCH= -gencode arch=compute_75,code=[sm_75,compute_75]
       
       
       
