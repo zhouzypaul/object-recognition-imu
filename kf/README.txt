@@ -14,8 +14,8 @@ time used:
 8000 matrix:  107.98598215899983  --> the library is twice as fast as my own code
 
 
-TODO:
-make_observation 
+TODO: 
 change the initial state 
-iou stuff  
+iou stuff
+a video sequencce to test stuff out  
 
