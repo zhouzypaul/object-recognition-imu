@@ -10,7 +10,8 @@ iX = 1  # relative index of x, the x-position of the center of the bounding box
 iY = 2  # relative index of y, the y-position of the center of the bounding box
 iW = 3  # relative index of w, the width of the bounding box
 iH = 4  # relative index of h, the height of the bounding box
-dim = num_max * num_obj * (iH + 1)  # the dimension of the state vector
+num_var = iH + 1
+dim = num_max * num_obj * num_var  # the dimension of the state vector
 
 """
 This version of KF assumes that each object can occur at most num_max times in one frame
@@ -41,7 +42,7 @@ f.F = np.eye(dim)  # state transition matrix
 f.H = np.eye(dim)  # the measurement function
 B = np.zeros((dim, 2))
 for i in range(num_obj * num_max):
-    start_index = i * (iH + 1)
+    start_index = i * num_var
     x_index = start_index + iX
     y_index = start_index + iY
     B[x_index][0] = 1

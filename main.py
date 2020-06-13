@@ -3,7 +3,7 @@ from darknet.darknet_video import YOLO
 from observation_parser import parse_yolo_batch_output, parse_yolo_output
 from kf.kf_v1 import KF
 from kf.object_dict import object_name_to_index
-from kf.make_observation import observation_to_nparray_v2
+from kf.make_observation import observation_to_nparray_v4
 import cv2
 
 
@@ -26,11 +26,11 @@ the result is in the form of ([[batch_boxes]], [[batch_scores]], [[batch_classes
 ('obj_label', confidence, (bounding_box_x_px, bounding_box_y_px, bounding_box_width_px, bounding_box_height_px))
 The X and Y coordinates are from the center of the bounding box. 
 """
-detect_result: {} = performDetect(imagePath="darknet/data/person.jpg", thresh=0.70,
+detect_result: {} = performDetect(imagePath="darknet/data/horses.jpg", thresh=0.70,
                                   metaPath="./darknet/cfg/kf_coco.data", showImage=False)
 parsed_result: [] = parse_yolo_output(detect_result)
 indexed_result: [] = object_name_to_index(parsed_result)
-# result_array = observation_to_nparray(parsed_result)  # convert the result to a numpy array
+result_array, unprocessed_objects = observation_to_nparray_v4(indexed_result)  # convert the result to a numpy array
 
 
 # process result of darknet from detect_image, this gives the full probability distribution
@@ -48,4 +48,6 @@ if __name__ == "__main__":
     print("------------------------------------")
     print(parsed_result)
     print(indexed_result)
+    print(result_array)
+    print(unprocessed_objects)
     print("------------------------------------")
