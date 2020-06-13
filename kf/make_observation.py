@@ -1,6 +1,7 @@
 import numpy as np
 from kf.kf_v1 import TOTOALNUM, NUMVARS
 from kf.kf_v4 import dim, num_max, num_obj, num_var
+from kf.object_dict import index_to_object
 
 
 def observation_to_nparray_v1(observ: []) -> np.array:
@@ -54,3 +55,21 @@ def observation_to_nparray_v4(observ: []) -> (np.array, []):
             final_array[start_index + 3] = object[2][2]  # w
             final_array[start_index + 4] = object[2][3]  # h
     return final_array, unprocessed
+
+
+def nparray_to_observation_v4(arr: np.array, unprocessed: []) -> []:
+    """
+    this method is for kf_v4
+    input1: np.array of shape (dim, 1), the output1 of function observation_to_nparray_v4
+    input2: a list of unprocessed objs, where obj is (tag: int, con, (x, y, w, h))
+    output: a list of obj observations, concat input1.toList and input2, where obj is (tag: str, con, (x, y, w, h))
+    """
+    obj_ls = []
+    for object_index in range(num_obj):
+        for occurrence_index in range(num_max):
+            start_index = occurrence_index * num_var + object_index * num_var * num_max
+            if arr[start_index][0] != 0:  # confidence of obj is not 0
+                tag: str = index_to_object[object_index]
+                obj = (tag, arr[start_index][0], (arr[start_index + 1][0], arr[start_index + 2][0], arr[start_index + 3][0], arr[start_index + 4][0]))
+                obj_ls.append(obj)
+    return obj_ls + unprocessed

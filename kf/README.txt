@@ -15,7 +15,7 @@ time used:
 
 
 TODO: 
-change the initial state 
+figure out how to incorporate imu info 
 iou stuff
 a video sequencce to test stuff out  
 

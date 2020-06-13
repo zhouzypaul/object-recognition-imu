@@ -1,7 +1,5 @@
 from filterpy.kalman import KalmanFilter
 import numpy as np
-from main import first_result
-
 
 # the indices in the state vector
 num_max = 2  # the number of maximum objects assumed to be detected in each frame
@@ -37,6 +35,7 @@ P = (I - K H) P
 
 # create the KF
 f = KalmanFilter(dim_x=dim, dim_z=dim, dim_u=2)
+from main import first_result  # do not move this statement to the top
 initial_state = first_result
 f.x = initial_state
 f.F = np.eye(dim)  # state transition matrix

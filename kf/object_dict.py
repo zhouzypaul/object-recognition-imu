@@ -37,7 +37,7 @@ object_to_index = {
     "baseball glove": 35,
     "skateboard": 36,
     "surfboard": 37,
-    "tennis racket": 37,
+    "tennis racket": 38,
     "bottle": 39,
     "wine glass": 40,
     "cup": 41,
@@ -80,6 +80,9 @@ object_to_index = {
     "hair drier": 78,
     "toothbrush": 79
 }
+
+# reverse the dict above
+index_to_object = {object_to_index[k]: k for k in object_to_index}
 
 
 def object_name_to_index(ls: []) -> []:
