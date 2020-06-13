@@ -9,6 +9,9 @@ import os
 import numpy as np
 
 
+# debugger
+debug = True
+
 # get the images from input
 directory = "/home/h2r/VP/input"
 img_path_ls = []  # a list of image paths
@@ -30,7 +33,7 @@ def process_img(img_path: str) -> (np.array, []):
     The X and Y coordinates are from the center of the bounding box.
     """
     detect_result: {} = performDetect(imagePath=img_path, thresh=0.70,
-                                      metaPath="./darknet/cfg/kf_coco.data", showImage=False)
+                                      metaPath="./darknet/cfg/kf_coco.data", showImage=True)
     parsed_result: [] = parse_yolo_output(detect_result)
     indexed_result: [] = object_name_to_index(parsed_result)
     result_array, unprocessed_objects = observation_to_nparray_v4(indexed_result)  # convert the result to a numpy array
@@ -39,18 +42,26 @@ def process_img(img_path: str) -> (np.array, []):
 
 # get the first image's result
 first_result, _ = process_img(img_path_ls[0])
+if debug: print('---------got first img')
 
 # loop YOLO and KF
 updated_obser_ls = []
 for i in range(len(img_path_ls)):
+    if debug: print('-------start loop')
     path = img_path_ls[i]
     delta_x = imu_ls[i][0]
     delta_y = imu_ls[i][1]
+    if debug: print('-------computed path, x, y')
     f.predict(u=np.array([[delta_x], [delta_y]]))
+    if debug: print('------------predicted')
     img_array, unprocessed = process_img(path)
+    if debug: print('-------processed img')
     f.update(z=img_array)
+    if debug: print('---------updated')
     updated_obser: [] = nparray_to_observation_v4(f.x, unprocessed)
+    if debug: print('---------change back to obser')
     updated_obser_ls.append(updated_obser)
+    if debug: print('----------finished loop')
 
 
 # process result of darknet from detect_image, this gives the full probability distribution
@@ -73,7 +84,7 @@ the result is in the form of ([[batch_boxes]], [[batch_scores]], [[batch_classes
 
 
 # see the results
-if __name__ == "__main__":
-    print("------------------------------------")
-    print(updated_obser_ls)
-    print("------------------------------------")
+# if __name__ == "__main__":
+#     print("------------------------------------")
+#     print(updated_obser_ls)
+#     print("------------------------------------")
