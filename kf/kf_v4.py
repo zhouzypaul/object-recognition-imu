@@ -1,5 +1,7 @@
 from filterpy.kalman import KalmanFilter
 import numpy as np
+
+
 debug = True
 
 # the indices in the state vector
@@ -37,10 +39,6 @@ P = (I - K H) P
 # create the KF
 f = KalmanFilter(dim_x=dim, dim_z=dim, dim_u=2)
 if debug: print('------created kf')
-from main import first_result  # do not move this statement to the top
-if debug: print('-------imported first state')
-initial_state = first_result
-f.x = initial_state
 f.F = np.eye(dim)  # state transition matrix
 f.H = np.eye(dim)  # the measurement function
 B = np.zeros((dim, 2))
@@ -51,4 +49,4 @@ for i in range(num_obj * num_max):
     B[x_index][0] = 1
     B[y_index][1] = 1
 f.B = B  # control transition matrix
-if debug: print('--------finished creating kf')
+if debug: print('------finished creating kf')

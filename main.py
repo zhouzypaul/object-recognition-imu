@@ -42,26 +42,28 @@ def process_img(img_path: str) -> (np.array, []):
 
 # get the first image's result
 first_result, _ = process_img(img_path_ls[0])
-if debug: print('---------got first img')
+if debug: print('------got first img')
+f.x = first_result
+if debug: print('------changed first state of kf')
 
 # loop YOLO and KF
 updated_obser_ls = []
 for i in range(len(img_path_ls)):
-    if debug: print('-------start loop')
+    if debug: print('------start loop')
     path = img_path_ls[i]
     delta_x = imu_ls[i][0]
     delta_y = imu_ls[i][1]
-    if debug: print('-------computed path, x, y')
+    if debug: print('------computed path, x, y')
     f.predict(u=np.array([[delta_x], [delta_y]]))
-    if debug: print('------------predicted')
+    if debug: print('------predicted')
     img_array, unprocessed = process_img(path)
-    if debug: print('-------processed img')
+    if debug: print('------processed img')
     f.update(z=img_array)
-    if debug: print('---------updated')
+    if debug: print('------updated')
     updated_obser: [] = nparray_to_observation_v4(f.x, unprocessed)
-    if debug: print('---------change back to obser')
+    if debug: print('------change back to obser')
     updated_obser_ls.append(updated_obser)
-    if debug: print('----------finished loop')
+    if debug: print('------finished loop')
 
 
 # process result of darknet from detect_image, this gives the full probability distribution
