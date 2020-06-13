@@ -3,38 +3,20 @@ import re
 
 # the observation output is in the form of
 # [('obj_label', confidence, (bounding_box_x_px, bounding_box_y_px, bounding_box_width_px, bounding_box_height_px))]
-def parse_yolo_str_output(output: str) -> []:
+def parse_yolo_output(output) -> []:
     """
-    this assumes the outpuut is a string. Need to convert the output into a string first.
-    Original output is a list
+    when showImage is True:
+    input: {'detections: [obj1, obj2, obj3, ...],   'image': ...,    'caption': ...}
+            where obj = (tag, con, (x, y, w, h))
+    when showImage is False:
+    input: [obj1, obj2, obj3, ... ]
+
+    output: [obj1, obj2, obj3, ... ]
     """
-    recognized_objects_ls = []
-    split_output = output.split(')), ')
-    for object_with_bb in split_output:
-        single_items = object_with_bb.split(',')
-        current_object = []
-        for single_item in single_items:
-            # strip the single_item of chars and
-            single_item = single_item.replace("(", "")
-            single_item = single_item.replace(")", "")
-            single_item = single_item.replace("[", "")
-            single_item = single_item.replace("]", "")
-            single_item = single_item.replace("'", "")
-            if single_item.startswith(" "):
-                single_item = float(single_item)
-            current_object.append(single_item)
-        recognized_objects_ls.append(current_object)
-    return recognized_objects_ls
-
-
-# tests for parse_yolo_str_output
-# output = "[('dog', 0.9977676868438721, (221.8644561767578, 383.2872009277344, 196.4304656982422, 319.7508544921875)), " \
-#          "('bicycle', 0.9898741245269775, (343.3896484375, 278.4660949707031, 451.69219970703125, " \
-#          "308.5605773925781)), ('truck', 0.9315087795257568, (582.4560546875, 126.83545684814453, 216.3033447265625, " \
-#          "78.77030181884766))] "
-# out = parse_yolo_output(output)
-# for i in out:
-#     print(i)
+    if type(output) == dict:
+        return output.get('detections')
+    elif type(output) == list:
+        return output
 
 
 # the batch observation is in the form of
@@ -76,6 +58,42 @@ def parse_yolo_batch_output(output: ()) -> []:
         pic_list.append(current_pic)
 
     return pic_list
+
+
+# the observation output is in the form of
+# [('obj_label', confidence, (bounding_box_x_px, bounding_box_y_px, bounding_box_width_px, bounding_box_height_px))]
+def parse_yolo_str_output(output: str) -> []:
+    """
+    this assumes the outpuut is a string. Need to convert the output into a string first. DON'T USE THIS
+    Original output is a list
+    """
+    recognized_objects_ls = []
+    split_output = output.split(')), ')
+    for object_with_bb in split_output:
+        single_items = object_with_bb.split(',')
+        current_object = []
+        for single_item in single_items:
+            # strip the single_item of chars and
+            single_item = single_item.replace("(", "")
+            single_item = single_item.replace(")", "")
+            single_item = single_item.replace("[", "")
+            single_item = single_item.replace("]", "")
+            single_item = single_item.replace("'", "")
+            if single_item.startswith(" "):
+                single_item = float(single_item)
+            current_object.append(single_item)
+        recognized_objects_ls.append(current_object)
+    return recognized_objects_ls
+
+
+# tests for parse_yolo_str_output
+# output = "[('dog', 0.9977676868438721, (221.8644561767578, 383.2872009277344, 196.4304656982422, 319.7508544921875)), " \
+#          "('bicycle', 0.9898741245269775, (343.3896484375, 278.4660949707031, 451.69219970703125, " \
+#          "308.5605773925781)), ('truck', 0.9315087795257568, (582.4560546875, 126.83545684814453, 216.3033447265625, " \
+#          "78.77030181884766))] "
+# out = parse_yolo_output(output)
+# for i in out:
+#     print(i)
 
 
 # if the batch observation is a string
@@ -176,8 +194,8 @@ def str_to_ls(s: str) -> []:
     num_ls = list(map(lambda x: float(x), str_ls))
     return num_ls
 
-
-batch_output = ([[(99, 191, 378, 276), (262, 61, 351, 204), (137, 396, 349, 612)], [(162, 7, 343, 259), (172, 366, 292, 493), (158, 197, 305, 364), (152, 2, 292, 126)], [(164, 103, 400, 268), (63, 393, 122, 576), (84, 136, 320, 471)]], [[0.9999403953552246, 0.9935618042945862, 0.9963354468345642], [0.981474757194519, 0.9930804967880249, 0.9855721592903137, 0.9085059762001038], [0.9980257153511047, 0.9519489407539368, 0.9934611320495605]], [[0, 16, 17], [17, 17, 17, 17], [16, 7, 1]])
-r = parse_yolo_batch_output(batch_output)
-for i in r:
-    print(i)
+#
+# batch_output = ([[(99, 191, 378, 276), (262, 61, 351, 204), (137, 396, 349, 612)], [(162, 7, 343, 259), (172, 366, 292, 493), (158, 197, 305, 364), (152, 2, 292, 126)], [(164, 103, 400, 268), (63, 393, 122, 576), (84, 136, 320, 471)]], [[0.9999403953552246, 0.9935618042945862, 0.9963354468345642], [0.981474757194519, 0.9930804967880249, 0.9855721592903137, 0.9085059762001038], [0.9980257153511047, 0.9519489407539368, 0.9934611320495605]], [[0, 16, 17], [17, 17, 17, 17], [16, 7, 1]])
+# r = parse_yolo_batch_output(batch_output)
+# for i in r:
+#     print(i)

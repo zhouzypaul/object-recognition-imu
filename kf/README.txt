@@ -11,5 +11,11 @@ time used:
 1200 matrix:  0.33988786400004756  --> 3 fps
 1600 matrix:  0.7434118329992998  --> 1 fps
 2000 matrix:  2.7712933889997657  --> 0.3 fps
-8000 matrix:  107.98598215899983  --> the library is twice as fast as my own code 
+8000 matrix:  107.98598215899983  --> the library is twice as fast as my own code
+
+
+TODO:
+make_observation 
+change the initial state 
+iou stuff  
 

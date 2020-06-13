@@ -83,9 +83,11 @@ object_to_index = {
 
 
 def object_name_to_index(ls: []) -> []:
-    # indexed_list = ls.copy()
+    index_ls = []
     for single_object in ls:
         name = single_object[0]
         index = object_to_index.get(name)
-        single_object[0] = index
+        temp: () = (index, single_object[1], single_object[2])
+        index_ls.append(temp)
     # return indexed_list
+    return index_ls
