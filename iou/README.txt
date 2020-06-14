@@ -1,5 +1,4 @@
 TODO:
-test git
 the main function
 compute iou function
 yolo parser 
