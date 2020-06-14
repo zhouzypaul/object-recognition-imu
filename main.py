@@ -9,8 +9,8 @@ import os
 import numpy as np
 
 
-# debugger
-debug = True
+# debugger, set to true to see debug results
+debug = False
 
 # get the images from input
 directory = "/home/h2r/VP/input"
@@ -33,7 +33,7 @@ def process_img(img_path: str) -> (np.array, []):
     The X and Y coordinates are from the center of the bounding box.
     """
     detect_result: {} = performDetect(imagePath=img_path, thresh=0.70,
-                                      metaPath="./darknet/cfg/kf_coco.data", showImage=True)
+                                      metaPath="./darknet/cfg/kf_coco.data", showImage=False)
     parsed_result: [] = parse_yolo_output(detect_result)
     indexed_result: [] = object_name_to_index(parsed_result)
     result_array, unprocessed_objects = observation_to_nparray_v4(indexed_result)  # convert the result to a numpy array
@@ -86,7 +86,7 @@ the result is in the form of ([[batch_boxes]], [[batch_scores]], [[batch_classes
 
 
 # see the results
-# if __name__ == "__main__":
-#     print("------------------------------------")
-#     print(updated_obser_ls)
-#     print("------------------------------------")
+if __name__ == "__main__":
+    print("------------------------------------")
+    print(updated_obser_ls)
+    print("------------------------------------")

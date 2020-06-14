@@ -1,28 +1,16 @@
 import numpy as np
-import random
 import matplotlib.pyplot as plt
 
-from .kf_v1 import KF
-from .simulated_observation import ls_of_observations_v1
+from kf_v4 import f
+from simulated_observation import ls_of_observations_v4, real_state_v4
 
 
 plt.ion()
 plt.figure()
 
 # assume the pic is 300 in x-length, and 200 in y-height
-real_state = np.zeros((400, 1))
-real_state[0] = 1
-real_state[1] = 150
-real_state[2] = 100
-real_state[3] = 30
-real_state[4] = 20
-real_state[5] = 1
-real_state[6] = 50
-real_state[7] = 60
-real_state[8] = 10
-real_state[9] = 10
-
-kf = KF(state_var=1)
+real_state = real_state_v4
+f.x = ls_of_observations_v4[0]
 
 NUMSTEPS = 10  # number of loops to run the algorithm
 delta_x = 1  # suppose the user turns his head at a constant speed
@@ -41,35 +29,29 @@ h1s = []
 real_h1s = []
 
 
-con2s = []
-real_con2s = []
-
 for step in range(NUMSTEPS):
     real_state[1] += delta_x
     real_state[2] += delta_y
     real_state[6] += delta_x
     real_state[7] += delta_y
+    real_state[21] += delta_x
+    real_state[22] += delta_y
 
-    kf.predict(delta_x=delta_x,
-               delta_y=delta_y,
-               process_noise_var=0.5)
-    kf.update(meas_value=ls_of_observations_v1[step],
-              meas_variance=1)
+    f.predict(u=np.array([[delta_x], [delta_y]]))
+    f.update(z=ls_of_observations_v4[step])
 
-    con1s.append(kf.mean[0])
-    real_con1s.append(real_state[0])
-    print(kf.mean[0])
-    x1s.append(kf.mean[1])
-    real_x1s.append(real_state[1])
-    y1s.append(kf.mean[2])
-    real_y1s.append(real_state[2])
-    w1s.append(kf.mean[3])
-    real_w1s.append(real_state[3])
-    h1s.append(kf.mean[4])
-    real_h1s.append(real_state[4])
+    con1s.append(f.x[20])
+    print(f.x[20])
+    real_con1s.append(real_state[20])
+    x1s.append(f.x[21])
+    real_x1s.append(real_state[21])
+    y1s.append(f.x[22])
+    real_y1s.append(real_state[22])
+    w1s.append(f.x[23])
+    real_w1s.append(real_state[23])
+    h1s.append(f.x[24])
+    real_h1s.append(real_state[24])
 
-    con2s.append(kf.mean[5])
-    real_con2s.append(real_state[5])
 
 plt.subplot(5, 2, 1)
 plt.title('Confidence 1')
@@ -96,10 +78,6 @@ plt.title('heights1')
 plt.plot(h1s, 'r')
 plt.plot(real_h1s, 'b')
 
-# plt.subplot(5, 2, 2)
-# plt.title('Confidence 2')
-# plt.plot(con2s, 'r')
-# plt.plot(real_con2s, 'b')
 
 plt.show()
 plt.ginput(timeout=300)
