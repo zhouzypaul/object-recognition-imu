@@ -4,6 +4,7 @@ from darknet.darknet import performDetect
 from observation_parser import parse_yolo_output
 from iou.compute import compute_iou, compute_giou
 from iou.increase_confidence import standard_increase
+from iou.move_object import move_objects
 
 
 # debugger, set to true to see debug results
@@ -14,8 +15,8 @@ debug = False
 directory = "/home/h2r/VP/input"
 img_path_ls = []  # a list of image paths
 for image in os.scandir(directory):
-    if image.path.endswith('.jpg') or image.path.endswith('.png') and image.is_file():
-        img_path_ls.append(image.path)
+    if image.img_path.endswith('.jpg') or image.img_path.endswith('.png') and image.is_file():
+        img_path_ls.append(image.img_path)
 img_path_ls.sort()
 
 
@@ -44,20 +45,28 @@ updated_obser_ls = []
 previous_objects: [] = None
 for i in range(len(img_path_ls)):
     if debug: print("------start loop")
-    path = img_path_ls[i]
+    img_path = img_path_ls[i]
     delta_x = imu_ls[i][0]
     delta_y = imu_ls[i][1]
     if debug: print("------computed path, x, y")
-    objects: [] = process_img(path)
+    objects: [] = process_img(img_path)
     if debug: print("------processed img")
+    move_objects(obj=objects, dx=delta_x, dy=delta_y)
+    if debug: print("------moved objects according to dx, dy")
+    processed_objs = []  # the list for objs after confidence are increased
+    increased_objs = []  # keep track of objs that have already been increased, so that they don't get increased again
     for old_obj in previous_objects:
         for current_obj in objects:
-            if compute_giou(old_obj[2], current_obj[2]) >= thresh:
-                standard_increase(current_obj)
+            if (old_obj[0] == current_obj[0]) and compute_giou(old_obj[2], current_obj[2]) >= thresh:
+                if current_obj not in increased_objs:
+                    increased_objs.append(current_obj)
+                    new_obj = standard_increase(current_obj)
+                    processed_objs.append(new_obj)
+                    break
     if debug: print("------increased all con possible")
-    previous_objects = objects
+    previous_objects = processed_objs
     if debug: print("------saved to previous objects")
-    updated_obser_ls.append(objects)
+    updated_obser_ls.append(processed_objs)
 
 
 # see the result

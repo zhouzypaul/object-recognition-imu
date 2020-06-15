@@ -16,8 +16,8 @@ debug = False
 directory = "/home/h2r/VP/input"
 img_path_ls = []  # a list of image paths
 for image in os.scandir(directory):
-    if image.path.endswith('.jpg') or image.path.endswith('.png') and image.is_file():
-        img_path_ls.append(image.path)
+    if image.img_path.endswith('.jpg') or image.img_path.endswith('.png') and image.is_file():
+        img_path_ls.append(image.img_path)
 img_path_ls.sort()
 
 

@@ -1,7 +1,6 @@
-TODO:
-compute iou function
-yolo parser 
-between two frames, calculate iou for every tuple 
+TODO: 
 increase the confidence function 
-
+function to move the pics using dx, dy
+test iou albe to comiple
+maybe draw
 test on a video stream 
