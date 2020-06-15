@@ -8,15 +8,15 @@ from iou.move_object import move_objects
 
 
 # debugger, set to true to see debug results
-debug = False
+debug = True
 
 
 # get the images from input
 directory = "/home/h2r/VP/input"
 img_path_ls = []  # a list of image paths
 for image in os.scandir(directory):
-    if image.img_path.endswith('.jpg') or image.img_path.endswith('.png') and image.is_file():
-        img_path_ls.append(image.img_path)
+    if image.path.endswith('.jpg') or image.path.endswith('.png') and image.is_file():
+        img_path_ls.append(image.path)
 img_path_ls.sort()
 
 
@@ -50,19 +50,23 @@ for i in range(len(img_path_ls)):
     delta_y = imu_ls[i][1]
     if debug: print("------computed path, x, y")
     objects: [] = process_img(img_path)
-    if debug: print("------processed img")
+    if debug: print("------processed img: ", objects)
     moved_objs = move_objects(objs=previous_objects, dx=delta_x, dy=delta_y)
     if debug: print("------moved objects according to dx, dy")
     processed_objs = []  # the list for objs after confidence are increased
     increased_objs = []  # keep track of objs that have already been increased, so that they don't get increased again
-    for old_obj in moved_objs:
-        for current_obj in objects:
+    for current_obj in objects:
+        if debug: print("--------current object is: ", current_obj)
+        for old_obj in moved_objs:
+            if debug: print("--------old object is: ", old_obj)
             if (old_obj[0] == current_obj[0]) and compute_giou(old_obj[2], current_obj[2]) >= thresh:
                 if current_obj not in increased_objs:
                     increased_objs.append(current_obj)
                     new_obj = percent_increase(current_obj)  # change the increase method here
                     processed_objs.append(new_obj)
                     break
+        if current_obj not in increased_objs:
+            processed_objs.append(current_obj)
     if debug: print("------increased all con possible")
     previous_objects = processed_objs
     if debug: print("------saved to previous objects")
@@ -72,4 +76,6 @@ for i in range(len(img_path_ls)):
 # see the result
 if __name__ == '__main__':
     print("--------------------------------------")
+    print("image path is: ", img_path_ls)
+    print(updated_obser_ls)
     print("--------------------------------------")

@@ -6,7 +6,6 @@ def move_objects(objs: [], dx: float, dy: float):
            dy: delta y
     output: None, update the original obj
     """
-    # TODO: if objs is NONE
     if objs is None:
         return []
     moved_objects = []
