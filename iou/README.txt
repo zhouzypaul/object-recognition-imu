@@ -1,5 +1,4 @@
 TODO:
-the main function
 compute iou function
 yolo parser 
 between two frames, calculate iou for every tuple 

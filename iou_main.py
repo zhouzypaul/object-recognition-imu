@@ -2,7 +2,7 @@ import os
 import numpy as np
 from darknet.darknet import performDetect
 from observation_parser import parse_yolo_output
-from iou.compute_iou import compute_iou
+from iou.compute import compute_iou, compute_giou
 from iou.increase_confidence import standard_increase
 
 
@@ -39,6 +39,7 @@ def process_img(img_path: str) -> []:
 
 
 # loop YOLO and iou
+thresh = 0.7  # the thresh hold of iou, if iou > thresh, two pics are considered close to each other
 updated_obser_ls = []
 previous_objects: [] = None
 for i in range(len(img_path_ls)):
@@ -51,7 +52,7 @@ for i in range(len(img_path_ls)):
     if debug: print("------processed img")
     for old_obj in previous_objects:
         for current_obj in objects:
-            if compute_iou(old_obj[2], current_obj[2]):
+            if compute_giou(old_obj[2], current_obj[2]) >= thresh:
                 standard_increase(current_obj)
     if debug: print("------increased all con possible")
     previous_objects = objects
