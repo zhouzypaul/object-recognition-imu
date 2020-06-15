@@ -51,11 +51,11 @@ for i in range(len(img_path_ls)):
     if debug: print("------computed path, x, y")
     objects: [] = process_img(img_path)
     if debug: print("------processed img")
-    move_objects(obj=objects, dx=delta_x, dy=delta_y)
+    moved_objs = move_objects(objs=previous_objects, dx=delta_x, dy=delta_y)
     if debug: print("------moved objects according to dx, dy")
     processed_objs = []  # the list for objs after confidence are increased
     increased_objs = []  # keep track of objs that have already been increased, so that they don't get increased again
-    for old_obj in previous_objects:
+    for old_obj in moved_objs:
         for current_obj in objects:
             if (old_obj[0] == current_obj[0]) and compute_giou(old_obj[2], current_obj[2]) >= thresh:
                 if current_obj not in increased_objs:
