@@ -1,4 +1,4 @@
-def move_objects(objs: [], dx: float, dy: float):
+def move_objects(objs: [], dx: float, dy: float) -> []:
     """
     update the bounding box location of the object
     input: objs: [('tag', con, (x, y, w, h))]

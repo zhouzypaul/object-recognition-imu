@@ -1,5 +1,4 @@
-TODO:  
-test iou albe to comiple
+TODO:
 maybe draw
 test on a video stream
 exxponential increase  

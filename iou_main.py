@@ -5,10 +5,11 @@ from observation_parser import parse_yolo_output
 from iou.compute import compute_iou, compute_giou
 from iou.increase_confidence import percent_increase
 from iou.move_object import move_objects
+from imu.displacement import compute_displacement  # TODO: change the parameters there before executing main
 
 
 # debugger, set to true to see debug results
-debug = True
+debug = False
 
 
 # get the images from input
@@ -64,13 +65,16 @@ for i in range(len(img_path_ls)):
                     increased_objs.append(current_obj)
                     new_obj = percent_increase(current_obj)  # change the increase method here
                     processed_objs.append(new_obj)
+                    if debug: print("----------adding increased obj: ", new_obj)
                     break
         if current_obj not in increased_objs:
             processed_objs.append(current_obj)
+            if debug: print("----------adding unincreased obj: ", current_obj)
     if debug: print("------increased all con possible")
     previous_objects = processed_objs
     if debug: print("------saved to previous objects")
     updated_obser_ls.append(processed_objs)
+    if debug: print("------end loop")
 
 
 # see the result

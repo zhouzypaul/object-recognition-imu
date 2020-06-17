@@ -367,7 +367,7 @@ def performDetect(imagePath=".darknet/data/dog.jpg", thresh=0.25, configPath="./
 
 
     When showImage is False, list of tuples like
-        ('obj_label', confidence, (bounding_box_x_px, bounding_box_y_px, bounding_box_width_px, bounding_box_height_px))
+        ('obj_label', confidence, (bounding_box_x_px, bounding_box_y_px, bounding_box_widath_px, bounding_box_height_px))
         The X and Y coordinates are from the center of the bounding box. Subtract half the width or height to get the lower corner.
 
     Otherwise, a dict with
