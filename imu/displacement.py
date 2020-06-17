@@ -6,6 +6,7 @@ default_depth = 3  # in meters
 dt = 0.1  # in seconds, the time interval between two frames
 view_angle = math.radians(100)  # in radian, the angle of view from the RGB camera
 pixel_width = 500  # the length of a single picture, in pixel units
+focus = 0.01  # the distance between the camera eye and the screen where picture is formed. in meters
 
 
 def compute_displacement(v_x: float, v_y: float, v_z: float,
@@ -25,7 +26,7 @@ def compute_displacement(v_x: float, v_y: float, v_z: float,
     dx = - vx_rad * dt * depth   # caused by rotation around x axis
     dx -= d_center * (math.cos(angle) - math.cos(angle + vy_rad * dt))  # rotation around y, this is the frame rotating
     dy += d_center * (math.sin(angle + vy_rad * dt) - math.sin(angle))  # rotation around y, this is the frame rotating
-    return meter_to_pixel(dx, depth), meter_to_pixel(dy, depth)
+    return meter_to_pixel(dx), meter_to_pixel(dy)
 
 
 def compute_displacement_ls(v_x: float, v_y: float, v_z: float, n: int, depth_ls: []):
@@ -44,14 +45,13 @@ def compute_displacement_ls(v_x: float, v_y: float, v_z: float, n: int, depth_ls
     return displacement_ls
 
 
-def meter_to_pixel(m: float, depth: float) -> float:
+def meter_to_pixel(m: float) -> float:
     """
     convert meters to pixels
     input: m: in meters
-           depth: the distance from the camera to the object
     output: m in pixel units
     """
-    meter_width = 2 * depth * math.tan(view_angle / 2)  # the width of a single pic in meters
+    meter_width = 2 * focus * math.tan(view_angle / 2)  # the width of a single pic in meters
     m_px_ratio = pixel_width / meter_width
     return m * m_px_ratio
     # TODO: different for different objects?
