@@ -4,9 +4,27 @@ import math
 # TODO: make sure the following parameters are correct before running main
 default_depth = 3  # in meters
 dt = 0.1  # in seconds, the time interval between two frames
-view_angle = math.radians(100)  # in radian, the angle of view from the RGB camera
+view_angle = 100  # in degrees, the angle of view from the RGB camera
 pixel_width = 500  # the length of a single picture, in pixel units
 focus = 0.01  # the distance between the camera eye and the screen where picture is formed. in meters
+
+
+def compute_displacement_pr(vx: float, vy:float, vz: float,
+                            d_center: float,
+                            angle: float) -> ():
+    """
+    compute the displacement dx, dy for one object
+    this method use the proportion of the angle turned to the angle_of_view to compute dx, dy
+    input: v_x, v_y, v_z: the angular rotational speed around x, y, z axis, obtained from imu, in degree/s
+           d_center: the distance between center of object bounding box and image center
+           angle: in radian, polar angle of the center of object bounding box, with respect to image center as origin
+    output: the displacement needed: dx, dy in pixel units
+    """
+    dy = (vz * dt) / view_angle * pixel_width
+    dx = - vx * dt / view_angle * pixel_width  # TODO: is the view angle the same for x and y???
+    dx -= d_center * (math.cos(angle) - math.cos(angle + math.radians(vy) * dt))  # rotation around y --> frame rotation
+    dy += d_center * (math.sin(angle + math.radians(vy) * dt) - math.sin(angle))  # rotation around y --> frame rotation
+    return dx, dy
 
 
 def compute_displacement(v_x: float, v_y: float, v_z: float,
@@ -51,7 +69,7 @@ def meter_to_pixel(m: float) -> float:
     input: m: in meters
     output: m in pixel units
     """
-    meter_width = 2 * focus * math.tan(view_angle / 2)  # the width of a single pic in meters
+    meter_width = 2 * focus * math.tan(math.radians(view_angle) / 2)  # the width of a single pic in meters
     m_px_ratio = pixel_width / meter_width
     return m * m_px_ratio
     # TODO: different for different objects?
