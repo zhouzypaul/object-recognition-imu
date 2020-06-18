@@ -4,6 +4,6 @@ INFO:
 ...do I need depth? how to get depth? a neural network that can work on monoimage 
 
 TODO:
-need to calculate object d_center and angle
+change iou_main to loop objects one by one, so that imu is no longer a list 
 import imu info and form a displacement list 
 KF method 
