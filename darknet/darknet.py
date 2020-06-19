@@ -441,7 +441,8 @@ def performDetect(imagePath=".darknet/data/dog.jpg", thresh=0.25, configPath="./
             image = io.imread(imagePath)
             print("*** " + str(len(detections)) + " Results, color coded by confidence ***")
             imcaption = []
-            for detection in detections:
+            for detection_distribution in detections:
+                detection = detection_distribution[0]
                 label = detection[0]
                 confidence = detection[1]
                 pstring = label + ": " + str(np.rint(100 * confidence)) + "%"
@@ -450,7 +451,7 @@ def performDetect(imagePath=".darknet/data/dog.jpg", thresh=0.25, configPath="./
                 bounds = detection[2]
                 shape = image.shape
                 # x = shape[1]
-                # xExtent = int(x * bounds[2] / 100)
+                # xExtent = int(x * bounds[2] / 100)d
                 # y = shape[0]
                 # yExtent = int(y * bounds[3] / 100)
                 yExtent = int(bounds[3])
