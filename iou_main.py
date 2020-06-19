@@ -36,7 +36,7 @@ def process_img(img_path: str) -> []:
     The X and Y coordinates are from the center of the bounding box.
     """
     detect_result: {} = performDetect(imagePath=img_path, thresh=0.70,
-                                      metaPath="./darknet/cfg/kf_coco.data", showImage=False)
+                                      metaPath="./darknet/cfg/kf_coco.data", showImage=True)
     parsed_result: [] = parse_yolo_output(detect_result)
     return parsed_result
 
@@ -87,5 +87,12 @@ for i in range(len(img_path_ls)):
 if __name__ == '__main__':
     print("--------------------------------------")
     print("image path is: ", img_path_ls)
-    print(updated_obser_ls)
+    i = -1
+    for obj in updated_obser_ls[0]:
+        i += 1
+        i = i % 80
+        if obj[1] > 0:
+            print("*************************")
+        print(i, obj)
+    print(len(updated_obser_ls[0]))
     print("--------------------------------------")
