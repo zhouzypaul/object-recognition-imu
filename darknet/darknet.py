@@ -298,12 +298,18 @@ def detect_image(net, meta, im, thresh=.5, hier_thresh=.5, nms=.45, debug=False)
     if debug: print("did sort")
     res = []
     if debug: print("about to range")
-    for j in range(num):
+    for j in range(num):  # this is the box index
         if debug: print("Ranging on " + str(j) + " of " + str(num))
         if debug: print("Classes: " + str(meta), meta.classes, meta.names)
+        contain_object = False
         for i in range(meta.classes):
-            if debug: print("Class-ranging on " + str(i) + " of " + str(meta.classes) + "= " + str(dets[j].prob[i]))
             if dets[j].prob[i] > 0:
+                contain_object = True
+                break
+        if contain_object:
+            full_distribution = []
+            for i in range(meta.classes):  # this is the class index
+                if debug: print("Class-ranging on " + str(i) + " of " + str(meta.classes) + "= " + str(dets[j].prob[i]))
                 b = dets[j].bbox
                 if altNames is None:
                     nameTag = meta.names[i]
@@ -314,13 +320,22 @@ def detect_image(net, meta, im, thresh=.5, hier_thresh=.5, nms=.45, debug=False)
                     print(nameTag)
                     print(dets[j].prob[i])
                     print((b.x, b.y, b.w, b.h))
-                res.append((nameTag, dets[j].prob[i], (b.x, b.y, b.w, b.h)))
+                full_distribution.append((nameTag, dets[j].prob[i], (b.x, b.y, b.w, b.h)))
+            res.append(full_distribution)
     if debug: print("did range")
-    res = sorted(res, key=lambda x: -x[1])
+    # res = sorted(res, key=lambda x: -x[1])
+    res = sorted(res, key=lambda x: sort_by_confidence(x), reverse=True)
     if debug: print("did sort")
     free_detections(dets, num)
     if debug: print("freed detections")
     return res
+
+
+def sort_by_confidence(elt: []) -> float:
+    max_con = 0
+    for obj_tuple in elt:
+        max_con = max(max_con, obj_tuple[1])
+    return max_con
 
 
 netMain = None

@@ -87,12 +87,16 @@ for i in range(len(img_path_ls)):
 if __name__ == '__main__':
     print("--------------------------------------")
     print("image path is: ", img_path_ls)
-    i = -1
     for obj in updated_obser_ls[0]:
-        i += 1
-        i = i % 80
-        if obj[1] > 0:
-            print("*************************")
-        print(i, obj)
+        print(obj)
+        for instance in obj:
+            print(instance)
+    # i = -1
+    # for obj in updated_obser_ls[0]:
+    #     i += 1
+    #     i = i % 80
+    #     if obj[1] > 0:
+    #         print("*************************")
+    #     print(i, obj)
     print(len(updated_obser_ls[0]))
     print("--------------------------------------")
