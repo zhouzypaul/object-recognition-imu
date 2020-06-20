@@ -338,6 +338,17 @@ def sort_by_confidence(elt: []) -> float:
     return max_con
 
 
+def get_max_con_class(full_distr: []) -> ():
+    """
+    get the class with greatest confidence in an object with full probability distribution \
+    input: [class1, class2, ... , class80]
+            where class = ('tag', confidence, (x, y, w, h))
+    output: classN, the class with the greatest confidence
+    """
+    sorted_list = sorted(full_distr, key=lambda x: -x[1])
+    return sorted_list[0]
+
+
 netMain = None
 metaMain = None
 altNames = None
@@ -442,7 +453,7 @@ def performDetect(imagePath=".darknet/data/dog.jpg", thresh=0.25, configPath="./
             print("*** " + str(len(detections)) + " Results, color coded by confidence ***")
             imcaption = []
             for detection_distribution in detections:
-                detection = detection_distribution[0]
+                detection = get_max_con_class(detection_distribution)
                 label = detection[0]
                 confidence = detection[1]  # TODO: fix this, this is 0!
                 pstring = label + ": " + str(np.rint(100 * confidence)) + "%"
