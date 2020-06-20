@@ -1,6 +1,6 @@
 TODO:
-get YOLO working on GPU
-fix thresh issue  
+fix thresh issue 
+find database  
 get the kf model to work on new YOLO output
 video sequence testing on iou
 video sequence testing on kf  
