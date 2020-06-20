@@ -1,14 +1,12 @@
 TODO:
-get the iou model to work for all
-parser, ...
-increase_confidence
-move_objects
-get YOLO working on GPU 
+get YOLO working on GPU
+fix thresh issue  
+get the kf model to work on new YOLO output
 video sequence testing on iou
 video sequence testing on kf  
 
 
 REFERENCE:
-darknet:
+darknet YOLOv4: https://github.com/AlexeyAB/darknet.git 
 deep network for weight estimationg: https://github.com/karoly-hars/depth_estimation_with_densenet-unet_hybrid
 

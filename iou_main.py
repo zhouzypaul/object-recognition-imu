@@ -23,7 +23,7 @@ img_path_ls.sort()
 
 
 # incorporate IMU and depth info
-imu_ls = [(0, 0, 0)]
+imu_ls = [(0, 0, 0), (0, 0, 0)]
 # TODO: put the IMU data in /input, and import it here
 
 
@@ -36,7 +36,7 @@ def process_img(img_path: str) -> []:
             where class = ('tag', confidence, (x, y, w, h))
             The X and Y coordinates are from the center of the bounding box, w & h are width and height of the box
     """
-    detect_result: {} = performDetect(imagePath=img_path, thresh=0.70,
+    detect_result: {} = performDetect(imagePath=img_path, thresh=0.20,
                                       metaPath="./darknet/cfg/kf_coco.data", showImage=True)
     parsed_result: [] = parse_yolo_output(detect_result)
     return parsed_result
@@ -99,10 +99,6 @@ for i in range(len(img_path_ls)):
 if __name__ == '__main__':
     print("--------------------------------------")
     print("image path is: ", img_path_ls)
-    print(updated_obser_ls[0])
-    # for obj in updated_obser_ls[0]:
-    #     print(obj)
-    #     for instance in obj:
-    #         print(instance)
-    # print(len(updated_obser_ls[0]))
+    for item in updated_obser_ls:
+        print(item)
     print("--------------------------------------")

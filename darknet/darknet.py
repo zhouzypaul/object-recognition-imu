@@ -354,8 +354,8 @@ metaMain = None
 altNames = None
 
 
-def performDetect(imagePath=".darknet/data/dog.jpg", thresh=0.25, configPath="./darknet/cfg/yolov3.cfg",
-                  weightPath="darknet/yolov3.weights", metaPath="./darknet/cfg/coco.data", showImage=True,
+def performDetect(imagePath=".darknet/data/dog.jpg", thresh=0.25, configPath="./darknet/cfg/yolov4.cfg",
+                  weightPath="darknet/yolov4.weights", metaPath="./darknet/cfg/coco.data", showImage=True,
                   makeImageOnly=False, initOnly=False):
     """
     Convenience function to handle the detection and returns of objects.
