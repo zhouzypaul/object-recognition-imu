@@ -444,7 +444,7 @@ def performDetect(imagePath=".darknet/data/dog.jpg", thresh=0.25, configPath="./
             for detection_distribution in detections:
                 detection = detection_distribution[0]
                 label = detection[0]
-                confidence = detection[1]
+                confidence = detection[1]  # TODO: fix this, this is 0!
                 pstring = label + ": " + str(np.rint(100 * confidence)) + "%"
                 imcaption.append(pstring)
                 print(pstring)

@@ -1,7 +1,7 @@
 import numpy as np
 from kf.kf_v1 import TOTOALNUM, NUMVARS
 from kf.kf_v4 import dim, num_max, num_obj, num_var
-from kf.object_dict import index_to_object
+from object_dict import index_to_object
 
 
 def observation_to_nparray_v1(observ: []) -> np.array:

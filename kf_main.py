@@ -1,10 +1,8 @@
-from darknet.darknet import performDetect, performBatchDetect, detect_image, detect
-from darknet.darknet_video import YOLO
-from observation_parser import parse_yolo_batch_output, parse_yolo_output
+from darknet.darknet import performDetect
+from observation_parser import parse_yolo_output
 from kf.kf_v4 import f
-from kf.object_dict import object_name_to_index
+from object_dict import object_name_to_index
 from kf.make_observation import observation_to_nparray_v4, nparray_to_observation_v4
-import cv2
 import os
 import numpy as np
 
