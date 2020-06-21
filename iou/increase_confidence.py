@@ -14,7 +14,7 @@ def percent_increase(obj: [], tag: str, percent: float = 0.2):
            percent: the increase percentage, default to be 20%
     output: None, update obj, where the 'tag' class's confidence is increased
     """
-    class_index = object_to_index(tag)
+    class_index = object_to_index[tag]
     con = obj[class_index][1]
     new_con = con + (1 - con) * percent
     new_obj = (obj[class_index][0], new_con, obj[class_index][2])
@@ -30,7 +30,7 @@ def distance_increase(current_obj: [], old_obj: (), percent: float = 0.2):
     output: None, update current_obj, only increase the class confidence of the old_obj's class
     """
     class_tag: str = old_obj[0]
-    class_index: int = object_to_index(class_tag)
+    class_index: int = object_to_index[class_tag]
     current_class: () = current_obj[class_index]
     x_cur, y_cur = current_class[2][0], current_class[2][1]
     x_old, y_old = old_obj[2][0], old_obj[2][1]

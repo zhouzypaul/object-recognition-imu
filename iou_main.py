@@ -10,7 +10,7 @@ from imu.image_info import get_angle, get_distance_center
 
 
 # debugger, set to true to see debug results
-debug = True
+debug = False
 
 
 # get the images from input
@@ -23,7 +23,7 @@ img_path_ls.sort()
 
 
 # incorporate IMU and depth info
-imu_ls = [(0, 0, 0), (0, -20, 0)]
+imu_ls = [(0, 0, 0), (0, -0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0)]
 # TODO: put the IMU data in /input, and import it here
 
 
@@ -37,7 +37,7 @@ def process_img(img_path: str) -> []:
             The X and Y coordinates are from the center of the bounding box, w & h are width and height of the box
     """
     detect_result: {} = performDetect(imagePath=img_path, thresh=0.50,
-                                      metaPath="./darknet/cfg/kf_coco.data", showImage=False)
+                                      metaPath="./darknet/cfg/kf_coco.data", showImage=True)
     parsed_result: [] = parse_yolo_output(detect_result)
     return parsed_result
 

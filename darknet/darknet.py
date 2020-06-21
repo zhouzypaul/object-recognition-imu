@@ -449,7 +449,11 @@ def performDetect(imagePath=".darknet/data/dog.jpg", thresh=0.25, configPath="./
         try:
             from skimage import io, draw
             import numpy as np
-            image = io.imread(imagePath)
+            from PIL import Image
+            im = Image.open(imagePath)
+            im = im.convert('RGB')  # convert RGB-A image to RGB image, to maintain a 3 dimensional image
+            image = np.array(im)
+            # image = io.imread(imagePath)
             print("*** " + str(len(detections)) + " Results, color coded by confidence ***")
             imcaption = []
             for detection_distribution in detections:
