@@ -1,0 +1,8 @@
+GoPro Hero 3+ Black
+horizontal angle: 118.2
+vertical angle: 69.5
+diagonal angle: 133.6 
+
+width: 1920 
+height: 1080
+16:9

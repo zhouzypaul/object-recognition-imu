@@ -3,10 +3,11 @@ import math
 
 # TODO: make sure the following parameters are correct before running main
 default_depth = 3  # in meters
-dt = 0.1  # in seconds, the time interval between two frames
-width_angle = 159  # in degrees, the width angle of view from the RGB camera
-height_angle = 130  # in degrees, the height angle of view from the RGB camera
-pixel_width = 500  # the length of a single picture, in pixel units
+dt = 1 / 29.97  # in seconds, the time interval between two frames
+width_angle = 118.2  # in degrees, the width angle of view from the RGB camera
+height_angle = 69.5  # in degrees, the height angle of view from the RGB camera
+pixel_width = 1920  # the length of a single picture, in pixel units
+pixel_height = 1080  # the height of a single picture, in pixel units
 focus = 0.01  # the distance between the camera eye and the screen where picture is formed. in meters
 
 g = 9.81  # the gravitational acceleration
@@ -24,10 +25,10 @@ def compute_displacement_pr(vx: float, vy:float, vz: float,
     output: the displacement needed: dx, dy in pixel units
     """
     # the gyro influence
-    dy = (vz * dt) / width_angle * pixel_width
-    dx = - vx * dt / width_angle * pixel_width  # TODO: is the view angle the same for x and y???
-    dx -= d_center * (math.cos(angle) - math.cos(angle + math.radians(vy) * dt))  # rotation around y --> frame rotation
-    dy += d_center * (math.sin(angle + math.radians(vy) * dt) - math.sin(angle))  # rotation around y --> frame rotation
+    dy = - (vx * dt) / height_angle * pixel_height
+    dx = - (vy * dt) / width_angle * pixel_width
+    dx += d_center * (math.cos(angle - math.radians(vz) * dt) - math.cos(angle))  # rotation around z --> frame rotation
+    dy += d_center * (math.sin(angle - math.radians(vz) * dt) - math.sin(angle))  # rotation around z --> frame rotation
     return dx, dy
 
 
@@ -44,7 +45,7 @@ def compute_displacement(v_x: float, v_y: float, v_z: float,
     output: the displacement needed: dx, dy in pixel units
     """
     vx_rad, vy_rad, vz_rad = math.radians(v_x), math.radians(v_y), math.radians(v_z)  # convert degree to radian
-    dy = vz_rad * dt * depth  # caused by rotation around z axis  TODO: verify the angle vz*dt is small
+    dy = vz_rad * dt * depth  # caused by rotation around z axis
     dx = - vx_rad * dt * depth   # caused by rotation around x axis
     dx -= d_center * (math.cos(angle) - math.cos(angle + vy_rad * dt))  # rotation around y, this is the frame rotating
     dy += d_center * (math.sin(angle + vy_rad * dt) - math.sin(angle))  # rotation around y, this is the frame rotating

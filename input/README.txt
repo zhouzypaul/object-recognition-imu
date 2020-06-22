@@ -10,7 +10,6 @@ fps = same as video, 29.97
 frame interval = 480 - 550
 
 TODO: 
-change the axis in displacement accordingly
 assert imu_ls and img_path_ls are of the same length / or how should I process the gyro data???
 write to two output files, and compare 
 test with the iou model

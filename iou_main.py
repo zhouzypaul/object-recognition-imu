@@ -5,7 +5,7 @@ from observation_parser import parse_yolo_output
 from iou.compute import compute_iou, compute_giou
 from iou.increase_confidence import percent_increase
 from iou.move_object import move_objects, move_object
-from imu.displacement import compute_displacement  # TODO: change the parameters there before executing main
+from imu.displacement import compute_displacement_pr  # TODO: change the parameters there before executing main
 from imu.image_info import get_angle, get_distance_center
 
 
@@ -71,7 +71,7 @@ for i in range(len(img_path_ls)):
     moved_objs = []  # the list for old objs after they've been moved to the new predicted location
     for prev_obj in previous_objects:
         if debug: print("--------previous object is :", prev_obj)
-        dx, dy = compute_displacement(vx, vy, vz, get_distance_center(prev_obj[2]), get_angle(prev_obj[2]))
+        dx, dy = compute_displacement_pr(vx, vy, vz, get_distance_center(prev_obj[2]), get_angle(prev_obj[2]))
         moved_obj = move_object(prev_obj, dx, dy)
         if debug: print("--------moved previous obj to: ", moved_obj)
         moved_objs.append(moved_obj)
