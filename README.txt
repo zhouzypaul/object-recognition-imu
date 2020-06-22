@@ -1,5 +1,6 @@
 TODO:
 get the input folder working 
+try integrating over smaller time to get displacement from gyro 
 
 incorporate acc info in imu displacement 
 fix thresh issue: maybe write a new function for thresh  

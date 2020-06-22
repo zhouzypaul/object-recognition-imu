@@ -91,8 +91,8 @@ def find_nearest_index(t: float) -> int:
 
 
 # time_array = np.array([])
-gyro_array = np.array([])
-for frame_index in range(START_FRAME, END_FRAME + 1):
+gyro_array = np.array([0, 0, 0])
+for frame_index in range(START_FRAME, END_FRAME):
     current_time = frame_index / fps
     current_angular_speed = gyro[find_nearest_index(current_time)]
     # time_array = np.append(time_array, time[find_nearest_index(current_time)])

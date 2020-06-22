@@ -1,4 +1,6 @@
 import os
+import csv
+import json
 import numpy as np
 from darknet.darknet import performDetect
 from observation_parser import parse_yolo_output
@@ -10,11 +12,12 @@ from imu.image_info import get_angle, get_distance_center
 
 
 # debugger, set to true to see debug results
-debug = False
+debug = True
+get_original = True
 
 
 # get the images from input
-directory = "./input"
+directory = "./input/image"
 img_path_ls = []  # a list of image paths
 for image in os.scandir(directory):
     if image.path.endswith('.jpg') or image.path.endswith('.png') and image.is_file():
@@ -25,7 +28,7 @@ img_path_ls.sort()
 # incorporate IMU and depth info
 imu_ls = np.loadtxt('imu/gyro_data.csv', delimiter=',')
 
-# TODO: assert that imu_ls and img_path_ls are of the same length
+assert len(img_path_ls) == len(imu_ls), "Length of IMU input should match length of camera input"
 
 
 # process single result form darknet
@@ -38,7 +41,7 @@ def process_img(img_path: str) -> []:
             The X and Y coordinates are from the center of the bounding box, w & h are width and height of the box
     """
     detect_result: {} = performDetect(imagePath=img_path, thresh=0.10,
-                                      metaPath="./darknet/cfg/kf_coco.data", showImage=True)
+                                      metaPath="./darknet/cfg/kf_coco.data", showImage=False)
     parsed_result: [] = parse_yolo_output(detect_result)
     return parsed_result
 
@@ -56,7 +59,8 @@ def get_max_con_class(full_distr: []) -> ():
 
 # loop YOLO and iou
 # the outputs shall all be of single distribution, as opposed to the darknet.py output
-iou_thresh = 0.7  # the thresh hold of iou, if iou > thresh, two pics are considered close to each other
+iou_thresh = 0.5  # the thresh hold of iou, if iou > thresh, two pics are considered close to each other
+original_obser_ls = []
 updated_obser_ls = []
 previous_objects: [] = []
 for i in range(len(img_path_ls)):
@@ -76,7 +80,12 @@ for i in range(len(img_path_ls)):
         if debug: print("--------moved previous obj to: ", moved_obj)
         moved_objs.append(moved_obj)
     processed_objs = []  # the list for objs after confidence are increased
+    unprocessed_objs = []  # the list for objs as YOLO detects them
     for current_obj in objects:
+        if get_original:
+            original_obj = get_max_con_class(current_obj)
+            unprocessed_objs.append(original_obj)
+            if debug: print("--------original object is", original_obj)
         increased = False  # keep track of whether the current_obj has already been increased
         if debug: print("--------current most likely object: ", get_max_con_class(current_obj))
         if debug: print("--------current object with full distribution: ", current_obj)
@@ -102,6 +111,10 @@ for i in range(len(img_path_ls)):
     previous_objects = processed_objs
     if debug: print("------saved to previous objects")
     updated_obser_ls.append(processed_objs)
+    if debug: print("------saved to processed objects")
+    if get_original:
+        original_obser_ls.append(unprocessed_objs)
+        if debug: print("------added original unprocessed items")
     if debug: print("------end loop")
 
 
@@ -111,4 +124,19 @@ if __name__ == '__main__':
     print("image path is: ", img_path_ls)
     for item in updated_obser_ls:
         print(item)
+    if get_original:
+        with open('./output/original_store.csv', 'w') as f:
+            json.dump(original_obser_ls, f, indent=2)
+
+        original_observation = open('./output/original_read.csv', 'w', newline='')
+        with original_observation:
+            write = csv.writer(original_observation)
+            write.writerows(original_obser_ls)
+
+    with open('./output/updated_store.csv', 'w') as f:
+        json.dump(updated_obser_ls, f, indent=2)
+    updated_observation = open('./output/updated_read.csv', 'w', newline='')
+    with updated_observation:
+        write = csv.writer(updated_observation)
+        write.writerows(updated_obser_ls)
     print("--------------------------------------")
