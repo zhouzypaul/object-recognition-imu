@@ -14,7 +14,7 @@ debug = False
 
 
 # get the images from input
-directory = "/home/h2r/VP/input"
+directory = "./input"
 img_path_ls = []  # a list of image paths
 for image in os.scandir(directory):
     if image.path.endswith('.jpg') or image.path.endswith('.png') and image.is_file():
@@ -23,8 +23,9 @@ img_path_ls.sort()
 
 
 # incorporate IMU and depth info
-imu_ls = [(0, 0, 0), (0, -0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0)]
-# TODO: put the IMU data in /input, and import it here
+imu_ls = np.loadtxt('imu/gyro_data.csv', delimiter=',')
+
+# TODO: assert that imu_ls and img_path_ls are of the same length
 
 
 # process single result form darknet
@@ -36,7 +37,7 @@ def process_img(img_path: str) -> []:
             where class = ('tag', confidence, (x, y, w, h))
             The X and Y coordinates are from the center of the bounding box, w & h are width and height of the box
     """
-    detect_result: {} = performDetect(imagePath=img_path, thresh=0.50,
+    detect_result: {} = performDetect(imagePath=img_path, thresh=0.10,
                                       metaPath="./darknet/cfg/kf_coco.data", showImage=True)
     parsed_result: [] = parse_yolo_output(detect_result)
     return parsed_result
