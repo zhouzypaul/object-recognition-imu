@@ -1,4 +1,7 @@
 TODO:
+try to save image with bounding boxes
+figure out why model can't handle motion blur? maybe output the iou as well
+
 draw and compare the acquired results
 try integrating over smaller time to get displacement from gyro 
 input -f: change imu coordinates to camera coordinates
