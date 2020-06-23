@@ -1,11 +1,12 @@
 TODO:
-get the input folder working 
+draw and compare the acquired results
 try integrating over smaller time to get displacement from gyro 
+input -f: change imu coordinates to camera coordinates
 
 incorporate acc info in imu displacement 
 fix thresh issue: maybe write a new function for thresh  
+
 get the kf model to work on new YOLO output
-video sequence testing on iou
 video sequence testing on kf  
 
 

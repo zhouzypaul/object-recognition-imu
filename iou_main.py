@@ -59,7 +59,7 @@ def get_max_con_class(full_distr: []) -> ():
 
 # loop YOLO and iou
 # the outputs shall all be of single distribution, as opposed to the darknet.py output
-iou_thresh = 0.5  # the thresh hold of iou, if iou > thresh, two pics are considered close to each other
+iou_thresh = 0.6  # the thresh hold of iou, if iou > thresh, two pics are considered close to each other
 original_obser_ls = []
 updated_obser_ls = []
 previous_objects: [] = []
@@ -94,8 +94,8 @@ for i in range(len(img_path_ls)):
             # dx, dy = compute_displacement(vx, vy, vz, get_distance_center(old_obj[2]), get_angle(old_obj[2]))
             # moved_obj = move_object(old_obj, dx, dy)
             # if debug: print("--------moved old object to: ", moved_obj)
-            if debug: print("------about to compute iou: ", compute_giou(old_obj[2], current_obj[0][2]))
-            if compute_giou(old_obj[2], current_obj[0][2]) >= iou_thresh:
+            if debug: print("------about to compute iou: ", compute_iou(old_obj[2], current_obj[0][2]))
+            if compute_iou(old_obj[2], current_obj[0][2]) >= iou_thresh:
                 if not increased:
                     increased = True
                     # increased_objs.append(current_obj)
@@ -125,17 +125,17 @@ if __name__ == '__main__':
     for item in updated_obser_ls:
         print(item)
     if get_original:
-        with open('./output/original_store.csv', 'w') as f:
+        with open('./output/original_store_iou.csv', 'w') as f:
             json.dump(original_obser_ls, f, indent=2)
 
-        original_observation = open('./output/original_read.csv', 'w', newline='')
+        original_observation = open('./output/original_read_iou.csv', 'w', newline='')
         with original_observation:
             write = csv.writer(original_observation)
             write.writerows(original_obser_ls)
 
-    with open('./output/updated_store.csv', 'w') as f:
+    with open('./output/updated_store_iou.csv', 'w') as f:
         json.dump(updated_obser_ls, f, indent=2)
-    updated_observation = open('./output/updated_read.csv', 'w', newline='')
+    updated_observation = open('./output/updated_read_iou.csv', 'w', newline='')
     with updated_observation:
         write = csv.writer(updated_observation)
         write.writerows(updated_obser_ls)

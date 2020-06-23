@@ -10,6 +10,4 @@ fps = same as video, 29.97
 frame interval = 480 - 550
 
 TODO: 
-write to two output files, and compare 
-test with the iou model
 figure out how to change from imu frame to camera frame  

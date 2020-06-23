@@ -445,6 +445,7 @@ def performDetect(imagePath=".darknet/data/dog.jpg", thresh=0.25, configPath="./
     # Do the detection
     # detections = detect(netMain, metaMain, imagePath, thresh)	# if is used cv2.imread(image)
     detections = detect(netMain, metaMain, imagePath.encode("ascii"), thresh)
+    # i = 479
     if showImage:
         try:
             from skimage import io, draw
@@ -499,6 +500,14 @@ def performDetect(imagePath=".darknet/data/dog.jpg", thresh=0.25, configPath="./
             if not makeImageOnly:
                 io.imshow(image)
                 io.show()
+                # i += 1
+                # savePath = './output{}.jpg'.format(str(i))
+                # if not os.path.exists(savePath):
+                #     raise ValueError('invalid saving path: ', savePath)
+                # try:
+                #     io.imsave(savePath, image)
+                # except Exception as e:
+                #     print("unable to save image: " + str(e))
             detections = {
                 "detections": detections,
                 "image": image,
