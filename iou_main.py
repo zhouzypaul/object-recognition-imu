@@ -1,6 +1,7 @@
 import os
 import csv
 import json
+import math
 import numpy as np
 from darknet.darknet import performDetect
 from observation_parser import parse_yolo_output
@@ -13,6 +14,7 @@ from imu.image_info import get_angle, get_distance_center
 
 debug = True
 get_original = True
+get_iou = True
 iou_thresh = 0.6  # the thresh hold of iou, if iou > thresh, two pics are considered close to each other
 image_directory = "./input/image"
 imu_directory = 'imu/gyro_data.csv'
@@ -64,11 +66,18 @@ def update() -> ():
     """
     this is where the bulk of the computation happens, using IMU info and past recognition results to update the current
     recognition
+    output: original_obser_ls: the recognition result outputed by YOLO
+            updated_obser_ls: the recognition result after being updated with IMU info
+            iou_ls: the list of top IOU for each obj
     """
+    global current_obj_max_iou
     original_obser_ls = []
     updated_obser_ls = []
+    iou_ls = []
     previous_objects: [] = []
     for i in range(len(img_path_ls)):
+
+        # load info
         if debug: print("------start loop")
         img_path = img_path_ls[i]
         if debug: print("------got path: ", img_path)
@@ -77,6 +86,8 @@ def update() -> ():
         if debug: print("------got angular speed: ", vx, vy, vz)
         objects: [] = process_img(img_path)
         if debug: print("------processed img: ", len(objects), "objects detected")
+
+        # move objects in previous frame
         moved_objs = []  # the list for old objs after they've been moved to the new predicted location
         for prev_obj in previous_objects:
             if debug: print("--------previous object is :", prev_obj)
@@ -84,29 +95,44 @@ def update() -> ():
             moved_obj = move_object(prev_obj, dx, dy)
             if debug: print("--------moved previous obj to: ", moved_obj)
             moved_objs.append(moved_obj)
+
+        # process current frame
         processed_objs = []  # the list for objs after confidence are increased
         unprocessed_objs = []  # the list for objs as YOLO detects them
+        frame_ious = []  # the top iou for each object in current frame
         for current_obj in objects:
             if get_original:
                 original_obj = get_max_con_class(current_obj)
                 unprocessed_objs.append(original_obj)
                 if debug: print("--------original object is", original_obj)
+            if get_iou:
+                current_obj_max_iou = - 1
             increased = False  # keep track of whether the current_obj has already been increased
-            if debug: print("--------current most likely object: ", get_max_con_class(current_obj))
-            if debug: print("--------current object with full distribution: ", current_obj)
+            max_con_class = get_max_con_class(current_obj)
+            if debug: print("--------current most likely object: ", max_con_class)
+            # if debug: print("--------current object with full distribution: ", current_obj)
             for old_obj in moved_objs:
-                if debug: print("------about to compute iou: ", compute_iou(old_obj[2], current_obj[0][2]))
-                if compute_iou(old_obj[2], current_obj[0][2]) >= iou_thresh:  # TODO: iou/giou
+                iou_score = compute_iou(old_obj[2], current_obj[0][2])
+                if get_iou:
+                    current_obj_max_iou = max(current_obj_max_iou, iou_score)
+                if debug: print("------computed iou: ", iou_score)
+                if iou_score >= iou_thresh:  # TODO: iou/giou
                     if not increased:
                         increased = True
                         percent_increase(current_obj, old_obj[0], percent=0.5)  # TODO: increase method
                         new_obj = get_max_con_class(current_obj)
                         processed_objs.append(new_obj)
                         if debug: print("----------adding increased obj: ", new_obj)
+                        if get_iou:
+                            frame_ious.append((max_con_class[0], iou_score))
+                            if debug: print("--------adding iou (increased)", current_obj[0], iou_score)
                         break
             if not increased:
-                processed_objs.append(get_max_con_class(current_obj))
-                if debug: print("----------adding unincreased obj: ", get_max_con_class(current_obj))
+                processed_objs.append(max_con_class)
+                if debug: print("----------adding unincreased obj: ", max_con_class)
+                if get_iou:
+                    frame_ious.append((max_con_class[0], current_obj_max_iou))
+                    if debug: print("--------adding iou (unincreased)", max_con_class[0], current_obj_max_iou)
         if debug: print("------increased all confidence possible")
         previous_objects = processed_objs
         if debug: print("------saved to previous objects")
@@ -115,17 +141,21 @@ def update() -> ():
         if get_original:
             original_obser_ls.append(unprocessed_objs)
             if debug: print("------added original unprocessed items")
+        if get_iou:
+            iou_ls.append(frame_ious)
+            if debug: print("------added iou of the frame")
         if debug: print("------end loop")
-    return original_obser_ls, updated_obser_ls
+    return original_obser_ls, updated_obser_ls, iou_ls
 
 
 # see the result
 if __name__ == '__main__':
-    print("--------------------------------------")
+    print("------------------main--------------------")
     # print("image path is: ", img_path_ls)
-    original, updated = update()
+    original, updated, iou = update()
     for item in updated:
         print(item)
+
     if get_original:
         with open('./output/original_store_iou.csv', 'w') as f:
             json.dump(original, f, indent=2)
@@ -135,10 +165,14 @@ if __name__ == '__main__':
             write = csv.writer(original_observation)
             write.writerows(original)
 
+    if get_iou:
+        with open('./output/iou.csv', 'w') as f:
+            json.dump(iou, f, indent=2)
+
     with open('./output/updated_store_iou.csv', 'w') as f:
         json.dump(updated, f, indent=2)
     updated_observation = open('./output/updated_read_iou.csv', 'w', newline='')
     with updated_observation:
         write = csv.writer(updated_observation)
         write.writerows(updated)
-    print("--------------------------------------")
+    print("-------------------main-------------------")

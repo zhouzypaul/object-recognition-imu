@@ -7,6 +7,8 @@ with open('original_store_iou.csv', 'r') as f:
     original = json.load(f)
 with open('updated_store_iou.csv', 'r') as f:
     updated = json.load(f)
+with open('iou.csv', 'r') as f:
+    iou = json.load(f)
 
 
 # process things in IOU
@@ -20,7 +22,10 @@ def is_bicycle(obj: []):
         return False
 
 
-def create_single_item_ls(from_list: [], func) -> []:
+def create_single_item_ls(from_list: [], func, con=0) -> []:
+    """
+    from a list of objects, select a specific class (such as 'bycicle's)
+    """
     single_item_ls = []
     for pic in from_list:
         contain_obj = False
@@ -30,13 +35,14 @@ def create_single_item_ls(from_list: [], func) -> []:
                 single_item_ls.append(obj)
                 break
         if not contain_obj:
-            single_item_ls.append([None, 0, [None, None, None, None]])
+            single_item_ls.append([None, con, [None, None, None, None]])
     return single_item_ls
 
 
 # create single item lists
 original_bicycle_ls = create_single_item_ls(original, is_bicycle)
 updated_bicycle_ls = create_single_item_ls(updated, is_bicycle)
+iou_bicycle_ls = create_single_item_ls(iou, is_bicycle)
 """
 in the form of [pic1, pic2, .. ] where pic = [] or ['bicycle', con, [x, y, w, h]]
 """
@@ -49,6 +55,8 @@ plt.figure()
 plt.title('bicycle confidence')
 plt.plot([obj[1] for obj in original_bicycle_ls], 'r')
 plt.plot([obj[1] for obj in updated_bicycle_ls], 'b')
+plt.plot([obj[1] for obj in iou_bicycle_ls], 'y')
+plt.plot([0.6 for i in range(71)], 'k')
 
 plt.show()
-plt.ginput(timeout=300)
+plt.ginput(1)
