@@ -28,7 +28,7 @@ Windows Python 2.7 version: https://github.com/AlexeyAB/darknet/blob/fc496d52bf2
 """
 # pylint: disable=R, W0401, W0614, W0703
 from ctypes import *
-import math
+import random
 import random
 import os
 
@@ -445,7 +445,6 @@ def performDetect(imagePath=".darknet/data/dog.jpg", thresh=0.25, configPath="./
     # Do the detection
     # detections = detect(netMain, metaMain, imagePath, thresh)	# if is used cv2.imread(image)
     detections = detect(netMain, metaMain, imagePath.encode("ascii"), thresh)
-    # i = 479
     if showImage:
         try:
             from skimage import io, draw
@@ -498,16 +497,16 @@ def performDetect(imagePath=".darknet/data/dog.jpg", thresh=0.25, configPath="./
                 draw.set_color(image, (rr4, cc4), boxColor, alpha=0.8)
                 draw.set_color(image, (rr5, cc5), boxColor, alpha=0.8)
             if not makeImageOnly:
-                io.imshow(image)
-                io.show()
-                # i += 1
-                # savePath = './output{}.jpg'.format(str(i))
+                # io.imshow(image)
+                # io.show()
+                savePath = "output/image/output{}.jpg".format(random.random())  # TODO
                 # if not os.path.exists(savePath):
                 #     raise ValueError('invalid saving path: ', savePath)
-                # try:
-                #     io.imsave(savePath, image)
-                # except Exception as e:
-                #     print("unable to save image: " + str(e))
+                try:
+                    io.imsave(savePath, image)
+                    print("saved image")
+                except Exception as e:
+                    print("unable to save image: " + str(e))
             detections = {
                 "detections": detections,
                 "image": image,
