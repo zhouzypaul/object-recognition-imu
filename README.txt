@@ -1,6 +1,6 @@
 TODO:
+confirm that gyro data is correct
 try integrating over smaller time to get displacement from gyro 
-input -f: change imu coordinates to camera coordinates
 
 incorporate acc info in imu displacement 
 fix thresh issue: maybe write a new function for thresh  
