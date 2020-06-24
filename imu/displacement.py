@@ -13,7 +13,7 @@ focus = 0.01  # the distance between the camera eye and the screen where picture
 g = 9.81  # the gravitational acceleration
 
 
-def compute_displacement_pr(vx: float, vy:float, vz: float,
+def compute_displacement_pr(vx: float, vy: float, vz: float,
                             d_center: float,
                             angle: float) -> ():
     """
@@ -26,9 +26,9 @@ def compute_displacement_pr(vx: float, vy:float, vz: float,
     """
     # the gyro influence
     dy = - (vx * dt) / height_angle * pixel_height
-    dx = - (vy * dt) / width_angle * pixel_width
-    dx += d_center * (math.cos(angle - math.radians(vz) * dt) - math.cos(angle))  # rotation around z --> frame rotation
-    dy += d_center * (math.sin(angle - math.radians(vz) * dt) - math.sin(angle))  # rotation around z --> frame rotation
+    dx = (vy * dt) / width_angle * pixel_width
+    dx += d_center * (math.cos(angle - math.radians(vz * dt)) - math.cos(angle))  # rotation around z --> frame rotation
+    dy += d_center * (math.sin(angle - math.radians(vz * dt)) - math.sin(angle))  # rotation around z --> frame rotation
     return dx, dy
 
 

@@ -106,17 +106,17 @@ def update() -> ():
                 unprocessed_objs.append(original_obj)
                 if debug: print("--------original object is", original_obj)
             if get_iou:
-                current_obj_max_iou = - 1
+                current_obj_max_iou = 0  # TODO: change this for giou
             increased = False  # keep track of whether the current_obj has already been increased
             max_con_class = get_max_con_class(current_obj)
             if debug: print("--------current most likely object: ", max_con_class)
             # if debug: print("--------current object with full distribution: ", current_obj)
             for old_obj in moved_objs:
-                iou_score = compute_iou(old_obj[2], current_obj[0][2])
+                iou_score = compute_iou(old_obj[2], current_obj[0][2])  # TODO: iou/giou
                 if get_iou:
                     current_obj_max_iou = max(current_obj_max_iou, iou_score)
                 if debug: print("------computed iou: ", iou_score)
-                if iou_score >= iou_thresh:  # TODO: iou/giou
+                if iou_score >= iou_thresh:
                     if not increased:
                         increased = True
                         percent_increase(current_obj, old_obj[0], percent=0.5)  # TODO: increase method
