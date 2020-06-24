@@ -1,6 +1,10 @@
 import json
 from matplotlib import pyplot as plt
+from rename import rename
 
+
+# rename the output pictures
+rename()
 
 # load the iou files
 with open('original_store_iou.csv', 'r') as f:

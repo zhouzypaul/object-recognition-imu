@@ -1,6 +1,6 @@
 import h5py
 import numpy as np
-
+import math
 
 fps = 29.97  # the fps of the video
 imu_rate = 1000.0  # the sampling rate of the imu
@@ -45,7 +45,6 @@ acc = np.transpose(acc)  # in the shape of acc[time index][axis index]
 
 hf.close()
 
-
 # 2. correct the time stamp
 init_time = time[0]
 time = time - init_time - time_offset
@@ -53,7 +52,6 @@ time = time - init_time - time_offset
 for i in range(len(time)):
     if np.isnan(time[i]):
         time[i] = 0.5 * (time[i - 1] + time[i + 1])
-
 
 # 3. correct the gyro & acc bias
 gyro = gyro - np.array([gbias_x, gbias_y, gbias_z])
@@ -67,8 +65,42 @@ def imu_to_camera_frame(v: np.array) -> np.array:
     input: array([vx, vy, vz]), the rotational speed in IMU coordinates
     output: the speed in camera coordinates
     """
-    # TODO: math to be figured out
-    return v
+    v_x, v_y, v_z = v[0], v[1], v[2]  # the magnitude of angular velocities
+    vx, vy, vz = np.array([v_x, 0, 0]), np.array([0, v_y, 0]), np.array([0, 0, v_z])  # angular velocity in vector form
+    # rotation around x-axis
+    vy = rotate_vector(v=vy, e=np.array([1, 0, 0]), theta=rot_x)
+    vz = rotate_vector(v=vz, e=np.array([1, 0, 0]), theta=rot_x)
+    # rotation around y-axis
+    vx = rotate_vector(v=vx, e=np.array([0, 1, 0]), theta=rot_y)
+    vz = rotate_vector(v=vz, e=np.array([0, 1, 0]), theta=rot_y)
+    # rotation around z-axis
+    vx = rotate_vector(v=vx, e=np.array([0, 0, 1]), theta=rot_z)
+    vy = rotate_vector(v=vy, e=np.array([0, 0, 1]), theta=rot_z)
+    # max the three new angular velocity vectors to axis
+    x, y, z = np.array([1, 0, 0]), np.array([0, 1, 0]), np.array([0, 0, 1])  # unit vectors
+    new_vx = np.dot(vx, x) + np.dot(vy, x) + np.dot(vz, x)
+    new_vy = np.dot(vx, y) + np.dot(vy, y) + np.dot(vz, y)
+    new_vz = np.dot(vx, z) + np.dot(vy, z) + np.dot(vz, z)
+    assert (vx + vy + vz)[0] == new_vx, "error on x"
+    assert (vx + vy + vz)[1] == new_vy, "error on y"
+    assert (vx + vy + vz)[2] == new_vz, "error on z"
+    return np.array([new_vx, new_vy, new_vz])
+
+
+def rotate_vector(v: np.array, e: np.array, theta: float) -> np.array:
+    """
+    rotate a 3D vector v around an axis for an angle theta
+    input: v: a 3D vector np.array([x, y, z]) to be rotated
+           e: the rotation axis, a unit vector
+           theta: the rotation angle, in degrees
+    output:  v_rot, a 3D vector after rotation
+    """
+    # Rodrigues' Rotation formula
+    # v_rot = v * cos(theta) + sin(theta) * e x v + ( 1 - cos(theta))(e * v) e
+    v_rot = v * math.cos(math.radians(theta)) + \
+            np.cross(e, v) * math.sin(math.radians(theta)) + \
+            np.dot(e, v) * v * (1 - math.cos(math.radians(theta)))
+    return v_rot
 
 
 def find_nearest_index(t: float) -> int:
@@ -98,7 +130,6 @@ for frame_index in range(START_FRAME, END_FRAME):
     # time_array = np.append(time_array, time[find_nearest_index(current_time)])
     gyro_array = np.append(gyro_array, imu_to_camera_frame(current_angular_speed))
     gyro_array = gyro_array.reshape(-1, 3)
-
 
 # save to csv file
 np.savetxt('gyro_data.csv', gyro_array, delimiter=',')

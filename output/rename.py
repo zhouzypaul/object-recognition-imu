@@ -14,5 +14,5 @@ def rename():
         os.rename(src, dst)
 
 
-if __name__ == '__main__':
-    rename()
+# if __name__ == '__main__':
+#     rename()
