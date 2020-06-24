@@ -1,1 +1,8 @@
 env/
+.idea/
+__pycache__/
+todo.txt
+iou/todo.txt
+kf/todo.txt
+imu/todo.txt
+input/todo.txt

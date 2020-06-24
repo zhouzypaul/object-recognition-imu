@@ -7,6 +7,4 @@ avconv -i video.mp4 -f image2 frame%00d.jpg
 
 input specs:
 fps = same as video, 29.97 
-frame interval = 480 - 550
-
-TODO: 
+frame interval = 480 - 550 
