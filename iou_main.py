@@ -157,21 +157,21 @@ if __name__ == '__main__':
         print(item)
 
     if get_original:
-        with open('./output/original_store_iou.csv', 'w') as f:
+        with open('./iou_output/original_store_iou.csv', 'w') as f:
             json.dump(original, f, indent=2)
 
-        original_observation = open('./output/original_read_iou.csv', 'w', newline='')
+        original_observation = open('./iou_output/original_read_iou.csv', 'w', newline='')
         with original_observation:
             write = csv.writer(original_observation)
             write.writerows(original)
 
     if get_iou:
-        with open('./output/iou.csv', 'w') as f:
+        with open('./iou_output/iou.csv', 'w') as f:
             json.dump(iou, f, indent=2)
 
-    with open('./output/updated_store_iou.csv', 'w') as f:
+    with open('./iou_output/updated_store_iou.csv', 'w') as f:
         json.dump(updated, f, indent=2)
-    updated_observation = open('./output/updated_read_iou.csv', 'w', newline='')
+    updated_observation = open('./iou_output/updated_read_iou.csv', 'w', newline='')
     with updated_observation:
         write = csv.writer(updated_observation)
         write.writerows(updated)

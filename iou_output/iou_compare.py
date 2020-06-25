@@ -1,4 +1,6 @@
 import json
+import math
+import numpy as np
 from matplotlib import pyplot as plt
 from rename import rename
 
@@ -13,6 +15,14 @@ with open('updated_store_iou.csv', 'r') as f:
     updated = json.load(f)
 with open('iou.csv', 'r') as f:
     iou = json.load(f)
+gyro_directory = '../imu/gyro_data.csv'
+gyro: np.array = np.loadtxt(gyro_directory, delimiter=',')
+
+
+# get absolute gyro speed
+speed = []
+for i in gyro:
+    speed.append(math.sqrt(i[0]**2 + i[1]**2 + i[2]**2))
 
 
 # process things in IOU
@@ -61,6 +71,7 @@ plt.plot([obj[1] for obj in original_bicycle_ls], 'r', label='YOLO confidence')
 plt.plot([obj[1] for obj in updated_bicycle_ls], 'b', label='IOU model confidence')
 plt.plot([obj[1] for obj in iou_bicycle_ls], 'y', label='IOU score')
 plt.plot([0.6 for i in range(71)], 'k', label='IOU threshold')
+# plt.plot(speed, 'g', label='speed of user')
 plt.legend()
 
 plt.show()
