@@ -2,6 +2,7 @@ import json
 import math
 import numpy as np
 from matplotlib import pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 from rename import rename
 
 
@@ -61,12 +62,26 @@ in the form of [pic1, pic2, .. ] where pic = [] or ['bicycle', con, [x, y, w, h]
 
 # draw the data
 plt.ion()
-plt.figure()
+fig = plt.figure()
+ax = fig.add_subplot(projection='3d')
 
-plt.title('Kalman Filter increase - bicycle confidence')
-plt.plot([obj[1] for obj in original_bicycle_ls], 'r', label='YOLO confidence')
-plt.plot([obj[1] for obj in updated_bicycle_ls], 'b', label='IOU model confidence')
-plt.plot(speed, 'g', label='speed of user')
+# plt.title('Kalman Filter increase - bicycle confidence')
+# plt.plot([obj[1] for obj in original_bicycle_ls], 'r', label='YOLO confidence')
+# plt.plot([obj[1] for obj in updated_bicycle_ls], 'b', label='IOU model confidence')
+# # plt.plot(speed, 'g', label='speed of user')
+# plt.legend()
+
+plt.title('Kalman Filter - bicycle location')
+x = np.array([obj[2][0] for obj in original_bicycle_ls])
+y = np.array([obj[2][1] for obj in original_bicycle_ls])
+t = np.array([i + 1 for i in range(len(original_bicycle_ls))])
+ax.scatter3D(x, y, t, c=t, cmap='Reds', label='old')
+x = np.array([obj[2][0] for obj in updated_bicycle_ls])
+y = np.array([obj[2][1] for obj in updated_bicycle_ls])
+ax.scatter3D(x, y, t, c=t, cmap='Blues', label='new')
+ax.set_xlabel('box x coordinates')
+ax.set_ylabel('box y coordinates')
+ax.set_zlabel('frame')
 plt.legend()
 
 plt.show()
