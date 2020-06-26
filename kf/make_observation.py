@@ -1,7 +1,9 @@
 import numpy as np
 from kf.kf_v1 import TOTOALNUM, NUMVARS
-from kf.kf_v4 import dim, num_max, num_obj, num_var
+from kf.kf_v4 import dim, num_max, num_obj, num_var, iX, input_dim
 from object_dict import index_to_object
+from imu.image_info import get_angle, get_distance_center
+from imu.displacement import compute_displacement_pr
 
 
 def observation_to_nparray_v1(observ: []) -> np.array:
@@ -73,3 +75,22 @@ def nparray_to_observation_v4(arr: np.array, unprocessed: []) -> []:
                 obj = (tag, arr[start_index][0], (arr[start_index + 1][0], arr[start_index + 2][0], arr[start_index + 3][0], arr[start_index + 4][0]))
                 obj_ls.append(obj)
     return obj_ls + unprocessed
+
+
+def make_u(arr: np.array, vx: float, vy: float, vz: float) -> np.array:
+    """
+    input: using the current state array arr and three angular velocities vx, vy, vz
+    output: the control-input u
+    """
+    u = np.zeros((input_dim, 1))
+    pointer = 0
+    for i in range(num_max * num_obj):
+        start_index = i * num_var
+        if arr[start_index] != 0:
+            end_index = start_index + num_var
+            box: np.array = arr[start_index + iX: end_index]
+            box: () = tuple(box)  # convert the np.array to tuple
+            dx, dy = compute_displacement_pr(vx, vy, vz, get_distance_center(box), get_angle(box))
+            u[pointer], u[pointer + 1] = dx, dy
+        pointer += 2
+    return u

@@ -7,7 +7,7 @@ import math
 def get_distance_center(box: ()) -> float:
     """
     calculate the distance from the center of the box to the center of the image
-    input: box: a bounding box
+    input: box: a bounding box (x, y, w, h)
     output: the distance
     """
     return math.sqrt((box[0])**2 + (box[1])**2)
@@ -16,7 +16,7 @@ def get_distance_center(box: ()) -> float:
 def get_angle(box: ()) -> float:
     """
     calculate the polar angle of an object center
-    input: box: the bounding box of an object
+    input: box: the bounding box of an object (x, y, w, h)
     output: the polar angle from the center of box to the center of image, ranging from [0, 2pi)
     """
     x, y = box[0], box[1]

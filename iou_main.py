@@ -43,6 +43,8 @@ def process_img(img_path: str) -> []:
             where class = ('tag', confidence, (x, y, w, h))
             The X and Y coordinates are from the center of the bounding box, w & h are width and height of the box
     """
+    if not os.path.exists(img_path):
+        raise ValueError("Invalid image path: " + img_path)
     detect_result: {} = performDetect(imagePath=img_path, thresh=0.10,
                                       metaPath="./darknet/cfg/kf_coco.data", showImage=True)
     parsed_result: [] = parse_yolo_output(detect_result)

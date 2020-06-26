@@ -499,7 +499,7 @@ def performDetect(imagePath=".darknet/data/dog.jpg", thresh=0.25, configPath="./
             if not makeImageOnly:
                 # io.imshow(image)
                 # io.show()
-                savePath = "output/image/output{}.jpg".format(random.random())  # TODO
+                savePath = "kf_output/image/output{}.jpg".format(random.random())  # TODO
                 # if not os.path.exists(savePath):
                 #     raise ValueError('invalid saving path: ', savePath)
                 try:
