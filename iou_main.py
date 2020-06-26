@@ -155,8 +155,8 @@ if __name__ == '__main__':
     print("------------------main--------------------")
     # print("image path is: ", img_path_ls)
     original, updated, iou = update()
-    for item in updated:
-        print(item)
+    # for item in updated:
+    #     print(item)
 
     if get_original:
         with open('./iou_output/original_store_iou.csv', 'w') as f:

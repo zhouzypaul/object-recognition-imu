@@ -65,25 +65,15 @@ def imu_to_camera_frame(v: np.array) -> np.array:
     input: array([vx, vy, vz]), the rotational speed in IMU coordinates
     output: the speed in camera coordinates
     """
-    v_x, v_y, v_z = v[0], v[1], v[2]  # the magnitude of angular velocities
-    vx, vy, vz = np.array([v_x, 0, 0]), np.array([0, v_y, 0]), np.array([0, 0, v_z])  # angular velocity in vector form
-    # rotation around x-axis
-    vy = rotate_vector(v=vy, e=np.array([1, 0, 0]), theta=rot_x)
-    vz = rotate_vector(v=vz, e=np.array([1, 0, 0]), theta=rot_x)
-    # rotation around y-axis
-    vx = rotate_vector(v=vx, e=np.array([0, 1, 0]), theta=rot_y)
-    vz = rotate_vector(v=vz, e=np.array([0, 1, 0]), theta=rot_y)
-    # rotation around z-axis
-    vx = rotate_vector(v=vx, e=np.array([0, 0, 1]), theta=rot_z)
-    vy = rotate_vector(v=vy, e=np.array([0, 0, 1]), theta=rot_z)
-    # max the three new angular velocity vectors to axis
-    x, y, z = np.array([1, 0, 0]), np.array([0, 1, 0]), np.array([0, 0, 1])  # unit vectors
-    new_vx = np.dot(vx, x) + np.dot(vy, x) + np.dot(vz, x)
-    new_vy = np.dot(vx, y) + np.dot(vy, y) + np.dot(vz, y)
-    new_vz = np.dot(vx, z) + np.dot(vy, z) + np.dot(vz, z)
-    assert (vx + vy + vz)[0] == new_vx, "error on x"
-    assert (vx + vy + vz)[1] == new_vy, "error on y"
-    assert (vx + vy + vz)[2] == new_vz, "error on z"
+    r = np.array([rot_x, rot_y, rot_z])  # rotation axis
+    theta = math.sqrt(rot_x**2 + rot_y**2 + rot_z**2)  # rotation angle in radians
+    e = r / theta  # rotation axis unit vector
+    v_rot = rotate_vector(v, e, theta)  # angular velocity after rotation
+    # map the new angular velocity vector to axis
+    e_x, e_y, e_z = np.array([1, 0, 0]), np.array([0, 1, 0]), np.array([0, 0, 1])  # unit vectors
+    new_vx = np.dot(v_rot, e_x)
+    new_vy = np.dot(v_rot, e_y)
+    new_vz = np.dot(v_rot, e_z)
     return np.array([new_vx, new_vy, new_vz])
 
 
@@ -92,14 +82,14 @@ def rotate_vector(v: np.array, e: np.array, theta: float) -> np.array:
     rotate a 3D vector v around an axis for an angle theta
     input: v: a 3D vector np.array([x, y, z]) to be rotated
            e: the rotation axis, a unit vector
-           theta: the rotation angle, in degrees
+           theta: the rotation angle, in radian
     output:  v_rot, a 3D vector after rotation
     """
     # Rodrigues' Rotation formula
     # v_rot = v * cos(theta) + sin(theta) * e x v + ( 1 - cos(theta))(e * v) e
-    v_rot = v * math.cos(math.radians(theta)) + \
-            np.cross(e, v) * math.sin(math.radians(theta)) + \
-            np.dot(e, v) * v * (1 - math.cos(math.radians(theta)))
+    v_rot = v * math.cos(theta) + \
+            np.cross(e, v) * math.sin(theta) + \
+            np.dot(e, v) * v * (1 - math.cos(theta))
     return v_rot
 
 
