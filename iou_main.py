@@ -15,7 +15,7 @@ from imu.image_info import get_angle, get_distance_center
 debug = True
 get_original = True
 get_iou = True
-iou_thresh = 0.6  # the thresh hold of iou, if iou > thresh, two pics are considered close to each other
+iou_thresh = 0.55  # the thresh hold of iou, if iou > thresh, two pics are considered close to each other
 image_directory = "./input/image"
 imu_directory = 'imu/gyro_data.csv'
 
@@ -114,7 +114,7 @@ def update() -> ():
             if debug: print("--------current most likely object: ", max_con_class)
             # if debug: print("--------current object with full distribution: ", current_obj)
             for old_obj in moved_objs:
-                iou_score = compute_iou(old_obj[2], current_obj[0][2])  # TODO: iou/giou
+                iou_score = compute_giou(old_obj[2], current_obj[0][2])  # TODO: iou/giou
                 if get_iou:
                     current_obj_max_iou = max(current_obj_max_iou, iou_score)
                 if debug: print("------computed iou: ", iou_score)
@@ -159,21 +159,21 @@ if __name__ == '__main__':
     #     print(item)
 
     if get_original:
-        with open('./iou_output/original_store_iou.csv', 'w') as f:
+        with open('./iou_output/original_store_giou.csv', 'w') as f:
             json.dump(original, f, indent=2)
 
-        original_observation = open('./iou_output/original_read_iou.csv', 'w', newline='')
+        original_observation = open('./iou_output/original_read_giou.csv', 'w', newline='')
         with original_observation:
             write = csv.writer(original_observation)
             write.writerows(original)
 
     if get_iou:
-        with open('./iou_output/iou.csv', 'w') as f:
+        with open('./iou_output/giou.csv', 'w') as f:
             json.dump(iou, f, indent=2)
 
-    with open('./iou_output/updated_store_iou.csv', 'w') as f:
+    with open('./iou_output/updated_store_giou.csv', 'w') as f:
         json.dump(updated, f, indent=2)
-    updated_observation = open('./iou_output/updated_read_iou.csv', 'w', newline='')
+    updated_observation = open('./iou_output/updated_read_giou.csv', 'w', newline='')
     with updated_observation:
         write = csv.writer(updated_observation)
         write.writerows(updated)
