@@ -42,7 +42,7 @@ def distance_increase(current_obj: [], old_obj: (), percent: float = 0.2):
     percent_increase(obj=current_obj, tag=class_tag, percent=percent * (1 - d_percent))
 
 
-def exponential_increase(obj: ()) -> ():
+def exponential_increase(obj: []) -> ():
     """
     increase in an exponential manner
     """
@@ -54,3 +54,18 @@ def decrease_others(obj: []) -> []:
     decrease the confidence of those that aren't increased
     """
     # TODO:
+
+
+def first_time_decrease(obj: [], tag: str, percent: float = 0.2):
+    """
+    if a tag is seen for the first time in a video sequence, we decrease it's confidence by percent percent
+        input: obj = [class1, class2, ... , class80], where class = ('tag', con, (x, y, w, h))
+        tag: a string, the class tag, only increase the confidence of this class
+        percent: the decrease percentage, default to be 20%
+    output: None, update obj, where the 'tag' class's confidence is decreased
+    """
+    class_index = object_to_index[tag]
+    con = obj[class_index][1]
+    new_con = con * (1 - percent)
+    new_obj = (obj[class_index][0], new_con, obj[class_index][2])
+    obj[class_index] = new_obj  # update the obj list

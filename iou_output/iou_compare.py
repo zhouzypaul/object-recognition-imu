@@ -75,4 +75,4 @@ plt.plot([0.6 for i in range(71)], 'k', label='IOU threshold')
 plt.legend()
 
 plt.show()
-plt.ginput(1)
+plt.ginput(1, timeout=3000)

@@ -66,7 +66,7 @@ in the form of [pic1, pic2, .. ] where pic = [] or ['bicycle', con, [x, y, w, h]
 plt.ion()
 plt.figure()
 
-plt.title('IOU - bicycle confidence')
+plt.title('GIOU - bicycle confidence')
 plt.plot([obj[1] for obj in original_bicycle_ls], 'r', label='YOLO confidence')
 plt.plot([obj[1] for obj in updated_bicycle_ls], 'b', label='IOU model confidence')
 plt.plot([obj[1] for obj in iou_bicycle_ls], 'y', label='IOU score')
@@ -75,4 +75,4 @@ plt.plot([0.55 for i in range(71)], 'k', label='IOU threshold')
 plt.legend()
 
 plt.show()
-plt.ginput(1)
+plt.ginput(1, timeout=3000)

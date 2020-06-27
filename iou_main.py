@@ -6,7 +6,7 @@ import numpy as np
 from darknet.darknet import performDetect
 from observation_parser import parse_yolo_output
 from iou.compute import compute_iou, compute_giou
-from iou.increase_confidence import percent_increase
+from iou.increase_confidence import percent_increase, first_time_decrease
 from iou.move_object import move_objects, move_object
 from imu.displacement import compute_displacement_pr  # TODO: change the parameters there before executing main
 from imu.image_info import get_angle, get_distance_center
@@ -46,7 +46,7 @@ def process_img(img_path: str) -> []:
     if not os.path.exists(img_path):
         raise ValueError("Invalid image path: " + img_path)
     detect_result: {} = performDetect(imagePath=img_path, thresh=0.10,
-                                      metaPath="./darknet/cfg/kf_coco.data", showImage=True)
+                                      metaPath="./darknet/cfg/kf_coco.data", showImage=False)
     parsed_result: [] = parse_yolo_output(detect_result)
     return parsed_result
 
@@ -77,6 +77,7 @@ def update() -> ():
     updated_obser_ls = []
     iou_ls = []
     previous_objects: [] = []
+    seen_objects: [] = []  # tags of objects already seen in the video sequence
     for i in range(len(img_path_ls)):
 
         # load info
@@ -103,38 +104,36 @@ def update() -> ():
         unprocessed_objs = []  # the list for objs as YOLO detects them
         frame_ious = []  # the top iou for each object in current frame
         for current_obj in objects:
-            if get_original:
-                original_obj = get_max_con_class(current_obj)
-                unprocessed_objs.append(original_obj)
-                if debug: print("--------original object is", original_obj)
-            if get_iou:
-                current_obj_max_iou = 0  # TODO: change this for giou
-            increased = False  # keep track of whether the current_obj has already been increased
             max_con_class = get_max_con_class(current_obj)
             if debug: print("--------current most likely object: ", max_con_class)
             # if debug: print("--------current object with full distribution: ", current_obj)
+            if get_original:
+                unprocessed_objs.append(max_con_class)
+                if debug: print("--------original object is", max_con_class)
+            current_obj_ious = {}  # keys: class tags, values: iou score for that class, for the current object
+            if max_con_class[0] not in seen_objects:  # if the object is not seen during previous part of the video
+                first_time_decrease(current_obj, max_con_class[0], percent=0.2)
+                seen_objects.append(max_con_class[0])
             for old_obj in moved_objs:
                 iou_score = compute_giou(old_obj[2], current_obj[0][2])  # TODO: iou/giou
-                if get_iou:
-                    current_obj_max_iou = max(current_obj_max_iou, iou_score)
                 if debug: print("------computed iou: ", iou_score)
-                if iou_score >= iou_thresh:
-                    if not increased:
-                        increased = True
-                        percent_increase(current_obj, old_obj[0], percent=0.5)  # TODO: increase method
-                        new_obj = get_max_con_class(current_obj)
-                        processed_objs.append(new_obj)
-                        if debug: print("----------adding increased obj: ", new_obj)
-                        if get_iou:
-                            frame_ious.append((max_con_class[0], iou_score))
-                            if debug: print("--------adding iou (increased)", current_obj[0], iou_score)
-                        break
-            if not increased:
-                processed_objs.append(max_con_class)
-                if debug: print("----------adding unincreased obj: ", max_con_class)
                 if get_iou:
-                    frame_ious.append((max_con_class[0], current_obj_max_iou))
-                    if debug: print("--------adding iou (unincreased)", max_con_class[0], current_obj_max_iou)
+                    if old_obj[0] in current_obj_ious:
+                        current_obj_ious[old_obj[0]] = max(iou_score, current_obj_ious[old_obj[0]])
+                    else:
+                        current_obj_ious[old_obj[0]] = iou_score
+                if iou_score >= iou_thresh:
+                    percent_increase(current_obj, old_obj[0], percent=0.5)  # TODO: increase method
+            new_max_con_class = get_max_con_class(current_obj)
+            processed_objs.append(new_max_con_class)
+            if debug: print('------adding object: ', new_max_con_class)
+            if get_iou:
+                if new_max_con_class[0] in current_obj_ious:
+                    max_con_class_iou = current_obj_ious[new_max_con_class[0]]
+                else:
+                    max_con_class_iou = 0  # TODO: 0 for iou and -1 for giou
+                frame_ious.append((new_max_con_class[0], max_con_class_iou))
+                if debug: print('------adding iou ', new_max_con_class[0], max_con_class_iou)
         if debug: print("------increased all confidence possible")
         previous_objects = processed_objs
         if debug: print("------saved to previous objects")
