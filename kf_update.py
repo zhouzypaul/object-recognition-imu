@@ -1,13 +1,11 @@
 from darknet.darknet import performDetect
 from observation_parser import parse_yolo_output
-from kf.kf_v4 import f, Fi
+from kf.kf_v4 import f
 from object_dict import object_name_to_index
 from kf.make_observation import observation_to_nparray_v4, nparray_to_observation_v4, make_u
 from config import *
 import os
 import numpy as np
-import json
-import csv
 
 
 # get the images from input
@@ -155,29 +153,3 @@ the result is in the form of ([[batch_boxes]], [[batch_scores]], [[batch_classes
 #                                          input_images=['darknet/data/person.jpg', 'darknet/data/horses.jpg', 'darknet/data/dog.jpg'])
 # parsed_batch_result: [] = parse_yolo_batch_output(batch_detect_result)
 # batch_result_array = observation_to_nparray_v2(parsed_batch_result)  # convert the result to a numpy array
-
-
-# see the results
-if __name__ == "__main__":
-    print("-------------------kf maim-------------------")
-    if increase_confidence:
-        f.F = Fi
-    first_state()
-    original, updated = update()
-
-    if get_original:
-        with open('./kf_output/original_store.csv', 'w') as f:
-            json.dump(original, f, indent=2)
-
-        original_observation = open('./kf_output/original_read.csv', 'w', newline='')
-        with original_observation:
-            write = csv.writer(original_observation)
-            write.writerows(original)
-
-    with open('./kf_output/updated_store.csv', 'w') as f:
-        json.dump(updated, f, indent=2)
-    updated_observation = open('./kf_output/updated_read.csv', 'w', newline='')
-    with updated_observation:
-        write = csv.writer(updated_observation)
-        write.writerows(updated)
-    print("-------------------kf main-------------------")

@@ -9,10 +9,12 @@ get_original = True
 saveImage = False  # save the image with bounding boxes
 
 
-# raw data
-image_directory = "./input/image"  # used in kf_main.py & iou_main.py
+# paths
+image_directory = "./input/image"  # input images, used in kf_update.py & iou_update.py
 imu_directory = 'imu/gyro_data.csv'
 raw_imu_path = '../input/imu/imu.h5'  # the path to the imu data file, used in imu/raw_data.py
+iou_output_path = './iou_output/'  # the directory of outputs of IOU, used in iou_update.py
+kf_output_path = './kf_output/'  # the directory of outputs of KF, used in kf_update.py
 
 
 # camera info

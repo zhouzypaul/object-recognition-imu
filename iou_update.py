@@ -1,13 +1,11 @@
 import os
-import csv
-import json
 import numpy as np
 from darknet.darknet import performDetect
 from observation_parser import parse_yolo_output
 from iou.compute import compute_iou, compute_giou
 from iou.increase_confidence import percent_increase, first_time_decrease
 from iou.move_object import move_object
-from imu.displacement import compute_displacement_pr  # TODO: change the parameters there before executing main
+from imu.displacement import compute_displacement_pr
 from imu.image_info import get_angle, get_distance_center
 from config import *
 
@@ -139,30 +137,3 @@ def update() -> ():
             if debug: print("------added iou of the frame")
         if debug: print("------end loop")
     return original_obser_ls, updated_obser_ls, iou_ls
-
-
-# see the result
-if __name__ == '__main__':
-    print("------------------main--------------------")
-    original, updated, iou = update()
-
-    if get_original:
-        with open('./iou_output/original_store_giou.csv', 'w') as f:
-            json.dump(original, f, indent=2)
-
-        original_observation = open('./iou_output/original_read_giou.csv', 'w', newline='')
-        with original_observation:
-            write = csv.writer(original_observation)
-            write.writerows(original)
-
-    if get_iou:
-        with open('./iou_output/giou.csv', 'w') as f:
-            json.dump(iou, f, indent=2)
-
-    with open('./iou_output/updated_store_giou.csv', 'w') as f:
-        json.dump(updated, f, indent=2)
-    updated_observation = open('./iou_output/updated_read_giou.csv', 'w', newline='')
-    with updated_observation:
-        write = csv.writer(updated_observation)
-        write.writerows(updated)
-    print("-------------------main-------------------")
