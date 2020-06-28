@@ -3,6 +3,9 @@ import math
 import numpy as np
 from matplotlib import pyplot as plt
 from rename import rename
+# from config import iou_thresh
+
+iou_thresh = 0.60
 
 
 # rename the output pictures
@@ -70,7 +73,7 @@ plt.title('IOU - bicycle confidence')
 plt.plot([obj[1] for obj in original_bicycle_ls], 'r', label='YOLO confidence')
 plt.plot([obj[1] for obj in updated_bicycle_ls], 'b', label='IOU model confidence')
 plt.plot([obj[1] for obj in iou_bicycle_ls], 'y', label='IOU score')
-plt.plot([0.6 for i in range(71)], 'k', label='IOU threshold')
+plt.plot([iou_thresh for i in range(71)], 'k', label='IOU threshold')
 # plt.plot(speed, 'g', label='speed of user')
 plt.legend()
 

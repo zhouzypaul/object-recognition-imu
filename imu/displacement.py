@@ -1,16 +1,5 @@
 import math
-
-
-# TODO: make sure the following parameters are correct before running main
-default_depth = 3  # in meters
-dt = 1 / 29.97  # in seconds, the time interval between two frames
-width_angle = 118.2  # in degrees, the width angle of view from the RGB camera
-height_angle = 69.5  # in degrees, the height angle of view from the RGB camera
-pixel_width = 1920  # the length of a single picture, in pixel units
-pixel_height = 1080  # the height of a single picture, in pixel units
-focus = 0.01  # the distance between the camera eye and the screen where picture is formed. in meters
-
-g = 9.81  # the gravitational acceleration
+from config import *
 
 
 def compute_displacement_pr(vx: float, vy: float, vz: float,

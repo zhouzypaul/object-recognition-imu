@@ -1,19 +1,7 @@
 from filterpy.kalman import KalmanFilter
 import numpy as np
+from config import *
 
-
-debug = False
-
-# the indices in the state vector
-num_max = 2  # the number of maximum objects assumed to be detected in each frame
-num_obj = 80  # the total number of classes of objects that can be recognized by the recognition alg
-iC = 0  # relative index of c, the confidence score of the object recognized, taking value in [0, 1]
-iX = 1  # relative index of x, the x-position of the center of the bounding box
-iY = 2  # relative index of y, the y-position of the center of the bounding box
-iW = 3  # relative index of w, the width of the bounding box
-iH = 4  # relative index of h, the height of the bounding box
-num_var = iH + 1
-dim = num_max * num_obj * num_var  # the dimension of the state vector
 
 """
 This version of KF assumes that each object can occur at most num_max times in one frame

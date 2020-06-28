@@ -29,7 +29,6 @@ Windows Python 2.7 version: https://github.com/AlexeyAB/darknet/blob/fc496d52bf2
 # pylint: disable=R, W0401, W0614, W0703
 from ctypes import *
 import random
-import random
 import os
 
 

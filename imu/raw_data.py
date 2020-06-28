@@ -1,19 +1,8 @@
 import h5py
 import numpy as np
 import math
+from ..config import *
 
-fps = 29.97  # the fps of the video
-imu_rate = 1000.0  # the sampling rate of the imu
-abias_x, abias_y, abias_z = 0.0, 0.0, 0.0
-gbias_x, gbias_y, gbias_z = -0.004873082820443066, -0.0022431677727018503, -0.003143394115523099  # gyroscope bias
-rot_x, rot_y, rot_z = -3.0535298646328917, 0.07979593555081343, -0.12905816022369937  # IMU-to-camera rotation
-time_offset = 2.3280178898330735  # time offset between the camera and the imu
-
-START_FRAME = 480
-END_FRAME = 550
-PATH = '../input/imu/imu.h5'  # the path to the imu data file
-
-debug = False
 
 # to load the data, do:
 # 1. Read the raw data from the imu.h5 file
@@ -29,7 +18,7 @@ debug = False
 
 
 # 1. read in the hdf file
-hf = h5py.File(PATH, 'r')
+hf = h5py.File(raw_imu_path, 'r')
 
 # get the data sets
 time = hf.get('time')

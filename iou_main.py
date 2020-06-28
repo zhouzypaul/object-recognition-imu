@@ -10,14 +10,7 @@ from iou.increase_confidence import percent_increase, first_time_decrease
 from iou.move_object import move_objects, move_object
 from imu.displacement import compute_displacement_pr  # TODO: change the parameters there before executing main
 from imu.image_info import get_angle, get_distance_center
-
-
-debug = True
-get_original = True
-get_iou = True
-iou_thresh = 0.55  # the thresh hold of iou, if iou > thresh, two pics are considered close to each other
-image_directory = "./input/image"
-imu_directory = 'imu/gyro_data.csv'
+from config import *
 
 
 # get the images from input
@@ -46,7 +39,7 @@ def process_img(img_path: str) -> []:
     if not os.path.exists(img_path):
         raise ValueError("Invalid image path: " + img_path)
     detect_result: {} = performDetect(imagePath=img_path, thresh=0.10,
-                                      metaPath="./darknet/cfg/kf_coco.data", showImage=False)
+                                      metaPath="./darknet/cfg/kf_coco.data", showImage=saveImage)
     parsed_result: [] = parse_yolo_output(detect_result)
     return parsed_result
 
@@ -152,10 +145,7 @@ def update() -> ():
 # see the result
 if __name__ == '__main__':
     print("------------------main--------------------")
-    # print("image path is: ", img_path_ls)
     original, updated, iou = update()
-    # for item in updated:
-    #     print(item)
 
     if get_original:
         with open('./iou_output/original_store_giou.csv', 'w') as f:

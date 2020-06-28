@@ -3,6 +3,7 @@ from observation_parser import parse_yolo_output
 from kf.kf_v4 import f, Fi
 from object_dict import object_name_to_index
 from kf.make_observation import observation_to_nparray_v4, nparray_to_observation_v4, make_u
+from config import *
 from imu.image_info import get_angle, get_distance_center
 from imu.displacement import compute_displacement_pr
 import os
@@ -11,16 +12,9 @@ import json
 import csv
 
 
-# variables
-debug = True
-get_original = True
-increase_confidence = True
-img_directory = "./input/image"
-imu_directory = 'imu/gyro_data.csv'
-
 # get the images from input
 img_path_ls = []  # a list of image paths
-for image in os.scandir(img_directory):
+for image in os.scandir(image_directory):
     if image.path.endswith('.jpg') or image.path.endswith('.png') and image.is_file():
         img_path_ls.append(image.path)
 img_path_ls.sort()
@@ -45,7 +39,7 @@ def process_img(img_path: str) -> []:
     if not os.path.exists(img_path):
         raise ValueError("Invalid image path: " + img_path)
     detect_result: {} = performDetect(imagePath=img_path, thresh=0.10,
-                                      metaPath="./darknet/cfg/kf_coco.data", showImage=True)
+                                      metaPath="./darknet/cfg/kf_coco.data", showImage=saveImage)
     parsed_result: [] = parse_yolo_output(detect_result)
     for j in range(len(parsed_result)):
         parsed_result[j] = get_max_con_class(parsed_result[j])  # convert the full distribution to single distribution
@@ -167,7 +161,7 @@ the result is in the form of ([[batch_boxes]], [[batch_scores]], [[batch_classes
 
 # see the results
 if __name__ == "__main__":
-    print("-----------------maim-------------------")
+    print("-------------------kf maim-------------------")
     if increase_confidence:
         f.F = Fi
     first_state()
@@ -188,4 +182,4 @@ if __name__ == "__main__":
     with updated_observation:
         write = csv.writer(updated_observation)
         write.writerows(updated)
-    print("-----------------main-------------------")
+    print("-------------------kf main-------------------")
