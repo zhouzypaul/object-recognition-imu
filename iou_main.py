@@ -1,13 +1,12 @@
 import os
 import csv
 import json
-import math
 import numpy as np
 from darknet.darknet import performDetect
 from observation_parser import parse_yolo_output
 from iou.compute import compute_iou, compute_giou
 from iou.increase_confidence import percent_increase, first_time_decrease
-from iou.move_object import move_objects, move_object
+from iou.move_object import move_object
 from imu.displacement import compute_displacement_pr  # TODO: change the parameters there before executing main
 from imu.image_info import get_angle, get_distance_center
 from config import *

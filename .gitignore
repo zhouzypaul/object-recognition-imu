@@ -7,3 +7,5 @@ kf/todo.txt
 imu/todo.txt
 input/todo.txt
 imu/__pycache__/
+detectron/
+tryout/
