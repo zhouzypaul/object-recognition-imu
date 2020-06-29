@@ -4,11 +4,11 @@ import sys
 from config import *
 
 
-def run(model: str):
+def run(args: []):
     """
     execute the main program and update the object recognition results using IMU info
     """
-    if model == 'kf':
+    if len(args) == 2 and args[1] == 'kf':
         print('running the Kalman Filter model ...')
         from kf.kf_v4 import Fi
         import kf_update
@@ -35,11 +35,11 @@ def run(model: str):
             write.writerows(updated)
         print("-------------------kf main-------------------")
 
-    if model == 'iou':
+    elif len(args) == 2 and args[1] == 'iou':
         print('running the Intersection Over Union model')
         import iou_update
         print("--------------------iou main--------------------")
-        original, updated, iou = iou_update.update()
+        original, updated, iou = iou_update.update(giou=False)
 
         if get_original:
             with open(iou_output_path + 'original_store_giou.csv', 'w') as f:
@@ -62,6 +62,38 @@ def run(model: str):
             write.writerows(updated)
         print("--------------------iou main-------------------")
 
+    elif len(args) == 3 and args[1] == 'iou' and args[2] == '--giou':
+        print('running the Intersection Over Union model')
+        import iou_update
+        print("--------------------iou main--------------------")
+        original, updated, iou = iou_update.update(giou=True)
+
+        if get_original:
+            with open(iou_output_path + 'original_store_giou.csv', 'w') as f:
+                json.dump(original, f, indent=2)
+
+            original_observation = open(iou_output_path + 'original_read_giou.csv', 'w', newline='')
+            with original_observation:
+                write = csv.writer(original_observation)
+                write.writerows(original)
+
+        if get_iou:
+            with open(iou_output_path + 'giou.csv', 'w') as f:
+                json.dump(iou, f, indent=2)
+
+        with open(iou_output_path + 'updated_store_giou.csv', 'w') as f:
+            json.dump(updated, f, indent=2)
+        updated_observation = open(iou_output_path + 'updated_read_giou.csv', 'w', newline='')
+        with updated_observation:
+            write = csv.writer(updated_observation)
+            write.writerows(updated)
+        print("--------------------iou main-------------------")
+
+    else:
+        print("Not a valid argument. Please use one of: ")
+        print("python main.py kf")
+        print("python main.py iou [--giou]")
+
 
 if __name__ == '__main__':
-    run(sys.argv[1])
+    run(sys.argv)

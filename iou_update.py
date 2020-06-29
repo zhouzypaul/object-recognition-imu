@@ -54,10 +54,12 @@ def get_max_con_class(full_distr: []) -> ():
 
 # loop YOLO and iou
 # the outputs shall all be of single distribution, as opposed to the darknet.py output
-def update() -> ():
+def update(giou: bool = True) -> ():
     """
     this is where the bulk of the computation happens, using IMU info and past recognition results to update the current
     recognition
+    input: True if we use generalized IoU to update the result
+           False if we use the regular IoU
     output: original_obser_ls: the recognition result outputed by YOLO
             updated_obser_ls: the recognition result after being updated with IMU info
             iou_ls: the list of top IOU for each obj
@@ -105,7 +107,9 @@ def update() -> ():
                 first_time_decrease(current_obj, max_con_class[0], percent=0.2)
                 seen_objects.append(max_con_class[0])
             for old_obj in moved_objs:
-                iou_score = compute_giou(old_obj[2], current_obj[0][2])  # TODO: iou/giou
+                iou_score = compute_giou(old_obj[2], current_obj[0][2])
+                if not giou:
+                    iou_score = compute_iou(old_obj[2], current_obj[0][2])
                 if debug: print("------computed iou: ", iou_score)
                 if get_iou:
                     if old_obj[0] in current_obj_ious:
@@ -113,7 +117,7 @@ def update() -> ():
                     else:
                         current_obj_ious[old_obj[0]] = iou_score
                 if iou_score >= iou_thresh:
-                    percent_increase(current_obj, old_obj[0], percent=0.5)  # TODO: increase method
+                    percent_increase(current_obj, old_obj[0], percent=0.5)  # TODO: can change increase method here
             new_max_con_class = get_max_con_class(current_obj)
             processed_objs.append(new_max_con_class)
             if debug: print('------adding object: ', new_max_con_class)
@@ -121,7 +125,7 @@ def update() -> ():
                 if new_max_con_class[0] in current_obj_ious:
                     max_con_class_iou = current_obj_ious[new_max_con_class[0]]
                 else:
-                    max_con_class_iou = 0  # TODO: 0 for iou and -1 for giou
+                    max_con_class_iou = 0
                 frame_ious.append((new_max_con_class[0], max_con_class_iou))
                 if debug: print('------adding iou ', new_max_con_class[0], max_con_class_iou)
         if debug: print("------increased all confidence possible")
