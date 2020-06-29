@@ -2,24 +2,21 @@ import json
 import math
 import numpy as np
 from matplotlib import pyplot as plt
-from rename import rename
-# from config import iou_thresh
-
-iou_thresh = 0.60
+from .rename import rename
+from config import *
 
 
 # rename the output pictures
 rename()
 
 # load the iou files
-with open('original_store_iou.csv', 'r') as f:
+with open(iou_output_path + 'original_store_iou.csv', 'r') as f:
     original = json.load(f)
-with open('updated_store_iou.csv', 'r') as f:
+with open(iou_output_path + 'updated_store_iou.csv', 'r') as f:
     updated = json.load(f)
-with open('iou.csv', 'r') as f:
+with open(iou_output_path + 'iou.csv', 'r') as f:
     iou = json.load(f)
-gyro_directory = '../imu/gyro_data.csv'
-gyro: np.array = np.loadtxt(gyro_directory, delimiter=',')
+gyro: np.array = np.loadtxt(imu_directory, delimiter=',')
 
 
 # get absolute gyro speed
@@ -65,17 +62,18 @@ in the form of [pic1, pic2, .. ] where pic = [] or ['bicycle', con, [x, y, w, h]
 """
 
 
-# draw the data
-plt.ion()
-plt.figure()
+def compare():
+    # draw the data
+    plt.ion()
+    plt.figure()
 
-plt.title('IOU - bicycle confidence')
-plt.plot([obj[1] for obj in original_bicycle_ls], 'r', label='YOLO confidence')
-plt.plot([obj[1] for obj in updated_bicycle_ls], 'b', label='IOU model confidence')
-plt.plot([obj[1] for obj in iou_bicycle_ls], 'y', label='IOU score')
-plt.plot([iou_thresh for i in range(71)], 'k', label='IOU threshold')
-# plt.plot(speed, 'g', label='speed of user')
-plt.legend()
+    plt.title('IOU - bicycle confidence')
+    plt.plot([obj[1] for obj in original_bicycle_ls], 'r', label='YOLO confidence')
+    plt.plot([obj[1] for obj in updated_bicycle_ls], 'b', label='IOU model confidence')
+    plt.plot([obj[1] for obj in iou_bicycle_ls], 'y', label='IOU score')
+    plt.plot([iou_thresh for i in range(71)], 'k', label='IOU threshold')
+    # plt.plot(speed, 'g', label='speed of user')
+    plt.legend()
 
-plt.show()
-plt.ginput(1, timeout=3000)
+    plt.show()
+    plt.ginput(1, timeout=3000)

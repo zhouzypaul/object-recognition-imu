@@ -1,7 +1,10 @@
 import os
+from config import iou_output_path
 
 
-PATH = "image/"
+PATH = iou_output_path + "image/"
+
+
 def rename():
     """
     the function renames the images in output/image folder
