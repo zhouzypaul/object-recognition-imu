@@ -1,14 +1,15 @@
 import json
 import csv
 import sys
+import argparse
 from config import *
 
 
-def run(args: []):
+def run(model: str, use_giou: bool):
     """
     execute the main program and update the object recognition results using IMU info
     """
-    if len(args) == 2 and args[1] == 'kf':
+    if model == 'kf':
         print('running the Kalman Filter model ...')
         from kf.kf_v4 import Fi
         import kf_update
@@ -35,11 +36,13 @@ def run(args: []):
             write.writerows(updated)
         print("-------------------kf main-------------------")
 
-    elif len(args) == 2 and args[1] == 'iou':
+    if model == 'iou':
         print('running the Intersection Over Union model')
         import iou_update
         print("--------------------iou main--------------------")
-        original, updated, iou = iou_update.update(giou=False)
+        if use_giou:
+            print('using generalized IoU')
+        original, updated, iou = iou_update.update(giou=use_giou)
 
         if get_original:
             with open(iou_output_path + 'original_store_giou.csv', 'w') as f:
@@ -62,38 +65,26 @@ def run(args: []):
             write.writerows(updated)
         print("--------------------iou main-------------------")
 
-    elif len(args) == 3 and args[1] == 'iou' and args[2] == '--giou':
-        print('running the Intersection Over Union model')
-        import iou_update
-        print("--------------------iou main--------------------")
-        original, updated, iou = iou_update.update(giou=True)
 
-        if get_original:
-            with open(iou_output_path + 'original_store_giou.csv', 'w') as f:
-                json.dump(original, f, indent=2)
+def parse_arguments():
+    # Create argument parser
+    parser = argparse.ArgumentParser()
 
-            original_observation = open(iou_output_path + 'original_read_giou.csv', 'w', newline='')
-            with original_observation:
-                write = csv.writer(original_observation)
-                write.writerows(original)
+    # Positional mandatory arguments
+    parser.add_argument("model", help="model type, either kf or iou", type=str)
 
-        if get_iou:
-            with open(iou_output_path + 'giou.csv', 'w') as f:
-                json.dump(iou, f, indent=2)
+    # Optional arguments
+    parser.add_argument("--giou", help="use generalized iou", action='store_true', default=False)
 
-        with open(iou_output_path + 'updated_store_giou.csv', 'w') as f:
-            json.dump(updated, f, indent=2)
-        updated_observation = open(iou_output_path + 'updated_read_giou.csv', 'w', newline='')
-        with updated_observation:
-            write = csv.writer(updated_observation)
-            write.writerows(updated)
-        print("--------------------iou main-------------------")
+    # Print version
+    parser.add_argument("--version", action="version", version='%(prog)s - Version 1.0')
 
-    else:
-        print("Not a valid argument. Please use one of: ")
-        print("python main.py kf")
-        print("python main.py iou [--giou]")
+    # Parse arguments
+    args = parser.parse_args()
+
+    return args
 
 
 if __name__ == '__main__':
-    run(sys.argv)
+    args = parse_arguments()
+    run(args.model, args.giou)
