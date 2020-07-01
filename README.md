@@ -55,7 +55,7 @@ as the YOLO in this repo is better integrated with the post-processing model.
         where confidence is the confidence of the object being that class, x, y is the x, y coordinates of the center of the bounding box of the object, w, h are the width and heighht of the bounding box 
     ``` 
 
-- If you are not using a conventional IMU/camera coordinate system orientation, please adjust the function `compute_displacement_pr` in `imu/displacement.py` 
+- If you are not using a conventional IMU/camera coordinate system orientation, please adjust the function `compute_displacement_pr()` in `imu/displacement.py` 
 
 
 ---

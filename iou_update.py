@@ -21,7 +21,7 @@ img_path_ls.sort()
 # incorporate IMU and depth info
 imu_ls = np.loadtxt(imu_directory, delimiter=',')
 
-assert len(img_path_ls) == len(imu_ls), "Length of IMU input should match length of camera input"
+# assert len(img_path_ls) == len(imu_ls), "Length of IMU input should match length of camera input"
 
 
 # process single result form darknet
@@ -76,6 +76,11 @@ def update(giou: bool = True) -> ():
         if debug: print("------start loop")
         img_path = img_path_ls[i]
         if debug: print("------got path: ", img_path)
+        # angular_speed_ls = []  # all imu samples between two frames
+        # for k in range(between_frame_count):
+        #     angular_speed = imu_ls[i * between_frame_count + k]
+        #     angular_speed_ls.append(angular_speed)
+        # if debug: print("-------got angular speed list: ", angular_speed_ls)
         angular_speed = imu_ls[i]
         vx, vy, vz = angular_speed[0], angular_speed[1], angular_speed[2]
         if debug: print("------got angular speed: ", vx, vy, vz)
@@ -86,6 +91,13 @@ def update(giou: bool = True) -> ():
         moved_objs = []  # the list for old objs after they've been moved to the new predicted location
         for prev_obj in previous_objects:
             if debug: print("--------previous object is :", prev_obj)
+            # dx, dy = 0, 0  # initialize dx, dy
+            # for av in angular_speed_ls:  # integrate the imu info between two frames to get the actual displacement
+            #     vx, vy, vz = av[0], av[1], av[2]
+            #     delta_dx, delta_dy = \
+            #         compute_displacement_pr(vx, vy, vz, get_distance_center(prev_obj[2]), get_angle(prev_obj[2]))
+            #     dx += delta_dx
+            #     dy += delta_dy
             dx, dy = compute_displacement_pr(vx, vy, vz, get_distance_center(prev_obj[2]), get_angle(prev_obj[2]))
             moved_obj = move_object(prev_obj, dx, dy)
             if debug: print("--------moved previous obj to: ", moved_obj)

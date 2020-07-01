@@ -8,6 +8,10 @@ from config import *
 def run(model: str, use_giou: bool, compare: bool):
     """
     execute the main program and update the object recognition results using IMU info
+    store the updated results in csv files
+    input: model: either kf or iou
+           use_giou: whether to use generalized iou in the iou model
+           compare: True to compare the results of updated and original recognition output
     """
     if model == 'kf':
         if compare:  # if we only compare to see results, don't run update function

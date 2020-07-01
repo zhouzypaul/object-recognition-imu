@@ -21,12 +21,6 @@ def compute_displacement_pr(vx: float, vy: float, vz: float,
     return dx, dy
 
 
-def integrate_displacement():
-    """
-    given several imu measurements between two frames, this estimates the actual displacement between the two frames
-    """
-
-
 def compute_displacement(v_x: float, v_y: float, v_z: float,
                          d_center: float,
                          angle: float,
