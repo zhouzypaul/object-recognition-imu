@@ -44,6 +44,18 @@ $ pip install -r requirements.txt
 Please note that the YOLO in this repo is a bit different from the <a href="https://github.com/AlexeyAB/darknet.git"> official release </a>, 
 as the YOLO in this repo is better integrated with the post-processing model. 
 
+- If you are nto using YOLO as your object detection algorithm, please build the algorithm of your choice under this folder, and change the follwing scripts: 
+    1. `object_dict.py`. change the `object_to_index` dictionary to fit the classes of your detection algorithm
+    2. `iou_update.py` & `kf_update.py`. Change the `process_img()` function to use your algorithm's detection function 
+    3. `observation.py`. Please parse the detection result of a single frame into the form 
+    ```
+        a list of objects: [obj1, obj2, obj3, ..., obj N], where N is the total number of bounding boxes in the frame
+        an object is a list of full probability distribution over all classes: obj = [class1, class2, ..., class M], where M is the total number of classes your algorithm can recognize
+        a class is a tuple: class = (confidence, (x, y, w, h)), 
+        where confidence is the confidence of the object being that class, x, y is the x, y coordinates of the center of the bounding box of the object, w, h are the width and heighht of the bounding box 
+    ``` 
+
+- If you are not using a conventional IMU/camera coordinate system orientation, please adjust the function `compute_displacement_pr` in `imu/displacement.py` 
 
 
 ---
@@ -72,6 +84,7 @@ and after the post-processing model is applied
 
 to see what arguments main.py takes in, run `python main.py --help`
 
+
 ###Example 1: 
 
 running the Kalman Filter model and process input images and IMU info
@@ -86,6 +99,7 @@ files are for human reading the outputs, and the `store.csv` files are stored in
 and available for further processing
 
 
+
 ###Example 2:
 
 running the IoU model and process input images and IMU info
@@ -96,6 +110,7 @@ to run the IoU with generalized IoU, use the tag `--giou` or `-g`
 ```shell script
 $ python main.py iou --giou
 ```
+
 
 
 ###Example 3:

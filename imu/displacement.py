@@ -11,7 +11,7 @@ def compute_displacement_pr(vx: float, vy: float, vz: float,
     input: vx, vy, vz: the angular rotational speed around x, y, z axis, obtained from imu, in degree/s
            d_center: the distance between center of object bounding box and image center
            angle: in radian, polar angle of the center of object bounding box, with respect to image center as origin
-    output: the displacement needed: dx, dy in pixel units
+    output: the displacement between two IMU measurements: dx, dy in pixel units
     """
     # the gyro influence
     dy = - (vx * dt) / height_angle * pixel_height
@@ -19,6 +19,12 @@ def compute_displacement_pr(vx: float, vy: float, vz: float,
     dx += d_center * (math.cos(angle + math.radians(vz * dt)) - math.cos(angle))  # rotation around z --> frame rotation
     dy += d_center * (math.sin(angle + math.radians(vz * dt)) - math.sin(angle))  # rotation around z --> frame rotation
     return dx, dy
+
+
+def integrate_displacement():
+    """
+    given several imu measurements between two frames, this estimates the actual displacement between the two frames
+    """
 
 
 def compute_displacement(v_x: float, v_y: float, v_z: float,

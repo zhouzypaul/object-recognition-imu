@@ -35,6 +35,7 @@ END_FRAME = 550
 
 # imu info
 imu_rate = 1000.0  # the sampling rate of the imu
+between_frame_count = imu_rate / fps  # the number of imu data samples between two camera frames
 
 
 # raw data bias
