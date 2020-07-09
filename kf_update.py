@@ -17,7 +17,7 @@ img_path_ls.sort()
 
 
 # incorporate IMU and depth info
-imu_ls = np.loadtxt(imu_directory, delimiter=',')
+imu_ls = np.loadtxt(gyro_path, delimiter=',')
 
 
 assert len(img_path_ls) == len(imu_ls), "Length of IMU input should match length of camera input"

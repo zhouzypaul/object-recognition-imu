@@ -15,7 +15,7 @@ with open(kf_output_path + 'original_store.csv', 'r') as f:
     original = json.load(f)
 with open(kf_output_path + 'updated_store.csv', 'r') as f:
     updated = json.load(f)
-gyro: np.array = np.loadtxt(imu_directory, delimiter=',')
+gyro: np.array = np.loadtxt(gyro_path, delimiter=',')
 
 
 # get absolute gyro speed

@@ -6,45 +6,45 @@ debug = True  # set this to true to print informative messages
 
 # compare results
 get_original = True
-saveImage = False  # save the image with bounding boxes
+saveImage = True  # save the image with bounding boxes
 
 
 # paths
 image_directory = "./input/image"  # input images, used in kf_update.py & iou_update.py
-imu_directory = 'imu/gyro_data.csv'
-raw_imu_path = '../input/imu/imu.h5'  # the path to the imu data file, used in imu/raw_data.py
+gyro_path = 'imu/gyro_data.csv'
+acc_path = 'imu/acc_data.csv'
+imu_time_path = 'imu/imu_time.csv'
+img_time_path = 'imu/img_time.csv'
+raw_imu_path = 'input/imu/imu_recordings.csv'  # the path to the imu data file, used in imu/raw_data.py
+raw_timestamp_path = 'input/imu/img_timestamp.csv'  # the path to the timestamp data file, used in imu/raw_data.py
 iou_output_path = './iou_output/'  # the directory of outputs of IOU, used in iou_update.py
 kf_output_path = './kf_output/'  # the directory of outputs of KF, used in kf_update.py
 
 
 # camera info
 default_depth = 3  # the distance between the camera and the object seen, in meters
-fps = 29.97  # frame rate of camera
+fps = 4  # frame rate of camera
 dt = 1 / fps
-width_angle = 118.2  # in degrees, the width angle of view from the RGB camera
-height_angle = 69.5  # in degrees, the height angle of view from the RGB camera
+width_angle = 159  # in degrees, the width angle of view from the RGB camera
+height_angle = 127  # in degrees, the height angle of view from the RGB camera
 focus = 0.01  # the distance between the camera eye and the screen where picture is formed. in meters
 
 
 # image info
-pixel_width = 1920  # the length of a single picture, in pixel units
-pixel_height = 1080  # the height of a single picture, in pixel units
-START_FRAME = 480  # index number of the starting frame
-END_FRAME = 550
+pixel_width = 1280  # the length of a single picture, in pixel units
+pixel_height = 720  # the height of a single picture, in pixel units
 
 
 # imu info
-imu_rate = 1000.0  # the sampling rate of the imu
-between_frame_count = imu_rate / fps  # the number of imu data samples between two camera frames
-between_frame_count = int(between_frame_count)
+imu_rate = 40  # the sampling rate of the imu
 
 
 # raw data bias
 abias_x, abias_y, abias_z = 0.0, 0.0, 0.0  # accelerometer bias
-gbias_x, gbias_y, gbias_z = -0.004873082820443066, -0.0022431677727018503, -0.003143394115523099  # gyroscope bias
-rot_x, rot_y, rot_z = -3.0535298646328917, 0.07979593555081343, -0.12905816022369937  # axis-angle vector of
+gbias_x, gbias_y, gbias_z = -0.0, -0.0, -0.0  # gyroscope bias
+rot_x, rot_y, rot_z = -0.0, 0.0, -0.0  # axis-angle vector of
 # IMU-to-camera rotation
-time_offset = 2.3280178898330735  # time offset between the camera and the imu
+time_offset = 0  # time offset between the camera and the imu
 
 
 # kf

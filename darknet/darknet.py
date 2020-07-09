@@ -498,7 +498,7 @@ def performDetect(imagePath=".darknet/data/dog.jpg", thresh=0.25, configPath="./
             if not makeImageOnly:
                 # io.imshow(image)
                 # io.show()
-                savePath = "kf_output/image/output{}.jpg".format(random.random())  # TODO
+                savePath = "iou_output/image/output{}.jpg".format(random.random())  # TODO
                 try:
                     io.imsave(savePath, image)
                     print("saved image")

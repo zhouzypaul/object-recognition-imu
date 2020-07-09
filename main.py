@@ -56,30 +56,55 @@ def run(model: str, use_giou: bool, compare: bool):
             print('running the Intersection Over Union model')
             if use_giou:
                 print('using generalized IoU')
-            import iou_update
-            print("--------------------iou main--------------------")
-            original, updated, iou = iou_update.update(giou=use_giou)
+                import iou_update
+                print("--------------------giou main--------------------")
+                original, updated, iou = iou_update.update(giou=use_giou)
 
-            if get_original:
-                with open(iou_output_path + 'original_store_giou.csv', 'w') as f:
-                    json.dump(original, f, indent=2)
+                if get_original:
+                    with open(iou_output_path + 'original_store_giou.csv', 'w') as f:
+                        json.dump(original, f, indent=2)
 
-                original_observation = open(iou_output_path + 'original_read_giou.csv', 'w', newline='')
-                with original_observation:
-                    write = csv.writer(original_observation)
-                    write.writerows(original)
+                    original_observation = open(iou_output_path + 'original_read_giou.csv', 'w', newline='')
+                    with original_observation:
+                        write = csv.writer(original_observation)
+                        write.writerows(original)
 
-            if get_iou:
-                with open(iou_output_path + 'giou.csv', 'w') as f:
-                    json.dump(iou, f, indent=2)
+                if get_iou:
+                    with open(iou_output_path + 'giou.csv', 'w') as f:
+                        json.dump(iou, f, indent=2)
 
-            with open(iou_output_path + 'updated_store_giou.csv', 'w') as f:
-                json.dump(updated, f, indent=2)
-            updated_observation = open(iou_output_path + 'updated_read_giou.csv', 'w', newline='')
-            with updated_observation:
-                write = csv.writer(updated_observation)
-                write.writerows(updated)
-            print("--------------------iou main-------------------")
+                with open(iou_output_path + 'updated_store_giou.csv', 'w') as f:
+                    json.dump(updated, f, indent=2)
+                updated_observation = open(iou_output_path + 'updated_read_giou.csv', 'w', newline='')
+                with updated_observation:
+                    write = csv.writer(updated_observation)
+                    write.writerows(updated)
+                print("--------------------giou main-------------------")
+            else:
+                import iou_update
+                print("--------------------iou main--------------------")
+                original, updated, iou = iou_update.update(giou=use_giou)
+
+                if get_original:
+                    with open(iou_output_path + 'original_store_iou.csv', 'w') as f:
+                        json.dump(original, f, indent=2)
+
+                    original_observation = open(iou_output_path + 'original_read_iou.csv', 'w', newline='')
+                    with original_observation:
+                        write = csv.writer(original_observation)
+                        write.writerows(original)
+
+                if get_iou:
+                    with open(iou_output_path + 'iou_without_displacement.csv', 'w') as f:
+                        json.dump(iou, f, indent=2)
+
+                with open(iou_output_path + 'updated_store_iou.csv', 'w') as f:
+                    json.dump(updated, f, indent=2)
+                updated_observation = open(iou_output_path + 'updated_read_iou.csv', 'w', newline='')
+                with updated_observation:
+                    write = csv.writer(updated_observation)
+                    write.writerows(updated)
+                print("--------------------iou main-------------------")
 
 
 def parse_arguments():
@@ -91,7 +116,7 @@ def parse_arguments():
 
     # Optional arguments
     parser.add_argument("-g", "--giou", help="use generalized iou", action='store_true', default=False)
-    parser.add_argument("-c", "--compare", help="compare the results between ", action='store_true', default=False)
+    parser.add_argument("-c", "--compare", help="compare the results", action='store_true', default=False)
 
     # Print version
     parser.add_argument("--version", action="version", version='%(prog)s - Version 1.0')

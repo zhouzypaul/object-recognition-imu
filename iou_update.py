@@ -18,10 +18,15 @@ for image in os.scandir(image_directory):
 img_path_ls.sort()
 
 
-# incorporate IMU and depth info
-imu_ls = np.loadtxt(imu_directory, delimiter=',')
-
-# assert len(img_path_ls) == len(imu_ls), "Length of IMU input should match length of camera input"
+# incorporate IMU info
+gyro_ls = np.loadtxt(gyro_path, delimiter=',')
+acc_ls = np.loadtxt(acc_path, delimiter=',')
+imu_time_ls = np.loadtxt(imu_time_path, delimiter=',')
+img_time_ls = np.loadtxt(img_time_path, delimiter=',')
+gyro_ls = list(gyro_ls)
+acc_ls = list(acc_ls)
+imu_time_ls = list(imu_time_ls)
+img_time_ls = list(img_time_ls)
 
 
 # process single result form darknet
@@ -52,9 +57,56 @@ def get_max_con_class(full_distr: []) -> ():
     return sorted_list[0]
 
 
+def img2imu_time(t_img: int):
+    """
+    given the unix time an image is taken, return the closest unix time where imu has a record
+    input: t_img, the unix time an image is taken
+    output: the unix time in imu_time_ls that's closest to t_img
+    """
+    smaller_time = -float('inf')  # initialize
+    bigger_time = None  # the two closest time to t_img in imu_time_ls
+    for t in imu_time_ls:
+        if t <= t_img:
+            smaller_time = t
+        else:
+            bigger_time = t
+            break
+    if t_img - smaller_time < bigger_time - t_img:
+        return smaller_time
+    else:
+        return bigger_time
+
+
+def interval_vel_acc(t_imu: int):
+    """
+    given an imu_time, return all the gyro & acc info from the start of gyro_ls/acc_ls till imu_time, then remove
+    all things returned from gyro_ls/acc_ls, remove all time from the start till imu_time in imu_time_ls
+    input: t_imu, an imu_time
+    output1: a list of angular velocities [[vx, vy, vz]]
+    output2: a list of linear accelerations [[ax, ay, az]]
+    """
+    angular_vel_ls = []
+    lin_acc_ls = []
+    count = 0
+    for time in imu_time_ls:  # TODO: this is wrong, the very first ones aren't in video
+        if time < t_imu:
+            count += 1
+        else:
+            break
+    for i in range(count):
+        gyro = gyro_ls[i]
+        acc = acc_ls[i]
+        angular_vel_ls.append(gyro)
+        lin_acc_ls.append(acc)
+    del gyro_ls[:count]
+    del acc_ls[:count]
+    del imu_time_ls[:count]
+    return angular_vel_ls, lin_acc_ls
+
+
 # loop YOLO and iou
 # the outputs shall all be of single distribution, as opposed to the darknet.py output
-def update(giou: bool = True) -> ():
+def update(giou: bool) -> ():
     """
     this is where the bulk of the computation happens, using IMU info and past recognition results to update the current
     recognition
@@ -71,19 +123,21 @@ def update(giou: bool = True) -> ():
     previous_objects: [] = []
     seen_objects: [] = []  # tags of objects already seen in the video sequence
     for i in range(len(img_path_ls)):
-
-        # load info
         if debug: print("------start loop")
+
+        # load image
         img_path = img_path_ls[i]
         if debug: print("------got path: ", img_path)
-        # angular_speed_ls = []  # all imu samples between two frames
-        # for k in range(between_frame_count):
-        #     angular_speed = imu_ls[i * between_frame_count + k]
-        #     angular_speed_ls.append(angular_speed)
-        # if debug: print("-------got angular speed list: ", angular_speed_ls)
-        angular_speed = imu_ls[i]
-        vx, vy, vz = angular_speed[0], angular_speed[1], angular_speed[2]
-        if debug: print("------got angular speed: ", vx, vy, vz)
+
+        # load imu
+        img_time = img_time_ls[i][1]
+        if debug: print('------the image time stamp is ', img_time)
+        imu_time = img2imu_time(img_time)
+        if debug: print('------the closest imu time is ', imu_time)
+        angular_vel_ls, lin_acc_ls = interval_vel_acc(imu_time)
+        if debug: print('------loaded imu data during this interval')
+
+        # process image
         objects: [] = process_img(img_path)
         if debug: print("------processed img: ", len(objects), "objects detected")
 
@@ -91,14 +145,15 @@ def update(giou: bool = True) -> ():
         moved_objs = []  # the list for old objs after they've been moved to the new predicted location
         for prev_obj in previous_objects:
             if debug: print("--------previous object is :", prev_obj)
-            # dx, dy = 0, 0  # initialize dx, dy
-            # for av in angular_speed_ls:  # integrate the imu info between two frames to get the actual displacement
-            #     vx, vy, vz = av[0], av[1], av[2]
-            #     delta_dx, delta_dy = \
-            #         compute_displacement_pr(vx, vy, vz, get_distance_center(prev_obj[2]), get_angle(prev_obj[2]))
-            #     dx += delta_dx
-            #     dy += delta_dy
-            dx, dy = compute_displacement_pr(vx, vy, vz, get_distance_center(prev_obj[2]), get_angle(prev_obj[2]))
+            dx, dy = 0, 0  # initialize dx, dy
+            for av in angular_vel_ls:  # integrate the imu info between two frames to get the actual displacement
+                vx, vy, vz = av[0], av[1], av[2]
+                delta_dx, delta_dy = \
+                    compute_displacement_pr(vx, vy, vz, get_distance_center(prev_obj[2]), get_angle(prev_obj[2]), delta_t=(1 / imu_rate))
+                dx += delta_dx
+                dy += delta_dy
+            dx, dy = 0, 0 # TODO
+            # dx, dy = compute_displacement_pr(vx, vy, vz, get_distance_center(prev_obj[2]), get_angle(prev_obj[2]))
             moved_obj = move_object(prev_obj, dx, dy)
             if debug: print("--------moved previous obj to: ", moved_obj)
             moved_objs.append(moved_obj)
@@ -119,10 +174,13 @@ def update(giou: bool = True) -> ():
                 first_time_decrease(current_obj, max_con_class[0], percent=0.2)
                 seen_objects.append(max_con_class[0])
             for old_obj in moved_objs:
-                iou_score = compute_giou(old_obj[2], current_obj[0][2])
-                if not giou:
+                # iou_score = compute_iou(old_obj[2], current_obj[0][2])
+                if giou:
+                    iou_score = compute_giou(old_obj[2], current_obj[0][2])
+                    if debug: print("------computed giou: ", iou_score)
+                else:
                     iou_score = compute_iou(old_obj[2], current_obj[0][2])
-                if debug: print("------computed iou: ", iou_score)
+                    if debug: print("------computed iou: ", iou_score)
                 if get_iou:
                     if old_obj[0] in current_obj_ious:
                         current_obj_ious[old_obj[0]] = max(iou_score, current_obj_ious[old_obj[0]])

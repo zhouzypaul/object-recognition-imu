@@ -4,7 +4,8 @@ from config import *
 
 def compute_displacement_pr(vx: float, vy: float, vz: float,
                             d_center: float,
-                            angle: float) -> ():
+                            angle: float,
+                            delta_t: float = dt) -> ():
     """
     compute the displacement dx, dy for one object
     this method use the proportion of the angle turned to the angle_of_view to compute dx, dy
@@ -14,10 +15,10 @@ def compute_displacement_pr(vx: float, vy: float, vz: float,
     output: the displacement between two IMU measurements: dx, dy in pixel units
     """
     # the gyro influence
-    dy = - (vx * dt) / height_angle * pixel_height
-    dx = - (vy * dt) / width_angle * pixel_width
-    dx += d_center * (math.cos(angle + math.radians(vz * dt)) - math.cos(angle))  # rotation around z --> frame rotation
-    dy += d_center * (math.sin(angle + math.radians(vz * dt)) - math.sin(angle))  # rotation around z --> frame rotation
+    dy = - (vx * delta_t) / height_angle * pixel_height
+    dx = - (vy * delta_t) / width_angle * pixel_width
+    dx += d_center * (math.cos(angle + math.radians(vz * delta_t)) - math.cos(angle))  # rotation around z --> frame rotation
+    dy += d_center * (math.sin(angle + math.radians(vz * delta_t)) - math.sin(angle))  # rotation around z --> frame rotation
     return dx, dy
 
 

@@ -14,9 +14,9 @@ with open(iou_output_path + 'original_store_iou.csv', 'r') as f:
     original = json.load(f)
 with open(iou_output_path + 'updated_store_iou.csv', 'r') as f:
     updated = json.load(f)
-with open(iou_output_path + 'iou.csv', 'r') as f:
+with open(iou_output_path + 'iou_without_displacement.csv', 'r') as f:
     iou = json.load(f)
-gyro: np.array = np.loadtxt(imu_directory, delimiter=',')
+gyro: np.array = np.loadtxt(gyro_path, delimiter=',')
 
 
 # get absolute gyro speed
@@ -26,11 +26,11 @@ for i in gyro:
 
 
 # process things in IOU
-def is_bicycle(obj: []):
+def is_tvmonitor(obj: []):
     """
     see if an object is a bicycle
     """
-    if obj[0] == 'bicycle':
+    if obj[0] == 'tvmonitor':
         return True
     else:
         return False
@@ -54,9 +54,9 @@ def create_single_item_ls(from_list: [], func, con=0) -> []:
 
 
 # create single item lists
-original_bicycle_ls = create_single_item_ls(original, is_bicycle)
-updated_bicycle_ls = create_single_item_ls(updated, is_bicycle)
-iou_bicycle_ls = create_single_item_ls(iou, is_bicycle)
+original_bicycle_ls = create_single_item_ls(original, is_tvmonitor)
+updated_bicycle_ls = create_single_item_ls(updated, is_tvmonitor)
+iou_bicycle_ls = create_single_item_ls(iou, is_tvmonitor)
 """
 in the form of [pic1, pic2, .. ] where pic = [] or ['bicycle', con, [x, y, w, h]]
 """
@@ -67,11 +67,11 @@ def compare():
     plt.ion()
     plt.figure()
 
-    plt.title('IOU - bicycle confidence')
+    plt.title('IOU - tv monitor confidence')
     plt.plot([obj[1] for obj in original_bicycle_ls], 'r', label='YOLO confidence')
     plt.plot([obj[1] for obj in updated_bicycle_ls], 'b', label='IOU model confidence')
     plt.plot([obj[1] for obj in iou_bicycle_ls], 'y', label='IOU score')
-    plt.plot([iou_thresh for i in range(71)], 'k', label='IOU threshold')
+    plt.plot([iou_thresh for i in range(90)], 'k', label='IOU threshold')
     # plt.plot(speed, 'g', label='speed of user')
     plt.legend()
 
