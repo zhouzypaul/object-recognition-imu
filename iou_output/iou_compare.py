@@ -14,7 +14,7 @@ with open(iou_output_path + 'original_store_iou.csv', 'r') as f:
     original = json.load(f)
 with open(iou_output_path + 'updated_store_iou.csv', 'r') as f:
     updated = json.load(f)
-with open(iou_output_path + 'iou_without_displacement.csv', 'r') as f:
+with open(iou_output_path + 'iou.csv', 'r') as f:
     iou = json.load(f)
 gyro: np.array = np.loadtxt(gyro_path, delimiter=',')
 
@@ -30,7 +30,7 @@ def is_tvmonitor(obj: []):
     """
     see if an object is a bicycle
     """
-    if obj[0] == 'tvmonitor':
+    if obj[0] == 'person':
         return True
     else:
         return False
@@ -67,7 +67,7 @@ def compare():
     plt.ion()
     plt.figure()
 
-    plt.title('IOU - tv monitor confidence')
+    plt.title('IOU - person confidence')
     plt.plot([obj[1] for obj in original_bicycle_ls], 'r', label='YOLO confidence')
     plt.plot([obj[1] for obj in updated_bicycle_ls], 'b', label='IOU model confidence')
     plt.plot([obj[1] for obj in iou_bicycle_ls], 'y', label='IOU score')

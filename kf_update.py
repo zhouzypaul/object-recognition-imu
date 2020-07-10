@@ -17,10 +17,14 @@ img_path_ls.sort()
 
 
 # incorporate IMU and depth info
-imu_ls = np.loadtxt(gyro_path, delimiter=',')
-
-
-assert len(img_path_ls) == len(imu_ls), "Length of IMU input should match length of camera input"
+gyro_ls = np.loadtxt(gyro_path, delimiter=',')
+acc_ls = np.loadtxt(acc_path, delimiter=',')
+imu_time_ls = np.loadtxt(imu_time_path, delimiter=',')
+img_time_ls = np.loadtxt(img_time_path, delimiter=',')
+gyro_ls = list(gyro_ls)
+acc_ls = list(acc_ls)
+imu_time_ls = list(imu_time_ls)
+img_time_ls = list(img_time_ls)
 
 
 # process single result form darknet
@@ -88,6 +92,53 @@ def strip_overconfidence(objs_ls: []):
             objs_ls[i] = new_obj
 
 
+def img2imu_time(t_img: int):
+    """
+    given the unix time an image is taken, return the closest unix time where imu has a record
+    input: t_img, the unix time an image is taken
+    output: the unix time in imu_time_ls that's closest to t_img
+    """
+    smaller_time = -float('inf')  # initialize
+    bigger_time = None  # the two closest time to t_img in imu_time_ls
+    for t in imu_time_ls:
+        if t <= t_img:
+            smaller_time = t
+        else:
+            bigger_time = t
+            break
+    if t_img - smaller_time < bigger_time - t_img:
+        return smaller_time
+    else:
+        return bigger_time
+
+
+def interval_vel_acc(t_imu: int):
+    """
+    given an imu_time, return all the gyro & acc info from the start of gyro_ls/acc_ls till imu_time, then remove
+    all things returned from gyro_ls/acc_ls, remove all time from the start till imu_time in imu_time_ls
+    input: t_imu, an imu_time
+    output1: a list of angular velocities [[vx, vy, vz]]
+    output2: a list of linear accelerations [[ax, ay, az]]
+    """
+    angular_vel_ls = []
+    lin_acc_ls = []
+    count = 0
+    for time in imu_time_ls:  # TODO: this is wrong, the very first ones aren't in video
+        if time < t_imu:
+            count += 1
+        else:
+            break
+    for i in range(count):
+        gyro = gyro_ls[i]
+        acc = acc_ls[i]
+        angular_vel_ls.append(gyro)
+        lin_acc_ls.append(acc)
+    del gyro_ls[:count]
+    del acc_ls[:count]
+    del imu_time_ls[:count]
+    return angular_vel_ls, lin_acc_ls
+
+
 # loop YOLO and KF
 def update() -> ():
     """
@@ -104,7 +155,7 @@ def update() -> ():
         # load info
         path = img_path_ls[i]
         if debug: print('got image path: ', path)
-        angular_speed = imu_ls[i]
+        angular_speed = gyro_ls[i]
         vx, vy, vz = angular_speed[0], angular_speed[1], angular_speed[2]
         if debug: print("------got angular speed: ", vx, vy, vz)
 
