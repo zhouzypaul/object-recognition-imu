@@ -1,5 +1,29 @@
 import math
+import numpy as np
+from pyquaternion import Quaternion
 from config import *
+
+
+def compute_displacement_quaternion(q: Quaternion):
+    """
+    compute the displacement dx, dy for one object
+    input: a quaternion representing the rotation between two frames
+    output: the displacement between two frames: dx, dy in pixel units
+    """
+    inertial_z = Quaternion(0, 0, 0, 1)  # z axis in the inertial frame
+    body_z = q * inertial_z * q.inverse  # z axis rotated to the body frame
+    vector = np.array(body_z.axis)
+    xz_projection = np.array([vector[0], 0, vector[2]])  # vector projected on the xz plane
+    # x_angle = math.degrees(math.acos(np.dot(xz_projection, np.array([0, 0, 1])) / np.linalg.norm(xz_projection))) \
+    #     if xz_projection[0] >= 0 \
+    #     else - math.degrees(math.acos(np.dot(xz_projection, np.array([0, 0, 1])) / np.linalg.norm(xz_projection)))
+    # y_angle = math.degrees(math.acos(np.dot(vector, xz_projection) / np.linalg.norm(xz_projection))) \
+    #     if vector[1] >= 0 else - math.degrees(math.acos(np.dot(vector, xz_projection) / np.linalg.norm(xz_projection)))
+    x_angle = math.degrees(math.atan(xz_projection[0] / abs(xz_projection[2])))
+    y_angle = math.degrees(math.atan(vector[1] / np.linalg.norm(xz_projection)))
+    dx = - x_angle / width_angle * pixel_width
+    dy = y_angle / height_angle * pixel_height
+    return dx, dy
 
 
 def compute_displacement_pr(vx: float, vy: float, vz: float,
@@ -17,8 +41,10 @@ def compute_displacement_pr(vx: float, vy: float, vz: float,
     # the gyro influence
     dy = - (vx * delta_t) / height_angle * pixel_height
     dx = - (vy * delta_t) / width_angle * pixel_width
-    dx += d_center * (math.cos(angle + math.radians(vz * delta_t)) - math.cos(angle))  # rotation around z --> frame rotation
-    dy += d_center * (math.sin(angle + math.radians(vz * delta_t)) - math.sin(angle))  # rotation around z --> frame rotation
+    dx += d_center * (
+                math.cos(angle + math.radians(vz * delta_t)) - math.cos(angle))  # rotation around z --> frame rotation
+    dy += d_center * (
+                math.sin(angle + math.radians(vz * delta_t)) - math.sin(angle))  # rotation around z --> frame rotation
     return dx, dy
 
 
@@ -36,7 +62,7 @@ def compute_displacement(v_x: float, v_y: float, v_z: float,
     """
     vx_rad, vy_rad, vz_rad = math.radians(v_x), math.radians(v_y), math.radians(v_z)  # convert degree to radian
     dy = vz_rad * dt * depth  # caused by rotation around z axis
-    dx = - vx_rad * dt * depth   # caused by rotation around x axis
+    dx = - vx_rad * dt * depth  # caused by rotation around x axis
     dx -= d_center * (math.cos(angle) - math.cos(angle + vy_rad * dt))  # rotation around y, this is the frame rotating
     dy += d_center * (math.sin(angle + vy_rad * dt) - math.sin(angle))  # rotation around y, this is the frame rotating
     return meter_to_pixel(dx), meter_to_pixel(dy)

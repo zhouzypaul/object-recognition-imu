@@ -21,6 +21,7 @@ from config import *
 
 # 1. read in the csv file
 time = []
+quaternion = []
 gyro = []  # [[vx, vy, vz]]
 acc = []  # [[ax, ay, az]]
 frame_timestamp = []  # [[frame number, timestamp]]
@@ -29,6 +30,7 @@ with open(raw_imu_path, 'r') as file:
     read = csv.reader(file, delimiter=',')
     for row in read:
         time.append(row[0])
+        quaternion.append([row[4], row[1], row[2], row[3]])
         gyro.append([row[5], row[6], row[7]])
         acc.append([row[11], row[12], row[13]])
 with open(raw_timestamp_path, 'r') as file:
@@ -37,17 +39,21 @@ with open(raw_timestamp_path, 'r') as file:
         frame_timestamp.append([row[0], row[1]])
 
 time.pop(0)  # get rid of the first item, the string heading
+quaternion.pop(0)
 gyro.pop(0)
 acc.pop(0)
 frame_timestamp.pop(0)
-time = list(map(int, time))
+time = list(map(int, time))  # turn string into float
+quaternion = list(map(lambda x: [float(x[0]), float(x[1]), float(x[2]), float(x[3])], quaternion))
 gyro = list(map(lambda x: [float(x[0]), float(x[1]), float(x[2])], gyro))
 acc = list(map(lambda x: [float(x[0]), float(x[1]), float(x[2])], acc))
 frame_timestamp = list(map(lambda x: [int(x[0]), float(x[1])], frame_timestamp))
 
 time = np.array(time)  # turn list into numpy array
+quaternion = np.array(quaternion)
 gyro = np.array(gyro)
 acc = np.array(acc)
+frame_timestamp = np.array(frame_timestamp)
 
 
 # uncomment the following if you are using an hdf5 file as input format
@@ -97,6 +103,23 @@ def imu_to_camera_frame(v: np.array) -> np.array:
     new_vy = np.dot(v_rot, e_y)
     new_vz = np.dot(v_rot, e_z)
     return np.array([new_vx, new_vy, new_vz])
+
+
+def rotate_orientation(v: np.array, axis: np.array) -> np.array:
+    """
+    rotate a vector from one coordinate orientation to another
+    input: array([vx, vy, vz]), the rotational speed in IMU coordinates
+    output: the speed in camera coordinates
+    """
+    # theta = math.sqrt(math.radians(axis[0])**2 + math.radians(axis[1])**2 + math.radians(axis[2])**2)  # rotation angle in radians
+    # e = axis / theta  # rotation axis unit vector
+    # v_rot = rotate_vector(v, e, theta)  # angular velocity after rotation
+    # return v_rot
+    theta_x, theta_y, theta_z = math.radians(axis[0]), math.radians(axis[1]), math.radians(axis[2])
+    v_rot = rotate_vector(v=v, e=np.array([1, 0, 0]), theta=theta_x)
+    v_rot = rotate_vector(v=v_rot, e=np.array([0, 1, 0]), theta=theta_y)
+    v_rot = rotate_vector(v=v_rot, e=np.array([0, 0, 1]), theta=theta_z)
+    return v_rot
 
 
 def rotate_vector(v: np.array, e: np.array, theta: float) -> np.array:
@@ -149,10 +172,11 @@ def find_nearest_index(t: float) -> int:
 #     gyro_array = gyro_array.reshape(-1, 3)
 
 # save to csv file
-np.savetxt('gyro_data.csv', gyro, delimiter=',')
-np.savetxt('acc_data.csv', acc, delimiter=',')
-np.savetxt('imu_time.csv', time, delimiter=',')
-np.savetxt('img_time.csv', frame_timestamp, delimiter=',')
+np.savetxt(gyro_path, gyro, delimiter=',')
+np.savetxt(acc_path, acc, delimiter=',')
+np.savetxt(imu_time_path, time, delimiter=',')
+np.savetxt(quaternion_path, quaternion, delimiter=',')
+np.savetxt(img_time_path, frame_timestamp, delimiter=',')
 
 #
 # if debug:

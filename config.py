@@ -6,11 +6,12 @@ debug = True  # set this to true to print informative messages
 
 # compare results
 get_original = True
-saveImage = True  # save the image with bounding boxes
+saveImage = False  # save the image with bounding boxes
 
 
 # paths
 image_directory = "./input/image"  # input images, used in kf_update.py & iou_update.py
+quaternion_path = 'imu/quaternion.csv'
 gyro_path = 'imu/gyro_data.csv'
 acc_path = 'imu/acc_data.csv'
 imu_time_path = 'imu/imu_time.csv'
@@ -36,7 +37,7 @@ pixel_height = 720  # the height of a single picture, in pixel units
 
 
 # imu info
-imu_rate = 40  # the sampling rate of the imu
+imu_rate = 38.5  # the sampling rate of the imu
 
 
 # raw data bias

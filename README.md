@@ -78,7 +78,7 @@ and after the post-processing model is applied
 
 > then, specify your camera, IMU, and other parameters in `config.py`
 
-> make sure to put your images and IMU raw data in the `input/image` and `input/imu` folder. The default file format for IMU data is csv. If not, please change the script `imu/raw_data.py` to take in the file format of your choosing
+> make sure to put your images and IMU raw data in the `input/image` and `input/imu` folder. The default file format for IMU data is csv. If not, please change the script `imu/raw_data.py` to take in the file format of your choosing. Then run `python main.py csv` to process the raw data
 
 > the bulk of the model can be access by running main.py 
 

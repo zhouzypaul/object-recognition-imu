@@ -95,7 +95,7 @@ def run(model: str, use_giou: bool, compare: bool):
                         write.writerows(original)
 
                 if get_iou:
-                    with open(iou_output_path + 'iou_without_displacement.csv', 'w') as f:
+                    with open(iou_output_path + 'iou.csv', 'w') as f:
                         json.dump(iou, f, indent=2)
 
                 with open(iou_output_path + 'updated_store_iou.csv', 'w') as f:
@@ -105,6 +105,9 @@ def run(model: str, use_giou: bool, compare: bool):
                     write = csv.writer(updated_observation)
                     write.writerows(updated)
                 print("--------------------iou main-------------------")
+    if model == 'csv':
+        from imu import raw_data
+        print('made csv')
 
 
 def parse_arguments():
