@@ -74,12 +74,14 @@ frame_timestamp = np.array(frame_timestamp)
 #
 # hf.close()
 
+
 # 2. correct the time stamp
 time = time - time_offset
 # sweep the NaN values
 for i in range(len(time)):
     if np.isnan(time[i]):
         time[i] = 0.5 * (time[i - 1] + time[i + 1])
+
 
 # 3. correct the gyro & acc bias
 gyro = gyro - np.array([gbias_x, gbias_y, gbias_z])
@@ -95,31 +97,15 @@ def imu_to_camera_frame(v: np.array) -> np.array:
     """
     r = np.array([rot_x, rot_y, rot_z])  # rotation axis
     theta = math.sqrt(rot_x**2 + rot_y**2 + rot_z**2)  # rotation angle in radians
-    e = r / theta  # rotation axis unit vector
-    v_rot = rotate_vector(v, e, theta)  # angular velocity after rotation
-    # map the new angular velocity vector to axis
-    e_x, e_y, e_z = np.array([1, 0, 0]), np.array([0, 1, 0]), np.array([0, 0, 1])  # unit vectors
-    new_vx = np.dot(v_rot, e_x)
-    new_vy = np.dot(v_rot, e_y)
-    new_vz = np.dot(v_rot, e_z)
-    return np.array([new_vx, new_vy, new_vz])
-
-
-def rotate_orientation(v: np.array, axis: np.array) -> np.array:
-    """
-    rotate a vector from one coordinate orientation to another
-    input: array([vx, vy, vz]), the rotational speed in IMU coordinates
-    output: the speed in camera coordinates
-    """
-    # theta = math.sqrt(math.radians(axis[0])**2 + math.radians(axis[1])**2 + math.radians(axis[2])**2)  # rotation angle in radians
-    # e = axis / theta  # rotation axis unit vector
-    # v_rot = rotate_vector(v, e, theta)  # angular velocity after rotation
-    # return v_rot
-    theta_x, theta_y, theta_z = math.radians(axis[0]), math.radians(axis[1]), math.radians(axis[2])
-    v_rot = rotate_vector(v=v, e=np.array([1, 0, 0]), theta=theta_x)
-    v_rot = rotate_vector(v=v_rot, e=np.array([0, 1, 0]), theta=theta_y)
-    v_rot = rotate_vector(v=v_rot, e=np.array([0, 0, 1]), theta=theta_z)
-    return v_rot
+    if theta > 0:
+        e = r / theta  # rotation axis unit vector
+        v_rot = rotate_vector(v, e, theta)  # angular velocity after rotation
+        # map the new angular velocity vector to axis
+        e_x, e_y, e_z = np.array([1, 0, 0]), np.array([0, 1, 0]), np.array([0, 0, 1])  # unit vectors
+        new_vx = np.dot(v_rot, e_x)
+        new_vy = np.dot(v_rot, e_y)
+        new_vz = np.dot(v_rot, e_z)
+        return np.array([new_vx, new_vy, new_vz])
 
 
 def rotate_vector(v: np.array, e: np.array, theta: float) -> np.array:
@@ -135,6 +121,41 @@ def rotate_vector(v: np.array, e: np.array, theta: float) -> np.array:
     v_rot = v * math.cos(theta) + \
             np.cross(e, v) * math.sin(theta) + \
             np.dot(e, v) * v * (1 - math.cos(theta))
+    return v_rot
+
+
+for i in range(len(gyro)):
+    if imu_to_camera_frame(gyro[i]) is not None:
+        gyro[i] = imu_to_camera_frame(gyro[i])
+    if imu_to_camera_frame(acc[i]) is not None:
+        acc[i] = imu_to_camera_frame(acc[i])
+
+
+# 5. save to csv files
+def make_csv():
+    # save to csv file
+    np.savetxt(gyro_path, gyro, delimiter=',')
+    np.savetxt(acc_path, acc, delimiter=',')
+    np.savetxt(imu_time_path, time, delimiter=',')
+    np.savetxt(quaternion_path, quaternion, delimiter=',')
+    np.savetxt(img_time_path, frame_timestamp, delimiter=',')
+
+
+# some methods used
+def rotate_orientation(v: np.array, axis: np.array) -> np.array:
+    """
+    rotate a vector from one coordinate orientation to another
+    input: array([vx, vy, vz]), the rotational speed in IMU coordinates
+    output: the speed in camera coordinates
+    """
+    # theta = math.sqrt(math.radians(axis[0])**2 + math.radians(axis[1])**2 + math.radians(axis[2])**2)  # rotation angle in radians
+    # e = axis / theta  # rotation axis unit vector
+    # v_rot = rotate_vector(v, e, theta)  # angular velocity after rotation
+    # return v_rot
+    theta_x, theta_y, theta_z = math.radians(axis[0]), math.radians(axis[1]), math.radians(axis[2])
+    v_rot = rotate_vector(v=v, e=np.array([1, 0, 0]), theta=theta_x)
+    v_rot = rotate_vector(v=v_rot, e=np.array([0, 1, 0]), theta=theta_y)
+    v_rot = rotate_vector(v=v_rot, e=np.array([0, 0, 1]), theta=theta_z)
     return v_rot
 
 
@@ -155,33 +176,3 @@ def find_nearest_index(t: float) -> int:
         while time[j] > t:
             j -= 1
         return j
-
-
-# time_array = np.array([]
-# gyro_array = np.array([0, 0, 0])
-# acc_array = np.array([0, 0, 0])
-# for gyro_data in gyro:
-#     gyro_array = np.append(gyro_array, imu_to_camera_frame(gyro_data))  # TODO: fix this
-# for acc_data in acc:
-#     acc_array = np.append(acc_array, imu_to_camera_frame(acc_data))
-# for frame_index in range(START_FRAME, END_FRAME):
-#     current_time = frame_index / fps
-#     current_angular_speed = gyro[find_nearest_index(current_time)]
-#     # time_array = np.append(time_array, time[find_nearest_index(current_time)])
-#     gyro_array = np.append(gyro_array, imu_to_camera_frame(current_angular_speed))
-#     gyro_array = gyro_array.reshape(-1, 3)
-
-# save to csv file
-np.savetxt(gyro_path, gyro, delimiter=',')
-np.savetxt(acc_path, acc, delimiter=',')
-np.savetxt(imu_time_path, time, delimiter=',')
-np.savetxt(quaternion_path, quaternion, delimiter=',')
-np.savetxt(img_time_path, frame_timestamp, delimiter=',')
-
-#
-# if debug:
-#     print(gyro)
-#     print(type(gyro))
-#     print(acc)
-#     print(time)
-#     print(frame_timestamp)

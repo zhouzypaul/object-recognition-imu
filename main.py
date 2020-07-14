@@ -107,6 +107,7 @@ def run(model: str, use_giou: bool, compare: bool):
                 print("--------------------iou main-------------------")
     if model == 'csv':
         from imu import raw_data
+        raw_data.make_csv()
         print('made csv')
 
 
