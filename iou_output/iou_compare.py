@@ -30,7 +30,7 @@ def is_tvmonitor(obj: []):
     """
     see if an object is a bicycle
     """
-    if obj[0] == 'person':
+    if obj[0] == 'bed':
         return True
     else:
         return False
@@ -67,7 +67,7 @@ def compare():
     plt.ion()
     plt.figure()
 
-    plt.title('IOU - person confidence')
+    plt.title('IOU - bed confidence')
     plt.plot([obj[1] for obj in original_bicycle_ls], 'r', label='YOLO confidence')
     plt.plot([obj[1] for obj in updated_bicycle_ls], 'b', label='IOU model confidence')
     plt.plot([obj[1] for obj in iou_bicycle_ls], 'y', label='IOU score')
