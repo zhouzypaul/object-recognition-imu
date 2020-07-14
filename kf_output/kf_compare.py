@@ -27,9 +27,9 @@ for i in gyro:
 # process things in IOU
 def is_bicycle(obj: []):
     """
-    see if an object is a bicycle
+    see if an object is a person
     """
-    if obj[0] == 'bicycle':
+    if obj[0] == 'person':
         return True
     else:
         return False
@@ -48,7 +48,7 @@ def create_single_item_ls(from_list: [], func, con=0) -> []:
                 single_item_ls.append(obj)
                 break
         if not contain_obj:
-            single_item_ls.append([None, con, [None, None, None, None]])
+            single_item_ls.append([None, con, [-100, -100, None, None]])
     return single_item_ls
 
 
@@ -64,26 +64,26 @@ def compare():
     # draw the data
     plt.ion()
     fig = plt.figure()
-    ax = fig.add_subplot(projection='3d')
+    # ax = fig.add_subplot(projection='3d')
 
-    # plt.title('Kalman Filter increase - bicycle confidence')
-    # plt.plot([obj[1] for obj in original_bicycle_ls], 'r', label='YOLO confidence')
-    # plt.plot([obj[1] for obj in updated_bicycle_ls], 'b', label='IOU model confidence')
-    # # plt.plot(speed, 'g', label='speed of user')
-    # plt.legend()
-
-    plt.title('Kalman Filter - bicycle location')
-    x = np.array([obj[2][0] for obj in original_bicycle_ls])
-    y = np.array([obj[2][1] for obj in original_bicycle_ls])
-    t = np.array([i + 1 for i in range(len(original_bicycle_ls))])
-    ax.scatter3D(x, y, t, c=t, cmap='Reds', label='old')
-    x = np.array([obj[2][0] for obj in updated_bicycle_ls])
-    y = np.array([obj[2][1] for obj in updated_bicycle_ls])
-    ax.scatter3D(x, y, t, c=t, cmap='Blues', label='new')
-    ax.set_xlabel('box x coordinates')
-    ax.set_ylabel('box y coordinates')
-    ax.set_zlabel('frame')
+    plt.title('Kalman Filter - book confidence')
+    plt.plot([obj[1] for obj in original_bicycle_ls], 'r', label='YOLO confidence')
+    plt.plot([obj[1] for obj in updated_bicycle_ls], 'b', label='IOU model confidence')
+    # plt.plot(speed, 'g', label='speed of user')
     plt.legend()
 
+    # plt.title('Kalman Filter - person location')
+    # x = np.array([obj[2][0] for obj in original_bicycle_ls])
+    # y = np.array([obj[2][1] for obj in original_bicycle_ls])
+    # t = np.array([i + 1 for i in range(len(original_bicycle_ls))])
+    # ax.scatter3D(x, y, t, c=t, cmap='Reds', label='old')
+    # x = np.array([obj[2][0] for obj in updated_bicycle_ls])
+    # y = np.array([obj[2][1] for obj in updated_bicycle_ls])
+    # ax.scatter3D(x, y, t, c=t, cmap='Blues', label='new')
+    # ax.set_xlabel('box x coordinates')
+    # ax.set_ylabel('box y coordinates')
+    # ax.set_zlabel('frame')
+    # plt.legend()
+
     plt.show()
-    plt.ginput(1)
+    plt.ginput(1, timeout=3000)

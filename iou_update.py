@@ -94,9 +94,10 @@ def interval_vel_acc_quat(t_imu: int):
     angular_vel_ls = []
     lin_acc_ls = []
     quat_ls = []
+    interval_time_ls = []
     count = 0
     for time in imu_time_ls:  # TODO: this is wrong, the very first ones aren't in video
-        if time < t_imu:
+        if time <= t_imu:
             count += 1
         else:
             break
@@ -107,11 +108,15 @@ def interval_vel_acc_quat(t_imu: int):
         angular_vel_ls.append(gyro)
         lin_acc_ls.append(acc)
         quat_ls.append(quat)
+        if i + 1 < len(imu_time_ls):  # make sure index not out of range
+            interval_time_ls.append((imu_time_ls[i + 1] - imu_time_ls[i]) / 1000)
+        else:
+            interval_time_ls.append(1 / imu_rate)
     del gyro_ls[:count]
     del acc_ls[:count]
     del quaternion_ls[:count]
     del imu_time_ls[:count]
-    return angular_vel_ls, lin_acc_ls, quat_ls
+    return angular_vel_ls, lin_acc_ls, quat_ls, interval_time_ls
 
 
 # loop YOLO and iou
@@ -146,10 +151,11 @@ def update(giou: bool) -> ():
         if debug: print('------the image time stamp is ', img_time)
         imu_time = img2imu_time(img_time)
         if debug: print('------the closest imu time is ', imu_time)
-        angular_vel_ls, lin_acc_ls, quat_ls = interval_vel_acc_quat(imu_time)
+        angular_vel_ls, lin_acc_ls, quat_ls, interval_time_ls = interval_vel_acc_quat(imu_time)
         assert len(angular_vel_ls) == len(lin_acc_ls), 'length of angular vel and linear acc not the same'
         assert len(angular_vel_ls) == len(quat_ls), 'length of angular vel and quaternion not the same'
-        if debug: print('------loaded imu data during this interval')
+        assert len(angular_vel_ls) == len(interval_time_ls), 'length of angular vel and interval time not the same'
+        if debug: print('------loaded imu data during this interval. ', 'number of data: ', len(angular_vel_ls))
 
         # process image
         objects: [] = process_img(img_path)
@@ -171,7 +177,7 @@ def update(giou: bool) -> ():
                 # cur_orientation = Quaternion(quat_ls[k][0], quat_ls[k][1], quat_ls[k][2], quat_ls[k][3])
 
                 delta_dx, delta_dy = compute_displacement_pr(vx, vy, vz, get_distance_center(prev_obj[2]),
-                                                             get_angle(prev_obj[2]), delta_t=(1 / imu_rate))
+                                                             get_angle(prev_obj[2]), delta_t=interval_time_ls[k])
                 dx += delta_dx
                 dy += delta_dy
 

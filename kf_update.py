@@ -1,11 +1,12 @@
 from darknet.darknet import performDetect
 from observation_parser import parse_yolo_output
-from kf.kf_v4 import f
+from kf.kf_v4 import f, input_dim
 from object_dict import object_name_to_index
-from kf.make_observation import observation_to_nparray_v4, nparray_to_observation_v4, make_u
+from kf.make_observation import observation_to_nparray_v4, nparray_to_observation_v4, make_u, make_u_quaternion
 from config import *
 import os
 import numpy as np
+from pyquaternion import Quaternion
 
 
 # get the images from input
@@ -16,13 +17,15 @@ for image in os.scandir(image_directory):
 img_path_ls.sort()
 
 
-# incorporate IMU and depth info
+# incorporate IMU info
 gyro_ls = np.loadtxt(gyro_path, delimiter=',')
 acc_ls = np.loadtxt(acc_path, delimiter=',')
+quaternion_ls = np.loadtxt(quaternion_path, delimiter=',')
 imu_time_ls = np.loadtxt(imu_time_path, delimiter=',')
 img_time_ls = np.loadtxt(img_time_path, delimiter=',')
-gyro_ls = list(gyro_ls)
+gyro_ls = list(gyro_ls)  # turn np.array into lists
 acc_ls = list(acc_ls)
+quaternion_ls = list(quaternion_ls)
 imu_time_ls = list(imu_time_ls)
 img_time_ls = list(img_time_ls)
 
@@ -112,31 +115,37 @@ def img2imu_time(t_img: int):
         return bigger_time
 
 
-def interval_vel_acc(t_imu: int):
+def interval_vel_acc_quat(t_imu: int):
     """
-    given an imu_time, return all the gyro & acc info from the start of gyro_ls/acc_ls till imu_time, then remove
-    all things returned from gyro_ls/acc_ls, remove all time from the start till imu_time in imu_time_ls
+    given an imu_time, return all the gyro & acc info from the start of gyro_ls/acc_ls/quaternion_ls till imu_time,
+    then remove all things returned from gyro_ls/acc_ls/quaternion_ls, remove all time from the start till imu_time in
+    imu_time_ls
     input: t_imu, an imu_time
     output1: a list of angular velocities [[vx, vy, vz]]
     output2: a list of linear accelerations [[ax, ay, az]]
+    output3: a list of quaternions [[w, i, j, k]]
     """
     angular_vel_ls = []
     lin_acc_ls = []
+    quat_ls = []
     count = 0
     for time in imu_time_ls:  # TODO: this is wrong, the very first ones aren't in video
-        if time < t_imu:
+        if time <= t_imu:
             count += 1
         else:
             break
     for i in range(count):
         gyro = gyro_ls[i]
         acc = acc_ls[i]
+        quat = quaternion_ls[i]
         angular_vel_ls.append(gyro)
         lin_acc_ls.append(acc)
+        quat_ls.append(quat)
     del gyro_ls[:count]
     del acc_ls[:count]
+    del quaternion_ls[:count]
     del imu_time_ls[:count]
-    return angular_vel_ls, lin_acc_ls
+    return angular_vel_ls, lin_acc_ls, quat_ls
 
 
 # loop YOLO and KF
@@ -149,15 +158,23 @@ def update() -> ():
     """
     original_obser_ls = []
     updated_obser_ls = []
+    prev_orientation = None
     for i in range(len(img_path_ls)):
         if debug: print('------start loop')
 
-        # load info
+        # load image
         path = img_path_ls[i]
         if debug: print('got image path: ', path)
-        angular_speed = gyro_ls[i]
-        vx, vy, vz = angular_speed[0], angular_speed[1], angular_speed[2]
-        if debug: print("------got angular speed: ", vx, vy, vz)
+
+        # load imu
+        img_time = img_time_ls[i][1]
+        if debug: print('------the image time stamp is ', img_time)
+        imu_time = img2imu_time(img_time)
+        if debug: print('------the closest imu time is ', imu_time)
+        angular_vel_ls, lin_acc_ls, quat_ls = interval_vel_acc_quat(imu_time)
+        assert len(angular_vel_ls) == len(lin_acc_ls), 'length of angular vel and linear acc not the same'
+        assert len(angular_vel_ls) == len(quat_ls), 'length of angular vel and quaternion not the same'
+        if debug: print('------loaded imu data during this interval. ', 'number of data: ', len(angular_vel_ls))
 
         # process img
         objs_ls = process_img(path)
@@ -165,7 +182,16 @@ def update() -> ():
         if debug: print('------processed img')
 
         # predict
-        u = make_u(img_array, vx, vy, vz)
+        u = np.zeros((input_dim, 1))
+        for av in angular_vel_ls:
+            du = make_u(img_array, av[0], av[1], av[2])
+            u = u + du
+        # q = quat_ls[-1]
+        # if debug: print("------the current quaternion is ", q)
+        # cur_orientation = Quaternion(q[0], q[1], q[2], q[3])
+        # delta_ori = Quaternion() if prev_orientation is None else cur_orientation * prev_orientation.inverse
+        # prev_orientation = cur_orientation
+        # u = make_u_quaternion(img_array, delta_ori)
         if debug: print('------got input array u')
         f.predict(u=u)
         if debug: print('------predicted')

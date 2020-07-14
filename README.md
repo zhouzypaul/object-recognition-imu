@@ -168,8 +168,7 @@ to customized your own compare settings, please edit `iou_output/iou_compare.py`
 
 Reach out to me at one of the following places!
 
-- Website at <a href="https://paulzhou69.github.io/" target="_blank">`https://paulzhou69.github.io/` </a>
-- Email at `paul_zhou@brown.edu`
+- Leave comments on my website: <a href="https://paulzhou69.github.io/" target="_blank">`https://paulzhou69.github.io/` </a>
 
 
 

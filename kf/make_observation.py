@@ -1,9 +1,11 @@
 import numpy as np
+from pyquaternion import Quaternion
 from kf.kf_v1 import TOTOALNUM, NUMVARS
-from kf.kf_v4 import dim, num_max, num_obj, num_var, iX, input_dim
+from kf.kf_v4 import input_dim
 from object_dict import index_to_object
 from imu.image_info import get_angle, get_distance_center
-from imu.displacement import compute_displacement_pr
+from imu.displacement import compute_displacement_pr, compute_displacement_quaternion
+from config import *
 
 
 def observation_to_nparray_v1(observ: []) -> np.array:
@@ -90,7 +92,23 @@ def make_u(arr: np.array, vx: float, vy: float, vz: float) -> np.array:
             end_index = start_index + num_var
             box: np.array = arr[start_index + iX: end_index]
             box: () = tuple(box)  # convert the np.array to tuple
-            dx, dy = compute_displacement_pr(vx, vy, vz, get_distance_center(box), get_angle(box))
+            dx, dy = compute_displacement_pr(vx, vy, vz, get_distance_center(box), get_angle(box), delta_t=(1 / imu_rate))
+            u[pointer], u[pointer + 1] = dx, dy
+        pointer += 2
+    return u
+
+
+def make_u_quaternion(arr: np.array, delta_q: Quaternion) -> np.array:
+    """
+    input: using the current state array arr and three angular velocities vx, vy, vz
+    output: the control-input u
+    """
+    u = np.zeros((input_dim, 1))
+    pointer = 0
+    for i in range(num_max * num_obj):
+        start_index = i * num_var
+        if arr[start_index] != 0:
+            dx, dy = compute_displacement_quaternion(delta_q)
             u[pointer], u[pointer + 1] = dx, dy
         pointer += 2
     return u
