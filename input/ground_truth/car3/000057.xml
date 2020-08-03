@@ -1,0 +1,35 @@
+<annotation>
+	<folder>ILSVRC2015_VID_train_0001/ILSVRC2015_train_00176007</folder>
+	<filename>000057</filename>
+	<source>
+		<database>ILSVRC_2015</database>
+	</source>
+	<size>
+		<width>1280</width>
+		<height>720</height>
+	</size>
+	<object>
+		<trackid>0</trackid>
+		<name>n02958343</name>
+		<bndbox>
+			<xmax>947</xmax>
+			<xmin>592</xmin>
+			<ymax>490</ymax>
+			<ymin>282</ymin>
+		</bndbox>
+		<occluded>0</occluded>
+		<generated>0</generated>
+	</object>
+	<object>
+		<trackid>1</trackid>
+		<name>n02958343</name>
+		<bndbox>
+			<xmax>236</xmax>
+			<xmin>81</xmin>
+			<ymax>184</ymax>
+			<ymin>96</ymin>
+		</bndbox>
+		<occluded>0</occluded>
+		<generated>0</generated>
+	</object>
+</annotation>

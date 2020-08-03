@@ -353,7 +353,7 @@ metaMain = None
 altNames = None
 
 
-def performDetect(imagePath=".darknet/data/dog.jpg", thresh=0.25, configPath="./darknet/cfg/yolov4.cfg",
+def performDetect(imagePath=".darknet/data/dog.jpg", thresh=0.01, configPath="./darknet/cfg/yolov4.cfg",
                   weightPath="darknet/yolov4.weights", metaPath="./darknet/cfg/coco.data", showImage=True,
                   makeImageOnly=False, initOnly=False):
     """

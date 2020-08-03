@@ -1,23 +1,17 @@
-import os
 import numpy as np
 from pyquaternion import Quaternion
-from darknet.darknet import performDetect
-from observation_parser import parse_yolo_output
 from iou.compute import compute_iou, compute_giou
-from iou.increase_confidence import percent_increase, first_time_decrease
+from iou.increase_confidence import percent_increase, percent_decrease
 from iou.move_object import move_object
 from imu.displacement import compute_displacement_pr, compute_displacement_quaternion
 from imu.image_info import get_angle, get_distance_center
 from imu.raw_data import rotate_orientation
+from update_functions import *
 from config import *
 
 
 # get the images from input
-img_path_ls = []  # a list of image paths
-for image in os.scandir(image_directory):
-    if image.path.endswith('.jpg') or image.path.endswith('.png') and image.is_file():
-        img_path_ls.append(image.path)
-img_path_ls.sort()
+img_path_ls = get_img_path(image_directory)
 
 
 # incorporate IMU info
@@ -31,34 +25,6 @@ acc_ls = list(acc_ls)
 quaternion_ls = list(quaternion_ls)
 imu_time_ls = list(imu_time_ls)
 img_time_ls = list(img_time_ls)
-
-
-# process single result form darknet
-def process_img(img_path: str) -> []:
-    """
-    input: a str, absolute path to the img
-    output: a list of objs, [obj1, obj2, ....],
-            where obj = [class1, class2, ... , class80]
-            where class = ('tag', confidence, (x, y, w, h))
-            The X and Y coordinates are from the center of the bounding box, w & h are width and height of the box
-    """
-    if not os.path.exists(img_path):
-        raise ValueError("Invalid image path: " + img_path)
-    detect_result: {} = performDetect(imagePath=img_path, thresh=0.10,
-                                      metaPath="./darknet/cfg/kf_coco.data", showImage=saveImage)
-    parsed_result: [] = parse_yolo_output(detect_result)
-    return parsed_result
-
-
-def get_max_con_class(full_distr: []) -> ():
-    """
-    get the class with greatest confidence in an object with full probability distribution \
-    input: [class1, class2, ... , class80]
-            where class = ('tag', confidence, (x, y, w, h))
-    output: classN, the class with the greatest confidence
-    """
-    sorted_list = sorted(full_distr, key=lambda x: -x[1])
-    return sorted_list[0]
 
 
 def img2imu_time(t_img: int):
@@ -131,7 +97,6 @@ def update(giou: bool) -> ():
             updated_obser_ls: the recognition result after being updated with IMU info
             iou_ls: the list of top IOU for each obj
     """
-    global current_obj_max_iou
     original_obser_ls = []
     updated_obser_ls = []
     iou_ls = []
@@ -146,30 +111,34 @@ def update(giou: bool) -> ():
         img_path = img_path_ls[i]
         if debug: print("------got path: ", img_path)
 
-        # load imu
-        img_time = img_time_ls[i][1]
-        if debug: print('------the image time stamp is ', img_time)
-        imu_time = img2imu_time(img_time)
-        if debug: print('------the closest imu time is ', imu_time)
-        angular_vel_ls, lin_acc_ls, quat_ls, interval_time_ls = interval_vel_acc_quat(imu_time)
-        assert len(angular_vel_ls) == len(lin_acc_ls), 'length of angular vel and linear acc not the same'
-        assert len(angular_vel_ls) == len(quat_ls), 'length of angular vel and quaternion not the same'
-        assert len(angular_vel_ls) == len(interval_time_ls), 'length of angular vel and interval time not the same'
-        if debug: print('------loaded imu data during this interval. ', 'number of data: ', len(angular_vel_ls))
-
         # process image
         objects: [] = process_img(img_path)
         if debug: print("------processed img: ", len(objects), "objects detected")
 
+        # load imu
+        # img_time = img_time_ls[i][1]  # TODO: change this back to the model
+        # if debug: print('------the image time stamp is ', img_time)
+        # imu_time = img2imu_time(img_time)
+        # if debug: print('------the closest imu time is ', imu_time)
+        # angular_vel_ls, lin_acc_ls, quat_ls, interval_time_ls = interval_vel_acc_quat(imu_time)
+        # assert len(angular_vel_ls) == len(lin_acc_ls), 'length of angular vel and linear acc not the same'
+        # assert len(angular_vel_ls) == len(quat_ls), 'length of angular vel and quaternion not the same'
+        # assert len(angular_vel_ls) == len(interval_time_ls), 'length of angular vel and interval time not the same'
+        # if debug: print('------loaded imu data during this interval. ', 'number of data: ', len(angular_vel_ls))
+        angular_vel_ls = [[0, 0, 0]]
+        # for i in range(NUM_FRAME): angular_vel_ls.append([0, 0, 0])
+        interval_time_ls = [1 / fps]
+        # for i in range(NUM_FRAME): interval_time_ls.append(1 / fps)
+
         # move objects in previous frame
         moved_objs = []  # the list for old objs after they've been moved to the new predicted location
+        # q = quat_ls[-1]  # get the current quaternion as orientation
+        # if debug: print("--------the current quaternion is ", q)
+        # cur_orientation = Quaternion(q[0], q[1], q[2], q[3])
+        # delta_ori = Quaternion() if prev_orientation is None else cur_orientation * prev_orientation.inverse
+        # if debug: print("--------the delta quaternion is ", delta_ori)
         for prev_obj in previous_objects:
             if debug: print("--------previous object is :", prev_obj)
-            # q = quat_ls[-1]  # get the current quaternion as orientation
-            # if debug: print("--------the current quaternion is ", q)
-            # cur_orientation = Quaternion(q[0], q[1], q[2], q[3])
-            # delta_ori = Quaternion() if prev_orientation is None else cur_orientation * prev_orientation.inverse
-            # prev_orientation = cur_orientation
             dx, dy = 0, 0  # initialize dx, dy
             for k in range(len(angular_vel_ls)):  # integrate the imu info between two frames to get actual displacement
                 vx, vy, vz = angular_vel_ls[k][0], angular_vel_ls[k][1], angular_vel_ls[k][2]
@@ -200,10 +169,12 @@ def update(giou: bool) -> ():
                 # cur_vy += ay * (1 / imu_rate)
 
             # dx, dy = compute_displacement_quaternion(delta_ori)
+            dx, dy = 0, 0  # TODO: delete this line
             if debug: print("--------displacement dx, dy: ", dx, dy)
             moved_obj = move_object(prev_obj, dx, dy)
             if debug: print("--------moved previous obj to: ", moved_obj)
             moved_objs.append(moved_obj)
+        # prev_orientation = cur_orientation
 
         # process current frame
         processed_objs = []  # the list for objs after confidence are increased
@@ -214,12 +185,15 @@ def update(giou: bool) -> ():
             if debug: print("------current most likely object: ", max_con_class)
             # if debug: print("--------current object with full distribution: ", current_obj)
             if get_original:
-                unprocessed_objs.append(max_con_class)
-                if debug: print("------original object is", max_con_class)
+                if max_con_class[1] > detection_thresh:
+                    unprocessed_objs.append(max_con_class)
+                    if debug: print("------original object is", max_con_class)
             current_obj_ious = {}  # keys: class tags, values: iou score for that class, for the current object
             if max_con_class[0] not in seen_objects:  # if the object is not seen during previous part of the video
-                first_time_decrease(current_obj, max_con_class[0], percent=0.2)
+                percent_decrease(current_obj, max_con_class[0], percent=0.2)
                 seen_objects.append(max_con_class[0])
+
+            # INCREASE CONFIDENCE
             for old_obj in moved_objs:
                 # iou_score = compute_iou(old_obj[2], current_obj[0][2])
                 if giou:
@@ -235,8 +209,10 @@ def update(giou: bool) -> ():
                         current_obj_ious[old_obj[0]] = iou_score
                 if iou_score >= iou_thresh:
                     percent_increase(current_obj, old_obj[0], percent=0.5)  # TODO: can change increase method here
+
+            # WRAPPING UP
             new_max_con_class = get_max_con_class(current_obj)
-            processed_objs.append(new_max_con_class)
+            if new_max_con_class[1] > detection_thresh: processed_objs.append(new_max_con_class)
             if debug: print('------adding object: ', new_max_con_class)
             if get_iou:
                 if new_max_con_class[0] in current_obj_ious:

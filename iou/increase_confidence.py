@@ -56,7 +56,7 @@ def decrease_others(obj: []) -> []:
     # TODO:
 
 
-def first_time_decrease(obj: [], tag: str, percent: float = 0.2):
+def percent_decrease(obj: [], tag: str, percent: float = 0.2):
     """
     if a tag is seen for the first time in a video sequence, we decrease it's confidence by percent percent
         input: obj = [class1, class2, ... , class80], where class = ('tag', con, (x, y, w, h))

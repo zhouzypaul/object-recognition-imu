@@ -10,12 +10,14 @@ from config import *
 rename()
 
 # load the iou files
-with open(iou_output_path + 'original_store_iou.csv', 'r') as f:
+with open(iou_output_path + 'original_store_iou.json', 'r') as f:
     original = json.load(f)
-with open(iou_output_path + 'updated_store_iou.csv', 'r') as f:
+with open(iou_output_path + 'updated_store_iou.json', 'r') as f:
     updated = json.load(f)
 with open(iou_output_path + 'iou.csv', 'r') as f:
     iou = json.load(f)
+with open(iou_output_path + 'iou_without_displacement.csv') as f:
+    no_imu_iou = json.load(f)
 gyro: np.array = np.loadtxt(gyro_path, delimiter=',')
 
 
@@ -30,7 +32,7 @@ def is_tvmonitor(obj: []):
     """
     see if an object is a bicycle
     """
-    if obj[0] == 'bed':
+    if obj[0] == 'tvmonitor':
         return True
     else:
         return False
@@ -57,9 +59,32 @@ def create_single_item_ls(from_list: [], func, con=0) -> []:
 original_bicycle_ls = create_single_item_ls(original, is_tvmonitor)
 updated_bicycle_ls = create_single_item_ls(updated, is_tvmonitor)
 iou_bicycle_ls = create_single_item_ls(iou, is_tvmonitor)
+no_imu_iou_bicycle_ls = create_single_item_ls(no_imu_iou, is_tvmonitor)
 """
 in the form of [pic1, pic2, .. ] where pic = [] or ['bicycle', con, [x, y, w, h]]
 """
+
+
+N = len(iou_bicycle_ls)
+# assert len(iou_bicycle_ls) == len(no_imu_iou_bicycle_ls), "different length list"  # TODO
+iou_sum = 0
+for i in iou_bicycle_ls:
+    iou_sum += i[1]
+no_imu_iou_sum = 0
+for i in no_imu_iou_bicycle_ls:
+    no_imu_iou_sum += i[1]
+print('the original is: ', no_imu_iou_sum / N)
+print('the updated is: ', iou_sum / N)
+
+# N = len(iou_bicycle_ls)
+# assert len(iou_bicycle_ls) == len(no_imu_iou_bicycle_ls), "different length list"
+# difference = 0
+# for i in range(len(iou_bicycle_ls)):
+#     if no_imu_iou_bicycle_ls[i][1] != 0:
+#         difference = max((iou_bicycle_ls[i][1] - no_imu_iou_bicycle_ls[i][1]) / no_imu_iou_bicycle_ls[i][1], difference)
+#     else:
+#         difference = max((iou_bicycle_ls[i][1] - 0.0001) / 0.0001, difference)
+# print('difference is: ', difference)
 
 
 def compare():
@@ -67,11 +92,11 @@ def compare():
     plt.ion()
     plt.figure()
 
-    plt.title('IOU - bed confidence')
+    plt.title('IOU - person confidence')
     plt.plot([obj[1] for obj in original_bicycle_ls], 'r', label='YOLO confidence')
     plt.plot([obj[1] for obj in updated_bicycle_ls], 'b', label='IOU model confidence')
     plt.plot([obj[1] for obj in iou_bicycle_ls], 'y', label='IOU score')
-    plt.plot([iou_thresh for i in range(90)], 'k', label='IOU threshold')
+    plt.plot([iou_thresh for i in range(100)], 'k', label='IOU threshold')
     # plt.plot(speed, 'g', label='speed of user')
     plt.legend()
 

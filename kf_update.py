@@ -6,15 +6,17 @@ from kf.make_observation import observation_to_nparray_v4, nparray_to_observatio
 from config import *
 import os
 import numpy as np
+from update_functions import get_img_path
 from pyquaternion import Quaternion
 
 
 # get the images from input
-img_path_ls = []  # a list of image paths
-for image in os.scandir(image_directory):
-    if image.path.endswith('.jpg') or image.path.endswith('.png') and image.is_file():
-        img_path_ls.append(image.path)
-img_path_ls.sort()
+img_path_ls = get_img_path(image_directory)
+# img_path_ls = []  # a list of image paths
+# for image in os.scandir(image_directory):
+#     if image.path.endswith('.jpg') or image.path.endswith('.png') and image.is_file():
+#         img_path_ls.append(image.path)
+# img_path_ls.sort()
 
 
 # incorporate IMU info
@@ -166,26 +168,28 @@ def update() -> ():
         path = img_path_ls[i]
         if debug: print('got image path: ', path)
 
-        # load imu
-        img_time = img_time_ls[i][1]
-        if debug: print('------the image time stamp is ', img_time)
-        imu_time = img2imu_time(img_time)
-        if debug: print('------the closest imu time is ', imu_time)
-        angular_vel_ls, lin_acc_ls, quat_ls = interval_vel_acc_quat(imu_time)
-        assert len(angular_vel_ls) == len(lin_acc_ls), 'length of angular vel and linear acc not the same'
-        assert len(angular_vel_ls) == len(quat_ls), 'length of angular vel and quaternion not the same'
-        if debug: print('------loaded imu data during this interval. ', 'number of data: ', len(angular_vel_ls))
-
         # process img
         objs_ls = process_img(path)
         img_array, unprocessed = img_to_array(objs_ls)
         if debug: print('------processed img')
 
+        # load imu
+        # img_time = img_time_ls[i][1]
+        # if debug: print('------the image time stamp is ', img_time)
+        # imu_time = img2imu_time(img_time)
+        # if debug: print('------the closest imu time is ', imu_time)
+        # angular_vel_ls, lin_acc_ls, quat_ls = interval_vel_acc_quat(imu_time)
+        # assert len(angular_vel_ls) == len(lin_acc_ls), 'length of angular vel and linear acc not the same'
+        # assert len(angular_vel_ls) == len(quat_ls), 'length of angular vel and quaternion not the same'
+        # if debug: print('------loaded imu data during this interval. ', 'number of data: ', len(angular_vel_ls))
+        angular_vel_ls = [[0, 0, 0]]  # TODO: delete this
+        interval_time_ls = [1 / fps]
+
         # predict
         u = np.zeros((input_dim, 1))
         for av in angular_vel_ls:
             du = make_u(img_array, av[0], av[1], av[2])
-            u = u + du
+            # u = u + du  # TODO: change this
         # q = quat_ls[-1]
         # if debug: print("------the current quaternion is ", q)
         # cur_orientation = Quaternion(q[0], q[1], q[2], q[3])
@@ -211,22 +215,3 @@ def update() -> ():
         if debug: print('------added to updated_obser_ls')
         if debug: print('------finished loop')
     return original_obser_ls, updated_obser_ls
-
-
-# process result of darknet from detect_image, this gives the full probability distribution
-# image = cv2.imread("darknet/data/person.jpg")
-# detect_result = detect(net="./darknet/cfg/yolov3.cfg", meta="./darknet/cfg/kf_coco.data", image=image, thresh=.5,
-#                        hier_thresh=.5, nms=.45)
-
-# process batch result from darknet
-"""
-the result is in the form of ([[batch_boxes]], [[batch_scores]], [[batch_classes]])
-"""
-# batch_detect_result = performBatchDetect(thresh=0.70,
-#                                          configPath="./darknet/cfg/yolov3.cfg",
-#                                          weightPath="darknet/yolov3.weights",
-#                                          metaPath="./darknet/cfg/kf_coco.data",
-#                                          batch_size=3,
-#                                          input_images=['darknet/data/person.jpg', 'darknet/data/horses.jpg', 'darknet/data/dog.jpg'])
-# parsed_batch_result: [] = parse_yolo_batch_output(batch_detect_result)
-# batch_result_array = observation_to_nparray_v2(parsed_batch_result)  # convert the result to a numpy array

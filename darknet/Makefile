@@ -1,9 +1,9 @@
-GPU=0
+GPU=1
 CUDNN=0
 CUDNN_HALF=0
 OPENCV=1
-AVX=1
-OPENMP=1
+AVX=0
+OPENMP=0
 LIBSO=1
 ZED_CAMERA=0 # ZED SDK 3.0 and above
 ZED_CAMERA_v2_8=0 # ZED SDK 2.X
@@ -31,7 +31,7 @@ OS := $(shell uname)
 # ARCH= -gencode arch=compute_70,code=[sm_70,compute_70]
 
 # GeForce RTX 2080 Ti, RTX 2080, RTX 2070, Quadro RTX 8000, Quadro RTX 6000, Quadro RTX 5000, Tesla T4, XNOR Tensor Cores
-# ARCH= -gencode arch=compute_75,code=[sm_75,compute_75]
+ ARCH= -gencode arch=compute_75,code=[sm_75,compute_75]
 
 # Jetson XAVIER
 # ARCH= -gencode arch=compute_72,code=[sm_72,compute_72]
@@ -66,7 +66,7 @@ endif
 
 CPP=g++ -std=c++11
 # NVCC=nvcc
-NVCC=/usr/local/cuda/bin/nvcc
+NVCC=/usr/local/cuda-10.1/bin/nvcc
 OPTS=-Ofast
 LDFLAGS= -lm -pthread
 COMMON= -Iinclude/ -I3rdparty/stb/include
@@ -102,20 +102,20 @@ LDFLAGS+= -lgomp
 endif
 
 ifeq ($(GPU), 1)
-COMMON+= -DGPU -I/usr/local/cuda/include/
+COMMON+= -DGPU -I/usr/local/cuda-10.1/include/
 CFLAGS+= -DGPU
 ifeq ($(OS),Darwin) #MAC
-LDFLAGS+= -L/usr/local/cuda/lib -lcuda -lcudart -lcublas -lcurand
+LDFLAGS+= -L/usr/local/cuda-10.1/lib -lcuda -lcudart -lcublas -lcurand
 else
-LDFLAGS+= -L/usr/local/cuda/lib64 -lcuda -lcudart -lcublas -lcurand
+LDFLAGS+= -L/usr/local/cuda-10.1/lib64 -lcuda -lcudart -lcublas -lcurand
 endif
 endif
 
 ifeq ($(CUDNN), 1)
 COMMON+= -DCUDNN
 ifeq ($(OS),Darwin) #MAC
-CFLAGS+= -DCUDNN -I/usr/local/cuda/include
-LDFLAGS+= -L/usr/local/cuda/lib -lcudnn
+CFLAGS+= -DCUDNN -I/usr/local/cuda-10.1/include
+LDFLAGS+= -L/usr/local/cuda-10.1/lib -lcudnn
 else
 CFLAGS+= -DCUDNN -I/usr/local/cudnn/include
 LDFLAGS+= -L/usr/local/cudnn/lib64 -lcudnn

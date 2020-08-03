@@ -4,13 +4,43 @@
 debug = True  # set this to true to print informative messages
 
 
+# detection
+detection_thresh = 0.4
+moved_iou_thresh = 0.4
+N = 4
+decay_rate = 0.5
+delta_score = 0.2
+OBJ_NAME = 'person'
+TEST_NAME = OBJ_NAME + ''
+test_thresh = 0.5
+frame_num_dict = {
+    'boat': 89,
+    'bird': 71,
+    'person': 194,
+    'dog': 660,
+    'cat': 85,
+    'zebra': 121,
+    'car': 93,
+    'car2': 81,
+    'car3': 152,
+    'motorbike': 96,
+    'aeroplane': 1419,
+    'bear': 287,
+    'sheep': 102,
+    'bear2': 78,
+    'boat2': 43
+}
+NUM_FRAME = frame_num_dict[TEST_NAME]
+
+
 # compare results
 get_original = True
 saveImage = False  # save the image with bounding boxes
 
 
 # paths
-image_directory = "./input/image"  # input images, used in kf_update.py & iou_update.py
+ground_truth_directory = "./input/ground_truth/" + TEST_NAME
+image_directory = "./input/image/" + TEST_NAME  # input images, used in kf_update.py & iou_update.py
 quaternion_path = 'imu/quaternion.csv'
 gyro_path = 'imu/gyro_data.csv'
 acc_path = 'imu/acc_data.csv'
@@ -24,7 +54,7 @@ kf_output_path = './kf_output/'  # the directory of outputs of KF, used in kf_up
 
 # camera info
 default_depth = 3  # the distance between the camera and the object seen, in meters
-fps = 4  # frame rate of camera
+fps = 30  # frame rate of camera
 dt = 1 / fps
 width_angle = 159  # in degrees, the width angle of view from the RGB camera
 height_angle = 127  # in degrees, the height angle of view from the RGB camera

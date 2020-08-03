@@ -11,7 +11,8 @@ def compute_displacement_quaternion(q: Quaternion):
     output: the displacement between two frames: dx, dy in pixel units
     """
     inertial_z = Quaternion(0, 0, 0, 1)  # z axis in the inertial frame
-    body_z = q * inertial_z * q.inverse  # z axis rotated to the body frame
+    body_z = q * inertial_z * q.inverse  # z axis rotated to the body frame, new rotate to old
+    assert math.isclose(body_z.w, 0, abs_tol=1e-9), 'quaternion real part not 0'
     vector = np.array(body_z.axis)
     xz_projection = np.array([vector[0], 0, vector[2]])  # vector projected on the xz plane
     # x_angle = math.degrees(math.acos(np.dot(xz_projection, np.array([0, 0, 1])) / np.linalg.norm(xz_projection))) \
