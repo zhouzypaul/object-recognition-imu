@@ -6,7 +6,7 @@ from kf.make_observation import observation_to_nparray_v4, nparray_to_observatio
 from config import *
 import os
 import numpy as np
-from update_functions import get_img_path
+from update_functions import get_img_path, strip_overconfidence, strip_under_output_thresh
 from pyquaternion import Quaternion
 
 
@@ -84,17 +84,6 @@ def first_state():
     if debug: print('------got first img')
     f.x = first_result
     if debug: print('------changed first state of kf')
-
-
-def strip_overconfidence(objs_ls: []):
-    """
-    update the objects list so that none of the confidence will reach over 1
-    """
-    for i in range(len(objs_ls)):
-        obj = objs_ls[i]
-        if obj[1] > 1:  # confidence is greater than 1
-            new_obj = (obj[0], 1, obj[2])
-            objs_ls[i] = new_obj
 
 
 def img2imu_time(t_img: int):
@@ -208,7 +197,9 @@ def update() -> ():
         updated_obser: [] = nparray_to_observation_v4(f.x, unprocessed)
         if debug: print('------change back to observation')
         strip_overconfidence(objs_ls)
+        objs_ls = strip_under_output_thresh(objs_ls)
         strip_overconfidence(updated_obser)
+        updated_obser = strip_under_output_thresh(updated_obser)
         original_obser_ls.append(objs_ls)
         if debug: print('------added to original_obser_ls')
         updated_obser_ls.append(updated_obser)

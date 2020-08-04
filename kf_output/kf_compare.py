@@ -11,9 +11,9 @@ from .rename import rename
 # rename()
 
 # load the iou files
-with open(kf_output_path + 'original_store.csv', 'r') as f:
+with open(kf_output_path + 'original_store.json', 'r') as f:
     original = json.load(f)
-with open(kf_output_path + 'updated_store.csv', 'r') as f:
+with open(kf_output_path + 'updated_store.json', 'r') as f:
     updated = json.load(f)
 gyro: np.array = np.loadtxt(gyro_path, delimiter=',')
 
@@ -69,7 +69,7 @@ def compare():
     plt.title('Kalman Filter - book confidence')
     plt.plot([obj[1] for obj in original_bicycle_ls], 'r', label='YOLO confidence')
     plt.plot([obj[1] for obj in updated_bicycle_ls], 'b', label='IOU model confidence')
-    # plt.plot(speed, 'g', label='speed of user')
+    plt.plot(speed, 'g', label='speed of user')
     plt.legend()
 
     # plt.title('Kalman Filter - person location')

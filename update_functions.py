@@ -84,3 +84,18 @@ def eligibility_score(tag: str, prev_ls: [], init_weight: float = 0.1, weight_in
         count += 1
     return score
 
+
+def strip_overconfidence(objs_ls: []):
+    """
+    update the objects list so that none of the confidence will reach over 1
+    """
+    for i in range(len(objs_ls)):
+        obj = objs_ls[i]
+        if obj[1] > 1:  # confidence is greater than 1
+            new_obj = (obj[0], 1, obj[2])
+            objs_ls[i] = new_obj
+
+
+def strip_under_output_thresh(objs_ls: []):
+    ls = filter(lambda x: x[1] >= detection_thresh, objs_ls)
+    return list(ls)
