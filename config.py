@@ -10,8 +10,8 @@ moved_iou_thresh = 0.4
 N = 4
 decay_rate = 0.5
 delta_score = 0.2
-OBJ_NAME = 'boat'
-TEST_NAME = OBJ_NAME + '2'
+OBJ_NAME = 'car'
+TEST_NAME = OBJ_NAME + '3'
 test_thresh = 0.5
 frame_num_dict = {
     'boat': 89,
@@ -40,7 +40,7 @@ saveImage = False  # save the image with bounding boxes
 
 # paths
 ground_truth_directory = "./input/ground_truth/" + TEST_NAME
-image_directory = "./input/image/" # + TEST_NAME  # input images, used in kf_update.py & iou_update.py
+image_directory = "./input/image/" + TEST_NAME  # input images, used in kf_update.py & iou_update.py
 quaternion_path = 'imu/quaternion.csv'
 gyro_path = 'imu/gyro_data.csv'
 acc_path = 'imu/acc_data.csv'

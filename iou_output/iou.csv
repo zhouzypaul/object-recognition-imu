@@ -1,3607 +1,1989 @@
 [
   [
     [
-      "cup",
+      "truck",
       0
     ],
     [
-      "cup",
+      "boat",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "truck",
       0
     ],
     [
-      "mouse",
+      "truck",
       0
     ],
     [
-      "mouse",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "vase",
+      "truck",
       0
     ],
     [
-      "mouse",
+      "truck",
       0
     ],
     [
-      "book",
+      "car",
       0
+    ]
+  ],
+  [
+    [
+      "truck",
+      0
     ],
     [
-      "vase",
+      "boat",
       0
     ],
     [
-      "pottedplant",
+      "car",
       0
     ],
+    [
+      "truck",
+      0
+    ]
+  ],
+  [
     [
-      "banana",
+      "truck",
       0
     ],
     [
-      "bottle",
+      "boat",
       0
     ],
     [
-      "laptop",
+      "boat",
       0
     ],
     [
-      "laptop",
+      "car",
       0
     ],
     [
-      "chair",
+      "traffic light",
       0
     ]
   ],
   [
-    [
-      "cup",
-      0
-    ],
     [
-      "tvmonitor",
+      "truck",
       0
     ],
     [
-      "cup",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "boat",
       0
     ],
     [
-      "mouse",
+      "truck",
       0
     ],
     [
-      "mouse",
+      "boat",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "vase",
+      "truck",
       0
     ],
     [
-      "bottle",
+      "car",
       0
     ],
     [
-      "banana",
+      "train",
       0
     ],
     [
-      "pottedplant",
+      "truck",
       0
     ],
     [
-      "vase",
+      "boat",
       0
     ],
     [
-      "mouse",
+      "boat",
       0
     ]
   ],
   [
     [
-      "cup",
+      "boat",
       0
     ],
     [
-      "cup",
+      "boat",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
     ],
     [
-      "vase",
+      "boat",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "mouse",
+      "boat",
       0
     ],
     [
-      "mouse",
+      "boat",
       0
     ],
     [
-      "mouse",
+      "truck",
       0
     ],
     [
-      "pottedplant",
+      "truck",
       0
     ],
     [
-      "cup",
+      "boat",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "cup",
+      "train",
       0
     ],
     [
-      "cup",
+      "truck",
       0
     ],
     [
-      "mouse",
+      "boat",
       0
     ],
     [
-      "vase",
+      "boat",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
     ]
   ],
   [
-    [
-      "cup",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
     [
-      "cup",
+      "truck",
       0
     ],
     [
-      "mouse",
+      "boat",
       0
     ],
     [
-      "mouse",
+      "car",
       0
     ],
     [
-      "cup",
+      "boat",
       0
     ],
     [
-      "mouse",
+      "boat",
       0
     ],
     [
-      "vase",
+      "truck",
       0
     ]
   ],
   [
     [
-      "cup",
+      "boat",
       0
     ],
     [
-      "cup",
+      "truck",
       0
     ],
     [
-      "tvmonitor",
+      "boat",
       0
     ],
     [
-      "tvmonitor",
+      "boat",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "vase",
+      "boat",
       0
     ],
     [
-      "cup",
+      "boat",
       0
     ],
     [
-      "mouse",
+      "truck",
       0
     ],
     [
-      "cup",
+      "boat",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "mouse",
+      "boat",
       0
     ],
     [
-      "cup",
+      "boat",
       0
     ],
     [
-      "cup",
+      "truck",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "cup",
+      "boat",
       0
     ],
     [
-      "cup",
+      "boat",
       0
     ],
     [
-      "cup",
+      "truck",
       0
     ]
   ],
   [
     [
-      "cup",
+      "boat",
       0
     ],
     [
-      "cup",
+      "truck",
       0
     ],
     [
-      "tvmonitor",
+      "boat",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "boat",
       0
     ],
     [
-      "mouse",
+      "boat",
       0
     ],
     [
-      "vase",
+      "truck",
       0
     ],
     [
-      "cup",
+      "boat",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "cup",
+      "boat",
       0
     ],
     [
-      "cup",
+      "truck",
       0
     ],
     [
-      "mouse",
+      "boat",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "cup",
+      "truck",
       0
     ],
     [
-      "cup",
+      "boat",
       0
     ],
     [
-      "mouse",
+      "car",
       0
     ],
     [
-      "mouse",
+      "boat",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "cup",
+      "truck",
       0
     ],
     [
-      "cup",
+      "car",
       0
     ],
     [
-      "cup",
+      "traffic light",
       0
     ]
   ],
   [
-    [
-      "cup",
-      0
-    ],
     [
-      "cup",
+      "truck",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "traffic light",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "vase",
+      "truck",
       0
     ],
     [
-      "mouse",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "cup",
+      "truck",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "vase",
+      "car",
       0
     ],
     [
-      "cup",
+      "truck",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "mouse",
+      "car",
       0
     ],
     [
-      "cup",
+      "truck",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "cup",
+      "truck",
       0
     ],
     [
-      "cup",
+      "car",
       0
     ]
   ],
   [
     [
-      "tvmonitor",
+      "truck",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "cup",
+      "truck",
       0
     ],
     [
-      "cup",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "mouse",
+      "truck",
       0
     ],
     [
-      "vase",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "cup",
+      "truck",
       0
     ],
     [
-      "cup",
+      "bus",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
     ]
   ],
   [
     [
-      "cup",
+      "truck",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "truck",
       0
     ],
     [
-      "mouse",
+      "bus",
       0
     ],
     [
-      "cup",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "vase",
+      "truck",
       0
     ],
     [
-      "cup",
+      "bus",
       0
     ],
     [
-      "cup",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "cup",
+      "truck",
       0
     ],
     [
-      "mouse",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "cup",
+      "truck",
       0
     ],
+    [
+      "car",
+      0
+    ]
+  ],
+  [
     [
-      "cup",
+      "truck",
       0
     ],
     [
-      "cup",
+      "car",
       0
     ]
   ],
   [
     [
-      "cup",
+      "truck",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "bus",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "cup",
+      "truck",
       0
     ],
     [
-      "mouse",
+      "car",
       0
     ],
     [
-      "vase",
+      "bus",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "mouse",
+      "truck",
       0
     ],
     [
-      "cup",
+      "car",
       0
     ],
     [
-      "cup",
+      "bus",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "cup",
+      "truck",
       0
     ],
     [
-      "cup",
+      "bus",
       0
     ]
   ],
   [
     [
-      "cup",
+      "truck",
       0
     ],
     [
-      "cup",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
     ],
+    [
+      "truck",
+      0
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "truck",
       0
     ],
     [
-      "vase",
+      "car",
       0
     ],
     [
-      "mouse",
+      "boat",
       0
     ],
     [
-      "mouse",
+      "truck",
       0
     ],
     [
-      "cup",
+      "bus",
       0
     ]
   ],
   [
-    [
-      "cup",
-      0
-    ],
     [
-      "tvmonitor",
+      "truck",
       0
     ],
     [
-      "cup",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "mouse",
+      "truck",
       0
     ],
     [
-      "cup",
+      "bus",
       0
     ],
     [
-      "vase",
+      "traffic light",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "cup",
+      "truck",
       0
     ],
     [
-      "cup",
+      "car",
       0
     ],
     [
-      "cup",
+      "truck",
       0
     ]
   ],
   [
     [
-      "tvmonitor",
+      "truck",
       0
     ],
     [
-      "cup",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "cup",
+      "car",
       0
     ],
     [
-      "mouse",
+      "boat",
       0
     ],
     [
-      "vase",
+      "traffic light",
       0
     ],
     [
-      "cup",
+      "truck",
       0
     ],
     [
-      "cup",
+      "truck",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "cup",
+      "car",
       0
     ],
     [
-      "cup",
+      "truck",
       0
     ],
     [
-      "mouse",
+      "truck",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "cup",
+      "car",
       0
     ],
     [
-      "cup",
+      "car",
       0
     ],
     [
-      "cup",
+      "truck",
       0
     ],
     [
-      "cup",
+      "truck",
       0
     ]
   ],
   [
-    [
-      "tvmonitor",
-      0
-    ],
     [
-      "cup",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
     ],
     [
-      "cup",
+      "truck",
       0
     ],
     [
-      "mouse",
+      "boat",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "vase",
+      "car",
       0
     ],
     [
-      "cup",
+      "truck",
       0
     ],
     [
-      "cup",
+      "boat",
       0
     ],
     [
-      "cup",
+      "truck",
       0
     ],
     [
-      "cup",
+      "car",
       0
     ]
   ],
   [
     [
-      "cup",
+      "car",
       0
     ],
     [
-      "cup",
+      "truck",
       0
     ],
     [
-      "cup",
+      "boat",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
     ],
+    [
+      "car",
+      0
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "truck",
       0
     ],
     [
-      "mouse",
+      "car",
       0
     ],
+    [
+      "truck",
+      0
+    ]
+  ],
+  [
     [
-      "cup",
+      "car",
       0
     ],
     [
-      "cup",
+      "truck",
       0
     ],
     [
-      "vase",
+      "car",
       0
     ],
     [
-      "cup",
+      "truck",
       0
     ]
   ],
   [
     [
-      "cup",
+      "car",
       0
     ],
     [
-      "cup",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
     ],
     [
-      "mouse",
+      "truck",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "cup",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "cup",
+      "truck",
       0
     ],
     [
-      "cup",
+      "truck",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "mouse",
+      "car",
       0
     ],
     [
-      "cup",
+      "truck",
       0
     ],
     [
-      "vase",
+      "car",
       0
     ],
     [
-      "cup",
+      "truck",
       0
     ]
   ],
   [
     [
-      "cup",
+      "car",
       0
     ],
     [
-      "cup",
+      "truck",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "mouse",
+      "truck",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "cup",
+      "car",
       0
     ],
     [
-      "cup",
+      "truck",
       0
     ],
     [
-      "cup",
+      "car",
       0
     ],
     [
-      "cup",
+      "truck",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "mouse",
+      "car",
       0
     ],
     [
-      "cup",
+      "truck",
       0
     ],
     [
-      "cup",
+      "truck",
       0
     ]
   ],
   [
     [
-      "cup",
+      "truck",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
     ],
     [
-      "mouse",
+      "car",
       0
     ],
     [
-      "cup",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "cup",
+      "car",
       0
     ],
     [
-      "cup",
+      "truck",
       0
     ],
     [
-      "cup",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "cup",
+      "car",
       0
     ],
     [
-      "cup",
+      "truck",
       0
     ],
     [
-      "mouse",
+      "truck",
       0
     ]
   ],
   [
     [
-      "cup",
+      "car",
       0
     ],
     [
-      "cup",
+      "truck",
       0
     ],
     [
-      "cup",
+      "truck",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "cup",
+      "truck",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "cup",
+      "car",
       0
     ],
     [
-      "cup",
+      "truck",
       0
     ],
     [
-      "mouse",
+      "car",
       0
     ]
   ],
   [
     [
-      "cup",
+      "car",
       0
     ],
     [
-      "cup",
+      "truck",
       0
     ],
     [
-      "cup",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "cup",
+      "car",
       0
     ],
     [
-      "cup",
+      "truck",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "mouse",
+      "car",
       0
     ],
     [
-      "cup",
+      "truck",
       0
     ],
     [
-      "cup",
+      "car",
       0
     ]
   ],
   [
-    [
-      "cup",
-      0
-    ],
     [
-      "cup",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
     ],
     [
-      "cup",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "cup",
+      "car",
       0
     ],
     [
-      "mouse",
+      "truck",
       0
     ],
     [
-      "cup",
+      "car",
       0
     ],
     [
-      "cup",
+      "bus",
       0
     ]
   ],
   [
     [
-      "cup",
+      "car",
       0
     ],
     [
-      "cup",
+      "truck",
       0
     ],
     [
-      "cup",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "cup",
+      "car",
       0
     ],
     [
-      "cup",
+      "truck",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "cup",
+      "person",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "cup",
+      "car",
       0
     ],
     [
-      "mouse",
+      "boat",
       0
     ],
     [
-      "cup",
+      "truck",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
     ]
   ],
   [
     [
-      "cup",
+      "car",
       0
     ],
     [
-      "cup",
+      "boat",
       0
     ],
     [
-      "cup",
+      "car",
       0
     ],
+    [
+      "truck",
+      0
+    ]
+  ],
+  [
     [
-      "mouse",
+      "car",
       0
     ],
     [
-      "cup",
+      "boat",
       0
     ],
     [
-      "cup",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
     ]
   ],
   [
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "bus",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
     ],
     [
-      "mouse",
+      "boat",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
     ],
     [
-      "tvmonitor",
+      "boat",
       0
     ],
     [
-      "tvmonitor",
+      "boat",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
     ]
   ],
   [
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "boat",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
     ],
     [
-      "tvmonitor",
+      "boat",
       0
     ]
   ],
   [
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
     ]
   ],
   [
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ]
-  ],
-  [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ]
-  ],
-  [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ]
-  ],
-  [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ]
-  ],
-  [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ]
-  ],
-  [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ]
-  ],
-  [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ]
-  ],
-  [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ]
-  ],
-  [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ]
-  ],
-  [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ]
-  ],
-  [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ]
-  ],
-  [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ]
-  ],
-  [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ]
-  ],
-  [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ]
-  ],
-  [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ]
-  ],
-  [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ]
-  ],
-  [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ]
-  ],
-  [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ]
-  ],
-  [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ]
-  ],
-  [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ]
-  ],
-  [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ]
-  ],
-  [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ]
-  ],
-  [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ]
-  ],
-  [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ]
-  ],
-  [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ]
-  ],
-  [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ]
-  ],
-  [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ]
-  ],
-  [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ]
-  ],
-  [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ]
-  ],
-  [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ]
-  ],
-  [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ]
-  ],
-  [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ]
-  ],
-  [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ]
-  ],
-  [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ]
-  ],
-  [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ]
-  ],
-  [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ]
-  ],
-  [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ]
-  ],
-  [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ]
-  ],
-  [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ]
-  ],
-  [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ]
-  ],
-  [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ]
-  ],
-  [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
     ]
   ],
   [
-    [
-      "tvmonitor",
-      0
-    ],
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
     ],
     [
-      "tvmonitor",
+      "boat",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
     ],
     [
-      "tvmonitor",
+      "person",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
     ]
   ],
   [
-    [
-      "tvmonitor",
-      0
-    ],
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
-    ],
-    [
-      "tvmonitor",
-      0
     ]
   ],
   [
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
     ]
   ],
   [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "boat",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
     ]
   ],
   [
-    [
-      "tvmonitor",
-      0
-    ],
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
     ]
   ],
   [
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
     ]
   ],
   [
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
     ]
   ],
   [
-    [
-      "tvmonitor",
-      0
-    ],
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
     ]
   ],
   [
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
     ]
   ],
   [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
     ]
   ],
   [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
     ]
   ],
   [
-    [
-      "tvmonitor",
-      0
-    ],
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
     ]
   ],
   [
-    [
-      "tvmonitor",
-      0
-    ],
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
     ]
   ],
   [
-    [
-      "tvmonitor",
-      0
-    ],
-    [
-      "tvmonitor",
-      0
-    ],
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
     ]
   ],
   [
-    [
-      "tvmonitor",
-      0
-    ],
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
     ]
   ],
   [
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
     ]
   ],
   [
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "truck",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
     ]
   ],
   [
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "clock",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
     ],
     [
-      "tvmonitor",
+      "clock",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
     ]
   ],
   [
     [
-      "tvmonitor",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
     ]
   ],
   [
     [
-      "tvmonitor",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
     ]
   ],
   [
     [
-      "tvmonitor",
+      "car",
       0
-    ],
+    ]
+  ],
+  [
     [
-      "tvmonitor",
+      "car",
       0
     ]
   ]

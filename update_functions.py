@@ -66,8 +66,8 @@ def eligibility_score(tag: str, prev_ls: [], init_weight: float = 0.1, weight_in
     if tag is NOT in an item in prev_ls, it contributes negatively to the eligibility score
     the earlier items in prev_ls contributes to the eli_score with a higher weight
     """
-    if not all(prev_ls):  # if all the sublists are empty
-        return 0
+    # if not all(prev_ls):  # if all the sublists are empty
+    #     return 0
     score = 0  # initialize the score
     count = 0  # count of the number of frames we have interated through
     for frame in reversed(prev_ls):  # iterate starting with the later frames, with have a higher weight

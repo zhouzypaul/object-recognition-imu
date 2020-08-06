@@ -32,7 +32,7 @@ def is_tvmonitor(obj: []):
     """
     see if an object is a bicycle
     """
-    if obj[0] == 'tvmonitor':
+    if obj[0] == 'book':
         return True
     else:
         return False
@@ -92,11 +92,11 @@ def compare():
     plt.ion()
     plt.figure()
 
-    plt.title('IOU - person confidence')
+    plt.title('backtrace - cup confidence')
     plt.plot([obj[1] for obj in original_bicycle_ls], 'r', label='YOLO confidence')
-    plt.plot([obj[1] for obj in updated_bicycle_ls], 'b', label='IOU model confidence')
-    plt.plot([obj[1] for obj in iou_bicycle_ls], 'y', label='IOU score')
-    plt.plot([iou_thresh for i in range(100)], 'k', label='IOU threshold')
+    plt.plot([obj[1] for obj in updated_bicycle_ls], 'b', label='backtrace model confidence')
+    # plt.plot([obj[1] for obj in iou_bicycle_ls], 'y', label='IOU score')
+    # plt.plot([iou_thresh for i in range(100)], 'k', label='IOU threshold')
     # plt.plot(speed, 'g', label='speed of user')
     plt.legend()
 
