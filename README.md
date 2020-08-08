@@ -14,7 +14,7 @@
 
 [![INSERT YOUR GRAPHIC HERE](https://github.com/paulzhou69/object-recognition-imu/blob/master/info/hardware.jpg)]()
 
-
+[![HitCount](http://hits.dwyl.com/paulzhou69/object-recognition-imu.svg)](http://hits.dwyl.com/paulzhou69/object-recognition-imu)
 
 ---
 
