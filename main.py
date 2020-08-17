@@ -97,7 +97,7 @@ def run(model: str, use_giou: bool, compare: bool, test: bool):
             else:
                 import iou_update, backtrace_update  # TODO: change this simplification
                 print("--------------------iou main--------------------")
-                original, updated, iou = backtrace_update.update(giou=use_giou)
+                original, updated, iou = iou_update.update(giou=use_giou)
 
                 if get_original:
                     with open(iou_output_path + 'original_store_iou.json', 'w') as f:

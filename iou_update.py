@@ -116,19 +116,17 @@ def update(giou: bool) -> ():
         if debug: print("------processed img: ", len(objects), "objects detected")
 
         # load imu
-        # img_time = img_time_ls[i][1]  # TODO: change this back to the model
-        # if debug: print('------the image time stamp is ', img_time)
-        # imu_time = img2imu_time(img_time)
-        # if debug: print('------the closest imu time is ', imu_time)
-        # angular_vel_ls, lin_acc_ls, quat_ls, interval_time_ls = interval_vel_acc_quat(imu_time)
-        # assert len(angular_vel_ls) == len(lin_acc_ls), 'length of angular vel and linear acc not the same'
-        # assert len(angular_vel_ls) == len(quat_ls), 'length of angular vel and quaternion not the same'
-        # assert len(angular_vel_ls) == len(interval_time_ls), 'length of angular vel and interval time not the same'
-        # if debug: print('------loaded imu data during this interval. ', 'number of data: ', len(angular_vel_ls))
-        angular_vel_ls = [[0, 0, 0]]
-        # for i in range(NUM_FRAME): angular_vel_ls.append([0, 0, 0])
-        interval_time_ls = [1 / fps]
-        # for i in range(NUM_FRAME): interval_time_ls.append(1 / fps)
+        img_time = img_time_ls[i][1]  # TODO: change this back to the model
+        if debug: print('------the image time stamp is ', img_time)
+        imu_time = img2imu_time(img_time)
+        if debug: print('------the closest imu time is ', imu_time)
+        angular_vel_ls, lin_acc_ls, quat_ls, interval_time_ls = interval_vel_acc_quat(imu_time)
+        assert len(angular_vel_ls) == len(lin_acc_ls), 'length of angular vel and linear acc not the same'
+        assert len(angular_vel_ls) == len(quat_ls), 'length of angular vel and quaternion not the same'
+        assert len(angular_vel_ls) == len(interval_time_ls), 'length of angular vel and interval time not the same'
+        if debug: print('------loaded imu data during this interval. ', 'number of data: ', len(angular_vel_ls))
+        # angular_vel_ls = [[0, 0, 0]]
+        # interval_time_ls = [1 / fps]
 
         # move objects in previous frame
         moved_objs = []  # the list for old objs after they've been moved to the new predicted location
@@ -169,7 +167,7 @@ def update(giou: bool) -> ():
                 # cur_vy += ay * (1 / imu_rate)
 
             # dx, dy = compute_displacement_quaternion(delta_ori)
-            dx, dy = 0, 0  # TODO: delete this line
+            # dx, dy = 0, 0  # TODO: delete this line
             if debug: print("--------displacement dx, dy: ", dx, dy)
             moved_obj = move_object(prev_obj, dx, dy)
             if debug: print("--------moved previous obj to: ", moved_obj)

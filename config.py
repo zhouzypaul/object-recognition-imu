@@ -5,32 +5,7 @@ debug = True  # set this to true to print informative messages
 
 
 # detection
-detection_thresh = 0.4
-moved_iou_thresh = 0.4
-N = 4
-decay_rate = 0.5
-delta_score = 0.2
-OBJ_NAME = 'car'
-TEST_NAME = OBJ_NAME + '3'
-test_thresh = 0.5
-frame_num_dict = {
-    'boat': 89,
-    'bird': 71,
-    'person': 194,
-    'dog': 660,
-    'cat': 85,
-    'zebra': 121,
-    'car': 93,
-    'car2': 81,
-    'car3': 152,
-    'motorbike': 96,
-    'aeroplane': 1419,
-    'bear': 287,
-    'sheep': 102,
-    'bear2': 78,
-    'boat2': 43
-}
-NUM_FRAME = frame_num_dict[TEST_NAME]
+detection_thresh = 0.4  # only those with confidences above this threshold will be output as a detection result
 
 
 # compare results
@@ -39,8 +14,7 @@ saveImage = False  # save the image with bounding boxes
 
 
 # paths
-ground_truth_directory = "./input/ground_truth/" + TEST_NAME
-image_directory = "./input/image/" + TEST_NAME  # input images, used in kf_update.py & iou_update.py
+image_directory = "./input/image/" # + TEST_NAME  # input images, used in kf_update.py & iou_update.py
 quaternion_path = 'imu/quaternion.csv'
 gyro_path = 'imu/gyro_data.csv'
 acc_path = 'imu/acc_data.csv'
@@ -97,3 +71,36 @@ dim = num_max * num_obj * num_var  # the dimension of the state vector
 giou_thresh = 0.55  # generalized iou score threshold for increasing confidence
 iou_thresh = 0.6  # iou score threshold for increasing confidence
 get_iou = True
+
+
+# trace back model
+N = 4  # how many frames to trace back
+decay_rate = 0.5
+delta_score = 0.2
+
+
+# for testing purposes
+moved_iou_thresh = 0.4
+OBJ_NAME = 'car'
+TEST_NAME = OBJ_NAME + '3'
+test_thresh = 0.5
+frame_num_dict = {
+    'boat': 89,
+    'bird': 71,
+    'person': 194,
+    'dog': 660,
+    'cat': 85,
+    'zebra': 121,
+    'car': 93,
+    'car2': 81,
+    'car3': 152,
+    'motorbike': 96,
+    'aeroplane': 1419,
+    'bear': 287,
+    'sheep': 102,
+    'bear2': 78,
+    'boat2': 43
+}
+NUM_FRAME = frame_num_dict[TEST_NAME]
+
+ground_truth_directory = "./input/ground_truth/" + TEST_NAME
