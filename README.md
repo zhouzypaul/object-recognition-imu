@@ -9,7 +9,7 @@
 
 > used on Vision Prosthetic in Paradiso Lab, Brown University
 
-Read about the details of this work in this paper [here](https://github.com/paulzhou69/object-recognition-imu/blob/master/assets/imu-paper.pdf). 
+Read about the details of this work in this paper [here](https://paulzhou69.github.io/docs/imu-paper.pdf). 
 
 
 [![Vision Prosthetic hardware](https://github.com/paulzhou69/object-recognition-imu/blob/master/assets/hardware.jpg)]()
