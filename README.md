@@ -154,7 +154,6 @@ to customized your own compare settings, please edit `iou_output/iou_compare.py`
 
 ## Team (Paradiso Lab, Brown University)
 
-> Contributors/People 
 
 
 ---
@@ -162,14 +161,6 @@ to customized your own compare settings, please edit `iou_output/iou_compare.py`
 ## FAQ
 
 - **Feel free to open issues :))**
-
----
-
-## Support
-
-Reach out to me at one of the following places!
-
-- Leave comments on my website: <a href="https://paulzhou69.github.io/" target="_blank">`https://paulzhou69.github.io/` </a>
 
 
 
