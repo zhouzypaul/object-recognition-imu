@@ -1,5 +1,5 @@
 
-<a href="https://paulzhou69.github.io/"><img src="https://i.pinimg.com/236x/fb/e4/ae/fbe4ae602785635af1b72789ab2d5c34--owl-anime.jpg" title="VP" alt="VP"></a>
+<a href="https://zhouzypaul.github.io/"><img src="https://i.pinimg.com/236x/fb/e4/ae/fbe4ae602785635af1b72789ab2d5c34--owl-anime.jpg" title="VP" alt="VP"></a>
 
 # Post-Processing Model of Video Object Recognition using IMU
 
