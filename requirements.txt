@@ -39,7 +39,7 @@ more-itertools==8.3.0
 networkx==2.4
 numba==0.49.1
 numexpr==2.7.1
-numpy==1.21.0
+numpy==1.22.0
 opencv-python==4.2.0.34
 packaging==20.4
 pandas==1.0.5
