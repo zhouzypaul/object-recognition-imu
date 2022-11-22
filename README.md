@@ -9,12 +9,12 @@
 
 > used on Vision Prosthetic in Paradiso Lab, Brown University
 
-Read about the details of this work in this paper [here](https://paulzhou69.github.io/docs/imu-paper.pdf). 
+Read about the details of this work in this paper [here](https://zhouzypaul.github.io/docs/imu-paper.pdf). 
 
 
-[![Vision Prosthetic hardware](https://github.com/paulzhou69/object-recognition-imu/blob/master/assets/hardware.jpg)]()
+[![Vision Prosthetic hardware](https://github.com/zhouzypaul/object-recognition-imu/blob/master/assets/hardware.jpg)]()
 
-<!-- [![HitCount](http://hits.dwyl.com/paulzhou69/object-recognition-imu.svg)](http://hits.dwyl.com/paulzhou69/object-recognition-imu) -->
+<!-- [![HitCount](http://hits.dwyl.com/zhouzypaul/object-recognition-imu.svg)](http://hits.dwyl.com/zhouzypaul/object-recognition-imu) -->
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fpaulzhou69%2Fobject-recognition-imu)](https://hits.seeyoufarm.com)
 
 ---
@@ -33,15 +33,15 @@ Read about the details of this work in this paper [here](https://paulzhou69.gith
 
 ## Installation
 
-- Clone this repo to your local machine using `https://github.com/paulzhou69/object-recognition-imu.git`
+- Clone this repo to your local machine using `https://github.com/zhouzypaul/object-recognition-imu.git`
 - install the dependencies using `requirements.txt`
 
 ```shell script
-$ git clone https://github.com/paulzhou69/object-recognition-imu.git
+$ git clone https://github.com/zhouzypaul/object-recognition-imu.git
 $ pip install -r requirements.txt
 ```
 
-- If you are using YOLO as your object detection algorithm, please follow the <a href="https://github.com/paulzhou69/object-recognition-imu/blob/master/darknet/README.md"> README here </a> to set up YOLO. 
+- If you are using YOLO as your object detection algorithm, please follow the <a href="https://github.com/zhouzypaul/object-recognition-imu/blob/master/darknet/README.md"> README here </a> to set up YOLO. 
 Please note that the YOLO in this repo is a bit different from the <a href="https://github.com/AlexeyAB/darknet.git"> official release </a>, 
 as the YOLO in this repo is better integrated with the post-processing model. 
 
@@ -93,7 +93,7 @@ running the Kalman Filter model and process input images and IMU info
 $ python main.py kf
 ```
 - you should see the terminal loading the images and the processing steps if you set `debug = True` in `config.py`
-[![INSERT YOUR GRAPHIC HERE](https://github.com/paulzhou69/object-recognition-imu/blob/master/assets/debug.png)]()
+[![INSERT YOUR GRAPHIC HERE](https://github.com/zhouzypaul/object-recognition-imu/blob/master/assets/debug.png)]()
 
 the results of the updated observation will be saved in files in `kf_output/`, where the `read.csv`
 files are for human reading the outputs, and the `store.csv` files are stored in json format
@@ -122,7 +122,7 @@ $ python main.py iou --compare
 $ python main.py kf --compare
 ```
 - you should see an image pop up:
-[![INSERT YOUR GRAPHIC HERE](https://github.com/paulzhou69/object-recognition-imu/blob/master/assets/compare.png)]()
+[![INSERT YOUR GRAPHIC HERE](https://github.com/zhouzypaul/object-recognition-imu/blob/master/assets/compare.png)]()
 
 to customized your own compare settings, please edit `iou_output/iou_compare.py`, `iou_output/giou_compare.py`, and 
 `kf_output/kf_compare.py`
@@ -140,7 +140,7 @@ to customized your own compare settings, please edit `iou_output/iou_compare.py`
     - 🍴 Fork this repo!
 
 - **Option 2**
-    - 👯 Clone this repo to your local machine using `https://github.com/paulzhou69/object-recognition-imu.git`
+    - 👯 Clone this repo to your local machine using `https://github.com/zhouzypaul/object-recognition-imu.git`
 
 ### Step 2
 
@@ -148,7 +148,7 @@ to customized your own compare settings, please edit `iou_output/iou_compare.py`
 
 ### Step 3
 
-- 🔃 Create a new pull request using <a href="https://github.com/paulzhou69/object-recognition-imu/compare" target="_blank">`https://github.com/paulzhou69/object-recognition-imu/compare` </a>.
+- 🔃 Create a new pull request using <a href="https://github.com/zhouzypaul/object-recognition-imu/compare" target="_blank">`https://github.com/zhouzypaul/object-recognition-imu/compare` </a>.
 
 ---
 
